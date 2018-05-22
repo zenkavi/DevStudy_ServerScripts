@@ -28,7 +28,7 @@ Script: python make_commands_for_nifti_conversion.py > exec_convert_dicoms_to_ni
 Output: dev_study/03_DICOM_to_NIFTI_conversions/*, exec_convert_dicoms_to_niftis.sh
 
 Input:
-Script:
+Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_dicoms_to_niftis.sh -j dcm2nii -q normal -m zenkavi@stanford.edu
 Output:
 
 Input:
@@ -76,9 +76,7 @@ Command order
 ==========================
 
 ```bash
-make_nifti_dirs.py
 
-launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_dicoms_to_niftis.sh -j dcm2nii -q normal -m zenkavi@stanford.edu
 
 python make_commands_for_run_events.py > exec_make_run_events.sh
 
