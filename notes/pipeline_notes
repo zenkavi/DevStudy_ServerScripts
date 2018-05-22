@@ -19,6 +19,14 @@ Input: sub_dirname_list.txt
 Script: make_bids_content_dirs.py
 Output: dev_study/data/sub-*/anat, dev_study/data/sub-*/func, dev_study/data/sub-*/fmap, dev_study/data/sub-*/behav
 
+Input: dev_study/01_DICOM_zipfiles_from_XNAT/*.zip
+Script: unzip_dicom_dirs.py
+Output: dev_study/02_DICOM_data_after_unzipping/*
+
+Input: dev_study/02_DICOM_data_after_unzipping/*
+Script: python make_commands_for_nifti_conversion.py > exec_convert_dicoms_to_niftis.sh
+Output: dev_study/03_DICOM_to_NIFTI_conversions/*, exec_convert_dicoms_to_niftis.sh
+
 Input:
 Script:
 Output:
@@ -46,19 +54,13 @@ File descriptions
 
 `fix_fmap_jsons.py`: Python script to extract both echo time data and add it to the default dcm2niix output for fieldmap image jsons.
 
-`make_bids_content_dirs.py`: Python script that loops through all subject BIDS directories and creates directories for the contents (e.g. anat, func etc.)
-
 `make_commands_for_bart_conversion.py`: Python script that populates text file with commands calling BART data conversion R script
 
 `make_commands_for_fmap_jsons.py`: Python script that populate shell script with commands for each subect to fix the fieldmap jsons
 
 `make_commands_for_move_niftis.py`: Python script that makes shell script commands to execute `move_niftis_to_bids.py` on each subject. Requires `sub_dirname_match_list.tsv`.
 
-`make_commands_for_nifti_conversion.py`: Python script to create command for each subject that will be used in shell script to convert dicoms to niftis
-
 `make_commands_for_run_events.py`: Python script that created shell commands to run python script that split the fMRI behavioral data in to csv's for each run for each subject
-
-`make_nifti_dirs.py`: Python script that creates directories in the path where the dicom files will be converted to niftis. Loops through, not for batch.
 
 `make_run_events.py`: Python script that split the behavioral fMRI data in to runs and converts them to tsv's that will be stored in sub/func BIDS directories
 
@@ -70,17 +72,10 @@ File descriptions
 
 `sub_dirname_match_list_tsv`: File containing nifti_paths in first column and bids_paths in second column that will be used to create the shell commands populating the arguments for `move_niftis_to_bids.py`.
 
-`unzip_dicom_dirs.py`: Python script to loop through and unzip the DICOM directories
-
 Command order
 ==========================
 
 ```bash
-
-unzip_dicom_dirs.py
-
-python make_commands_for_nifti_conversion.py > exec_convert_dicoms_to_niftis.sh
-
 make_nifti_dirs.py
 
 launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_dicoms_to_niftis.sh -j dcm2nii -q normal -m zenkavi@stanford.edu
@@ -99,6 +94,6 @@ launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_m
 
 python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
 
-laucnch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
+launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
 
 ```
