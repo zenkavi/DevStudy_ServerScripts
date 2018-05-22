@@ -7,17 +7,17 @@ General for running thing in this directory on TACC:
 - Run all jobs on TACC
 
 Setup environment [UPDATE WITH CORRECT PYTHON ENV]
-Input: NA
+Input:
 Script: source setup/dev_study_env.sh
-Output: NA
+Output:
 
 Input: sub_dirname_list.txt
-Script:
-Output:
+Script: make_bids_subject_dirs.py
+Output: dev_study/data/sub-*
 
-Input:
-Script:
-Output:
+Input: sub_dirname_list.txt
+Script: make_bids_content_dirs.py
+Output: dev_study/data/sub-*/anat, dev_study/data/sub-*/func, dev_study/data/sub-*/fmap, dev_study/data/sub-*/behav
 
 Input:
 Script:
@@ -48,8 +48,6 @@ File descriptions
 
 `make_bids_content_dirs.py`: Python script that loops through all subject BIDS directories and creates directories for the contents (e.g. anat, func etc.)
 
-`make_bids_subject_dirs.py`: Python script that take in the sub\_dirname\_list.txt file and creates a BIDS directory for each
-
 `make_commands_for_bart_conversion.py`: Python script that populates text file with commands calling BART data conversion R script
 
 `make_commands_for_fmap_jsons.py`: Python script that populate shell script with commands for each subect to fix the fieldmap jsons
@@ -78,11 +76,6 @@ Command order
 ==========================
 
 ```bash
-
-
-make_bids_subject_dirs.py
-
-make_bids_content_dirs.py
 
 unzip_dicom_dirs.py
 
