@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import os
 
-dir_names = open("/corral-repl/utexas/poldracklab/users/zenkavi/DevStudy_TaccScripts/scripts/sub_dirname_list.txt")
+dir_names = open("/corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_TaccScripts/sub_dirname_list.txt")
 
 for line in dir_names:
-	os.mkdir("/corral-repl/utexas/poldracklab/users/zenkavi/DevStudy_TaccScripts/data/sub-"+line.strip())
+	os.mkdir("/corral-repl/utexas/poldracklab/users/zenkavi/dev_study/data/sub-"+line.strip())
 
 dir_names.close()

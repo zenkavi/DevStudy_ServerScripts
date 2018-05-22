@@ -11,7 +11,7 @@ Input: NA
 Script: source setup/dev_study_env.sh
 Output: NA
 
-Input:
+Input: sub_dirname_list.txt
 Script:
 Output:
 
