@@ -6,5 +6,5 @@ sub_dir_names = os.listdir("/corral-repl/utexas/poldracklab/users/zenkavi/dev_st
 print('#!/bin/bash')
 
 for sub_dir_name in sub_dir_names:
-	command = 'python /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_TaccScripts/fix_fmap_jsons.py "/corral-repl/utexas/poldracklab/users/zenkavi/dev_study/data/'+sub_dir_name+'"'
+	command = 'python /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/fix_fmap_jsons.py "/corral-repl/utexas/poldracklab/users/zenkavi/dev_study/data/'+sub_dir_name+'"'
 	print(command)
