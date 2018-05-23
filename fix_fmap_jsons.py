@@ -23,7 +23,7 @@ sys.path = ['',
  '/home1/04127/zenkavi/.ipython']
 
 if len(sys.argv) < 1:
-    sys.exit("Usage: moveNiftisToBids.py sub_dir_name")
+    sys.exit("Usage: fix_fmap_jsons.py sub_dir_name")
 
 fmap_path = sys.argv[1]+'/fmap/' #make sure paths end with '/'
 
@@ -31,8 +31,8 @@ json_file_names = [s for s in os.listdir(fmap_path) if ".json" in s]
 
 echo_times = []
 
-for i in json_file_names: 
-	with open(fmap_path+i) as data_file:    
+for i in json_file_names:
+	with open(fmap_path+i) as data_file:
 	    data = json.load(data_file)
 	    echo_times.append(data['EchoTime'])
 

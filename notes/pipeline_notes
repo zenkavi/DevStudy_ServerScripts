@@ -25,73 +25,48 @@ Output: dev_study/02_DICOM_data_after_unzipping/*
 
 Input: dev_study/02_DICOM_data_after_unzipping/*
 Script: python make_commands_for_nifti_conversion.py > exec_convert_dicoms_to_niftis.sh
-Output: dev_study/03_DICOM_to_NIFTI_conversions/*, exec_convert_dicoms_to_niftis.sh
+Output: dev_study/03_DICOM_to_NIFTI_conversions/* (shell directories), exec_convert_dicoms_to_niftis.sh
 
-Input:
+[CAN USE IMPROVEMENT - Does the launch script currently actually parallelize all these commands?]
+Input: dev_study/02_DICOM_data_after_unzipping/* (unzipped dicom's)
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_dicoms_to_niftis.sh -j dcm2nii -q normal -m zenkavi@stanford.edu
-Output:
+Output: dev_study/03_DICOM_to_NIFTI_conversions/* (nifti files)
 
-Input:
-Script:
-Output:
+Input: dev_study/todo/behav_data_tb_organized/machine_game
+Script: python make_commands_for_run_events.py > exec_make_run_events.sh
+Output: exec_make_run_events.sh
 
-File descriptions
-==========================
+[CAN USE IMPROVEMENT - Does the launch script currently actually parallelize all these commands?]
+Input: dev_study/todo/behav_data_tb_organized/machine_game, make_run_events.py
+Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_make_run_events.sh -j runevs
+Output: dev_study/data/sub-*/fun/sub-*/*_events.tsv
+
+Input: dev_study/todo/behav_data_tb_organized/bart, dev_study/DevStudy_TaccScripts/convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr'
+Script: python make_commands_for_bart_conversion.py > exec_convert_bart_mat_to_tsv.sh
+Output: exec_convert_bart_mat_to_tsv.sh
+
+Input: dev_study/todo/behav_data_tb_organized/bart/*.mat
+Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_bart_mat_to_tsv.sh -j bartconv
+Output: dev_study/data/sub-*/behav/*.tsv, dev_study/data/sub-*/behav/*.json
+
+Input: dev_study/DevStudy_TaccScripts/sub_dirname_match_list.tsv
+Script: python make_commands_for_move_niftis.py > exec_move_niftis_to_bids.sh
+Output: exec_move_niftis_to_bids.sh
+
+[CAN USE IMPROVEMENT - move_niftis_to_bids.py NEEDS PY3/PATH UPDATE]
+Input: dev_study/03_DICOM_to_NIFTI_conversion/*, dev_study/DevStudy_TaccScripts/move_niftis_to_bids.py
+Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_move_niftis_to_bids.sh -j movenii
+Output: dev_study/data/sub-*/anat/*, dev_study/data/sub-*/func/*, dev_study/data/sub-*/fmap/*
+
+Input: dev_study/data/* (subject directories)
+Script: python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
+Output: exec_fix_fmap_jsons.sh
+
+[CAN USE IMPROVEMENT - fix_fmap_jsons.py NEEDS PY2/PATH UPDATE]
+Input: dev_study/data/sub-*/fmap/*.json
+Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
+Output: dev_study/data/sub-*/fmap/*.json
 
 `check_bold_vols.py`: Script from Mumford video tutorials to check the volume of all bold niftis.
 
-`convertBARTmat2tsv.R`: R script to convert Matlab output files for the BART behavioral data in to tsv's that can be saved sub/behav BIDS directories
-
-`exec_convert_bart_mat_to_tsv.sh`: Shell script with commands calling the R script that converts the .mat behavioral BART data to .tsv's and saves in sub/behav BIDS directories
-
-`exec_convert_dicoms_to_niftis.sh`: Shell script with commands to python script that converts the dicoms to niftis for each subject (separate commands for each subject for parallelization of batch job)
-
-`exec_fix_fmap_jsons.sh`: Shell script with commands calling python script on each subject's BIDS directory to take the fieldmap json's output by dcm2niix by default and add the two echo times to each of them to be able to run the fieldmap workflow.
-
-`exec_make_run_events.sh`: Shell script with commands to call python script that split the fMRI behavioral data in to tsv's with onsets for each event in each run for sub/func BIDS directories
-
-`exec_move_niftis_to_bids.sh`: Shell script with commands to call python script for each subject that moves the converted nifti's to the correct BIDS directories
-
-`fix_fmap_jsons.py`: Python script to extract both echo time data and add it to the default dcm2niix output for fieldmap image jsons.
-
-`make_commands_for_bart_conversion.py`: Python script that populates text file with commands calling BART data conversion R script
-
-`make_commands_for_fmap_jsons.py`: Python script that populate shell script with commands for each subect to fix the fieldmap jsons
-
-`make_commands_for_move_niftis.py`: Python script that makes shell script commands to execute `move_niftis_to_bids.py` on each subject. Requires `sub_dirname_match_list.tsv`.
-
-`make_commands_for_run_events.py`: Python script that created shell commands to run python script that split the fMRI behavioral data in to csv's for each run for each subject
-
-`make_run_events.py`: Python script that split the behavioral fMRI data in to runs and converts them to tsv's that will be stored in sub/func BIDS directories
-
-`move_niftis_to_bids.py`: Python script that copies and renames nifti's and json's in a specificied nifti_path to a given bids_path with the appropriate directory structure.
-
 `sbatch_template.sbatch`: Example batch script (not used)
-
-`sub_dirname_list.txt`: list of subject numbers that will be used to create BIDS directories for each subjects
-
-`sub_dirname_match_list_tsv`: File containing nifti_paths in first column and bids_paths in second column that will be used to create the shell commands populating the arguments for `move_niftis_to_bids.py`.
-
-Command order
-==========================
-
-```bash
-
-
-python make_commands_for_run_events.py > exec_make_run_events.sh
-
-launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_make_run_events.sh -j runevs
-
-python make_commands_for_bart_conversion.py > exec_convert_bart_mat_to_tsv.sh
-
-launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_bart_mat_to_tsv.sh -j bartconv
-
-python make_commands_for_move_niftis.py > exec_move_niftis_to_bids.sh
-
-launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_move_niftis_to_bids.sh -j movenii
-
-python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
-
-launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
-
-```
