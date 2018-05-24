@@ -1,4 +1,4 @@
-#!/bin/bash
+
 # change paths and modules depending on cluster
 # sherlock
 if [[ $HOME -ef /home/users/zenkavi ]]; then
