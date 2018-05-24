@@ -5,6 +5,12 @@ General for running thing in this directory on TACC:
 - Push all changes to origin
 - Pull on TACC
 - Run all jobs on TACC
+- How to change all subdirectory names with pattern to another
+find . -name behav -type d -execdir mv {} beh \;
+
+===================================================================
+===================================================================
+===================================================================
 
 Setup environment [UPDATE WITH CORRECT PYTHON ENV]
 Input:
