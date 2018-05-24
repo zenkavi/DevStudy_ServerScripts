@@ -51,7 +51,7 @@ Input: dev_study/todo/behav_data_tb_organized/bart, dev_study/DevStudy_TaccScrip
 Script: python make_commands_for_bart_conversion.py > exec_convert_bart_mat_to_tsv.sh
 Output: exec_convert_bart_mat_to_tsv.sh
 
-Input: dev_study/todo/behav_data_tb_organized/bart/*.mat
+Input: dev_study/todo/behav_data_tb_organized/bart/*.mat, convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr'
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_bart_mat_to_tsv.sh -j bartconv
 Output: dev_study/data/sub-*/behav/*.tsv, dev_study/data/sub-*/behav/*.json
 
