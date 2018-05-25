@@ -7,16 +7,15 @@ lib_path = Sys.getenv()[["R_LIB"]]
 todo_path = Sys.getenv()[["TODO_PATH"]]
 data_path = Sys.getenv()[["DATA_LOC"]]
 
-input <- paste0(todo_path,args[1])
-tsvOutput <- paste0(data_path,args[2])
-jsonOutput <- paste0(data_path,args[3])
+inputPath <- paste0(todo_path,args[1])
+outputPath <- paste0(data_path,args[2])
 
 #install.packages(c('R.matlab', 'RJSONIO', 'plyr'), repos='http://cran.rstudio.com/', lib = '/work/04127/zenkavi/.r_library/')
 library(R.matlab, lib.loc = lib_path)
 library(RJSONIO, lib.loc = lib_path)
 library(plyr, lib.loc = lib_path)
 
-mat <- readMat(input)
+mat <- readMat(inputPath)
 
 listForJson <- list(ans = mat$ans,
                     script.name = mat$script.name,
@@ -94,7 +93,7 @@ listForJson <- list(ans = mat$ans,
 jsonOutputList <- toJSON(listForJson)
 
 #Save jsonOutput
-write(jsonOutputList, jsonOutput)
+write(jsonOutputList, paste0(outputPath, '.json'))
 
 #Process event info stored in trial.info
 trial.info <- mat$trial.info
@@ -144,4 +143,4 @@ tsvDf$iti <- ifelse(length(as.numeric(mat$ITI)) == 0 , NA, as.numeric(mat$ITI))
 tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , NA, as.numeric(mat$ISI))
 
 #Save tsvOutput
-write.table(tsvDf, file = tsvOutput, row.names=FALSE, sep="\t")
+write.table(tsvDf, file = paste(outputPath, '.tsv'), row.names=FALSE, sep="\t")
