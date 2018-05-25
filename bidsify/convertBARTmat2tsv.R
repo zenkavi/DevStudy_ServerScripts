@@ -3,27 +3,31 @@
 #Bash command: Rscript --vanilla convertBARTmat2tsv.R path/to/input.mat path/to/out.tsv path/to/out.json
 args = commandArgs(trailingOnly=TRUE)
 
-input <- args[1]
-tsvOutput <- args[2]
-jsonOutput <- args[3]
-  
+lib_path = Sys.getenv()[["R_LIB"]]
+todo_path = Sys.getenv()[["TODO_PATH"]]
+data_path = Sys.getenv()[["DATA_LOC"]]
+
+input <- paste0(todo_path,args[1])
+tsvOutput <- paste0(data_path,args[2])
+jsonOutput <- paste0(data_path,args[3])
+
 #install.packages(c('R.matlab', 'RJSONIO', 'plyr'), repos='http://cran.rstudio.com/', lib = '/work/04127/zenkavi/.r_library/')
-library(R.matlab, lib.loc = '/work/04127/zenkavi/.r_library/')
-library(RJSONIO, lib.loc = '/work/04127/zenkavi/.r_library/')
-library(plyr, lib.loc = '/work/04127/zenkavi/.r_library/')
+library(R.matlab, lib.loc = lib_path)
+library(RJSONIO, lib.loc = lib_path)
+library(plyr, lib.loc = lib_path)
 
 mat <- readMat(input)
 
-listForJson <- list(ans = mat$ans, 
-                    script.name = mat$script.name, 
-                    revision.data = mat$revision.date, 
+listForJson <- list(ans = mat$ans,
+                    script.name = mat$script.name,
+                    revision.data = mat$revision.date,
                     script.version = mat$script.version,
                     subject.code = mat$subject.code,
                     c = mat$c,
                     logfile = mat$logfile,
                     MRI = mat$MRI,
                     pixelSize = mat$pixelSize,
-                    fid = mat$fid, 
+                    fid = mat$fid,
                     ptb.RootPath = mat$ptb.RootPath,
                     ptb.ConfigPath = mat$ptb.ConfigPath,
                     numDevices = mat$numDevices,
@@ -97,12 +101,12 @@ trial.info <- mat$trial.info
 
 #Function to process data for a given trial
 makeTrialDf <- function(listElement){
-  
+
   #create the empty df that will be filled with the trial info
   #nrow is the # of responses
   out <- data.frame(matrix(data=NA, nrow = length(listElement$resp), ncol = length(names(listElement))))
   names(out) <- names(listElement)
-  
+
   #Take pertinent variable and reformat it to be part of df
   out$payoff.level <- as.numeric(listElement$payoff.level)
   out$balloon <- as.numeric(listElement$balloon)
@@ -117,7 +121,7 @@ makeTrialDf <- function(listElement){
   out$trial.total <- as.numeric(listElement$trial.total)
   out$cumulative.total <- as.numeric(listElement$cumulative.total)
   out$finished <- as.numeric(listElement$finished)
-  
+
   return(out)
 }
 
@@ -141,4 +145,3 @@ tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , NA, as.numeric(mat$ISI))
 
 #Save tsvOutput
 write.table(tsvDf, file = tsvOutput, row.names=FALSE, sep="\t")
-
