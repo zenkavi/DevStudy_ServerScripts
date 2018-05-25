@@ -10,8 +10,8 @@
 #SBATCH --mem-per-cpu=4G
 
 # Outputs ----------------------------------
-#SBATCH -o $SERVER_SCRIPTS/.out/%A-%a.out
-#SBATCH -e $SERVER_SCRIPTS/.err/%A-%a.err
+#SBATCH -o {SERVER_SCRIPTS}/.out/%A-%a.out
+#SBATCH -e {SERVER_SCRIPTS}/.err/%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
