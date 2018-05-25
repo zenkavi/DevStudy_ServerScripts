@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 
-todo_path = os.environ('TODO_PATH')
+todo_path = os.environ[]'TODO_PATH']
 
 mat_file_names = os.listdir(todo_path+"behav_data_tb_organized/bart")
 
