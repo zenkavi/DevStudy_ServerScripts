@@ -1,0 +1,30 @@
+#!/bin/bash
+##############################################
+# An example jobarray sbatch file for Sherlock
+##############################################
+#SBATCH -J bart_mat2csv                  # Give me a job name
+#SBATCH --array=1-82%10          # Number of lines in corresponding tasks_list.sh file,
+                                  # and have max 10 tasks running in parallel at a time
+#SBATCH -p russpold,owners,normal # Queues you can submit to.
+#SBATCH --time=1:00:00           # Wallclock time
+#SBATCH -n 1                      # Each line of tasks_list.sh is an independent task
+#SBATCH --cpus-per-task=10        # Say you want each line to use 10 cpus.
+#SBATCH --ntasks-per-node=1       # Necessary for the job array to allocate resources correctly
+#SBATCH --mem-per-cpu=4G       # Take over all available RAM per node
+
+# Outputs ----------------------------------
+#SBATCH -o %A-%a.out
+#SBATCH -e %A-%a.err
+#SBATCH --mail-user=<username>@stanford.edu
+#SBATCH --mail-type=ALL
+# ------------------------------------------
+module load system                          # Only Sherlock2
+module load singularity                     # load singularity (both Sherlock 1 and 2)
+unset PYTHONPATH
+export FS_LICENSE=$PWD/.freesurfer.txt      # Necessary for FMRIPREP only
+# The heavylifting happens here
+# Make sure you have a tasks_list.sh file ready in the same working directory,
+# with one task per line.
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" tasks_list.sh )
+# Example of one possible line in the tasks_list.sh file:
+# singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.0.7-2018-02-14-521e873ab8db.img $OAK/data/openfmri/ds000116 $HOME/derivatives/ds000116 participant -w work/ds000116 --participant_label sub-17 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 --force-syn -vv
