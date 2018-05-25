@@ -3,7 +3,7 @@ import os
 
 todo_path = os.environ['TODO_PATH']
 
-mat_file_names = os.listdir(todo_path+"behav_data_tb_organized/bart")
+mat_file_names = os.listdir(todo_path+"/behav_data_tb_organized/bart")
 
 sub_ids = [ x.split("_")[0] for x in mat_file_names ]
 
