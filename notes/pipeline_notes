@@ -47,12 +47,12 @@ Input: dev_study/todo/behav_data_tb_organized/machine_game, make_run_events.py
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_make_run_events.sh -j runevs
 Output: dev_study/data/sub-*/fun/sub-*/*_events.tsv
 
-Input: dev_study/todo/behav_data_tb_organized/bart, dev_study/DevStudy_TaccScripts/convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr'
+Input: setup/dev_study_env.sh
 Script: python make_commands_for_bart_conversion.py > task_list_bart_mat_to_tsv.sh
-Output: exec_convert_bart_mat_to_tsv.sh
+Output: task_list_bart_mat_to_tsv.sh
 
-Input: dev_study/todo/behav_data_tb_organized/bart/*.mat, convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr'
-Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_bart_mat_to_tsv.sh -j bartconv
+Input: dev_study/todo/behav_data_tb_organized/bart/*.mat, convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr', task_list_bart_mat_to_tsv.sh
+Script: sbatch convert_bart_to_tsv.batch
 Output: dev_study/data/sub-*/behav/*.tsv, dev_study/data/sub-*/behav/*.json
 
 Input: dev_study/DevStudy_TaccScripts/sub_dirname_match_list.tsv
