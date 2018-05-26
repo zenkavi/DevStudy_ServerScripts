@@ -146,4 +146,4 @@ tsvDf$iti <- ifelse(length(as.numeric(mat$ITI)) == 0 , NA, as.numeric(mat$ITI))
 tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , NA, as.numeric(mat$ISI))
 
 #Save tsvOutput
-write.table(tsvDf, file = paste(outputPath, '.tsv'), row.names=FALSE, sep="\t")
+write.table(tsvDf, file = paste0(outputPath, '.tsv'), row.names=FALSE, sep="\t")

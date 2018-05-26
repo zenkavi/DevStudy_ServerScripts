@@ -4,10 +4,6 @@
 #SBATCH --array=1-4%2
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=0:30:00
-#SBATCH -n 1
-#SBATCH --cpus-per-task=4
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=4G
 
 # Outputs ----------------------------------
 #SBATCH -o ../.out/bart_mat2csv-%A-%a.out
