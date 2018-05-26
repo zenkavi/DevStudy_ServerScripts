@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #SBATCH -J bart_mat2csv
-#SBATCH --array=1-4%2
+#SBATCH --array=1-82%10
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=0:30:00
+#SBATCH --time=0:15:00
 
 # Outputs ----------------------------------
 #SBATCH -o ../.out/bart_mat2csv-%A-%a.out
@@ -13,4 +13,4 @@
 # ------------------------------------------
 source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
 
-eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" test_task_list_bart_mat_to_tsv.sh )
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" task_list_bart_mat_to_tsv.sh )
