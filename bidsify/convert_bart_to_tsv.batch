@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #SBATCH -J bart_mat2csv
-#SBATCH --array=1-2%1
+#SBATCH --array=1-4%2
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=1:00:00
+#SBATCH --time=0:30:00
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
 #SBATCH --ntasks-per-node=1
