@@ -3,7 +3,7 @@
 #Bash command: Rscript --vanilla convertBARTmat2tsv.R path/to/input.mat path/to/out.tsv path/to/out.json
 args = commandArgs(trailingOnly=TRUE)
 
-#lib_path = Sys.getenv()[["R_LIB"]]
+lib_path = Sys.getenv()[["R_LIB"]]
 #todo_path = Sys.getenv()[["TODO_PATH"]]
 #data_path = Sys.getenv()[["DATA_LOC"]]
 
