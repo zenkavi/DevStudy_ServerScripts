@@ -3,12 +3,15 @@
 #Bash command: Rscript --vanilla convertBARTmat2tsv.R path/to/input.mat path/to/out.tsv path/to/out.json
 args = commandArgs(trailingOnly=TRUE)
 
-lib_path = Sys.getenv()[["R_LIB"]]
-todo_path = Sys.getenv()[["TODO_PATH"]]
-data_path = Sys.getenv()[["DATA_LOC"]]
+#lib_path = Sys.getenv()[["R_LIB"]]
+#todo_path = Sys.getenv()[["TODO_PATH"]]
+#data_path = Sys.getenv()[["DATA_LOC"]]
 
-inputPath <- paste0(todo_path,args[1])
-outputPath <- paste0(data_path,args[2])
+#inputPath <- paste0(todo_path,args[1])
+#outputPath <- paste0(data_path,args[2])
+
+inputPath <- args[1]
+outputPath <- args[2]
 
 #install.packages(c('R.matlab', 'RJSONIO', 'plyr'), repos='http://cran.rstudio.com/', lib = '/work/04127/zenkavi/.r_library/')
 library(R.matlab, lib.loc = lib_path)
