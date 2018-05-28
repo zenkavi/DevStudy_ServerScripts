@@ -96,7 +96,7 @@ listForJson <- list(ans = mat$ans,
 jsonOutputList <- toJSON(listForJson)
 
 #Save jsonOutput
-write(jsonOutputList, paste0(outputPath, '.json'))
+write(jsonOutputList, paste0(outputPath, '_beh.json'))
 
 #Process event info stored in trial.info
 trial.info <- mat$trial.info
@@ -146,8 +146,8 @@ tsvDf$iti <- ifelse(length(as.numeric(mat$ITI)) == 0 , 'n/a', as.numeric(mat$ITI
 tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , 'n/a', as.numeric(mat$ISI))
 
 #Add onset and duration columns to make the tsv's events files
-tsvDf = cbind(onset = tsvDf$trial.start, tsvDf)
 tsvDf = cbind(duration = tsvDf$trial.end - tsvDf$trial.start, tsvDf)
+tsvDf = cbind(onset = tsvDf$trial.start, tsvDf)
 
 #Save tsvOutput
 write.table(tsvDf, file = paste0(outputPath, '_events.tsv'), row.names=FALSE, sep="\t", quote=FALSE)
