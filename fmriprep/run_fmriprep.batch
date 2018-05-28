@@ -19,8 +19,8 @@
 module load system
 module load singularity
 unset PYTHONPATH
-export FS_LICENSE=$PWD/license.txt      # Necessary for FMRIPREP only
+export FS_LICENSE=$PWD/license.txt
+
+source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
 
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_tasks_list.sh )
-# Example of one possible line in the tasks_list.sh file:
-# singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.0.15-2018-05-17-ad916df843e8.img $OAK/data/ds000054/0.0.1/ $OAK/data/ds000054/0.0.1/derivatives/ participant -w work --participant_label sub-100003 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv
