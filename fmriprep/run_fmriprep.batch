@@ -23,4 +23,4 @@ export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/l
 
 source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
 
-eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_tasks_list.sh )
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_task_list.sh )
