@@ -11,6 +11,7 @@ rm -rf sub-test
 #replace 200067 with 200027 in participants.tsv
 
 #rm second events file for first run for 100110
+#because in /corral-repl/utexas/poldracklab/users/shelfins/Developmental_Study/data/machine_game the first tsv is used for parameter calculation as seen in NoHead.csv file
 rm sub-100110_2_task-machinegame_run-01_events.tsv
 
 #change multiple fmaps to runs
