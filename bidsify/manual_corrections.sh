@@ -10,6 +10,9 @@ rm -rf sub-test
 
 #replace 200067 with 200027 in participants.tsv
 
+#rm second events file for first run for 100110
+rm sub-100110_2_task-machinegame_run-01_events.tsv
+
 #change multiple fmaps to runs
 mv sub-100009_magnitude1.nii.gz ./sub-100009_run-1_magnitude1.nii.gz
 mv sub-100009_magnitude1.json ./sub-100009_run-1_magnitude1.json
