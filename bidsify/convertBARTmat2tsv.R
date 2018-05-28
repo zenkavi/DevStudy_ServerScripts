@@ -140,10 +140,14 @@ tsvDf <- rbind.fill(trialsDfs)
 tsvDf$trial.num <- factor(tsvDf$explode.trial, levels = unique(tsvDf$explode.trial), labels = 1:length(unique(tsvDf$explode.trial)))
 
 #Additional variables that might be necessary for analysis
-tsvDf$secs <- ifelse(length(as.numeric(mat$secs)) == 0 , NA, as.numeric(mat$secs))
-tsvDf$start.time <-ifelse(length(as.numeric(mat$start.time)) == 0 , NA, as.numeric(mat$start.time))
-tsvDf$iti <- ifelse(length(as.numeric(mat$ITI)) == 0 , NA, as.numeric(mat$ITI))
-tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , NA, as.numeric(mat$ISI))
+tsvDf$secs <- ifelse(length(as.numeric(mat$secs)) == 0 , 'n/a', as.numeric(mat$secs))
+tsvDf$start.time <-ifelse(length(as.numeric(mat$start.time)) == 0 , 'n/a', as.numeric(mat$start.time))
+tsvDf$iti <- ifelse(length(as.numeric(mat$ITI)) == 0 , 'n/a', as.numeric(mat$ITI))
+tsvDf$isi <- ifelse(length(as.numeric(mat$ISI)) == 0 , 'n/a', as.numeric(mat$ISI))
+
+#Add onset and duration columns to make the tsv's events files
+tsvDf = cbind(onset = tsvDf$trial.start, tsvDf)
+tsvDf = cbind(duration = tsvDf$trial.end - tsvDf$trial.start, tsvDf)
 
 #Save tsvOutput
-write.table(tsvDf, file = paste0(outputPath, '.tsv'), row.names=FALSE, sep="\t")
+write.table(tsvDf, file = paste0(outputPath, '_events.tsv'), row.names=FALSE, sep="\t", quote=FALSE)
