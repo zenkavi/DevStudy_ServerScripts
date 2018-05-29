@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#SBATCH -J mriqc
+#SBATCH --array=1-83%10
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=48:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=6400M
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/mriqc-%A-%a.out
+#SBATCH -e ../.err/mriqc-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+
+module load system
+module load singularity
+#source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+
+unset PYTHONPATH
+#export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
+
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" mriqc_task_list.sh )
