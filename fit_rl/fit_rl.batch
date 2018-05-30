@@ -1,0 +1,7 @@
+what should the arrays be?
+one per subject? 78 arrays with 43 jobs each
+one per model? 43 arrays with 78 jobs each [leaning towards this because eventually you'll converge on model instead of wanting to always running all models]
+
+so you'd need another shell script to loop through models - run_fit_rl.sh - that calls fit_rl.batch
+
+fit_rl.batch should call fit_rl.py
