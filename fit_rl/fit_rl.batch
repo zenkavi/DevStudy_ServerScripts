@@ -1,7 +1,30 @@
+#!/bin/bash
+
+#SBATCH -J fit_rl_fix-{FIX_VARS}_fit-{FIT_VARS}
+#SBATCH --array=1-78%10
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=0:15:00
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/bart_mat2csv-%A-%a.out
+#SBATCH -e ../.err/bart_mat2csv-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" .task_lists/task_list_bart_mat_to_tsv.sh )
+
 what should the arrays be?
 one per subject? 78 arrays with 43 jobs each
 one per model? 43 arrays with 78 jobs each [leaning towards this because eventually you'll converge on model instead of wanting to always running all models]
 
+will i need 43 different batch scripts?
+no should be able to take care of this in run_fit_rl.sh
+
 so you'd need another shell script to loop through models - run_fit_rl.sh - that calls fit_rl.batch
 
 fit_rl.batch should call fit_rl.py
+
+one line for the task list for this array should look like:
+python fit_rl.py {DATA_PATH} {OUTPUT_PATH} {SUBJECT} {MODEL}
