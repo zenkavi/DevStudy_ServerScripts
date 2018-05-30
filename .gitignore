@@ -1,4 +1,6 @@
 .DS_Store
 .out
 .err
+.rl_task_lists
+.fits
 license.txt
