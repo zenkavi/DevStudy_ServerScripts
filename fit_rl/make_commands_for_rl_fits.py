@@ -13,9 +13,9 @@ subjects = [ x.split("ProbLearn")[1].split(".")[0] for x in beh_file_names ]
 
 data_path = todo_path+"/behav_data_tb_organized/machine_game/"
 
-output_path = server_scripts+"fit_rl/.fits"
+output_path = server_scripts+"/fit_rl/.fits"
 
-tasklist_path = server_scripts+"fit_rl/.rl_task_lists/"
+tasklist_path = server_scripts+"/fit_rl/.rl_task_lists/"
 
 n_fits = 50
 
@@ -72,7 +72,13 @@ for pars in pars_list:
         
         task_list.append(command)
         
-        file_name = 'fit_'+ '-'.join(extract_pars(pars)['fitparams']) + '_fix_'+ '-'.join(extract_pars(pars)['fixparams'])+'_task_list.sh'
+        fitparams = '-'.join(extract_pars(pars)['fitparams'])
+        fixparams = '-'.join(extract_pars(pars)['fixparams'])
+        
+        if len(fixparams) == 0:
+            file_name = 'fit_'+ fitparams + '_fix'+ fixparams +'_task_list.sh'
+        else:
+            file_name = 'fit_'+ fitparams + '_fix_'+ fixparams +'_task_list.sh'
     
     pd.DataFrame(task_list).to_csv(tasklist_path+file_name, header=False, index=False, quoting=csv.QUOTE_NONE, escapechar=' ')
     task_list = []    
