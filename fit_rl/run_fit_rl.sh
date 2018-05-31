@@ -1,10 +1,5 @@
-
-fit_rl.batch need variables
-FIX_VARS
-FIT_VARS
-
-use these variables to create the task list names as well in the format:
-task_list_rl_fix-{FIX_VARS}_fit-{FIT_VARS}.sh
-
-loop through each model and call fit_rl.batch
-what is a nice way to specify the models?
+set -e
+for task_list in fit_alpha-beta-exp_fix_task_list.sh fit_alphaneg-beta-expneg_fix_alphapos-exppos_task_list.sh fit_alpha-beta-expneg-exppos_fix_task_list.sh fit_alphaneg-beta-exppos_fix_alphapos-expneg_task_list.sh fit_alpha-beta-expneg_fix_exppos_task_list.sh fit_alphaneg-beta_fix_alphapos-exp_task_list.sh fit_alpha-beta-exppos_fix_expneg_task_list.sh fit_alphaneg-exp_fix_alphapos-beta_task_list.sh fit_alpha-exp_fix_beta_task_list.sh fit_alphaneg-expneg-exppos_fix_alphapos-beta_task_list.sh fit_alpha-expneg-exppos_fix_beta_task_list.sh fit_alphaneg-expneg_fix_alphapos-beta-exppos_task_list.sh fit_alpha-expneg_fix_beta-exppos_task_list.sh fit_alphaneg-exppos_fix_alphapos-beta-expneg_task_list.sh fit_alpha-exppos_fix_beta-expneg_task_list.sh fit_alphaneg_fix_alphapos-beta-exp_task_list.sh fit_alpha_fix_beta-exp_task_list.sh fit_alphapos-beta-exp_fix_alphaneg_task_list.sh fit_alphaneg-alphapos-beta-exp_fix_task_list.sh fit_alphapos-beta-expneg-exppos_fix_alphaneg_task_list.sh fit_alphaneg-alphapos-beta-expneg-exppos_fix_task_list.sh fit_alphapos-beta-expneg_fix_alphaneg-exppos_task_list.sh fit_alphaneg-alphapos-beta-expneg_fix_exppos_task_list.sh fit_alphapos-beta-exppos_fix_alphaneg-expneg_task_list.sh fit_alphaneg-alphapos-beta-exppos_fix_expneg_task_list.sh fit_alphapos-exp_fix_alphaneg-beta_task_list.sh fit_alphaneg-alphapos-beta_fix_exp_task_list.sh fit_alphapos-expneg-exppos_fix_alphaneg-beta_task_list.sh fit_alphaneg-alphapos-exp_fix_beta_task_list.sh fit_alphapos-expneg_fix_alphaneg-beta-exppos_task_list.sh fit_alphaneg-alphapos-expneg-exppos_fix_beta_task_list.sh fit_alphapos-exppos_fix_alphaneg-beta-expneg_task_list.sh fit_alphaneg-alphapos-expneg_fix_beta-exppos_task_list.sh fit_alphapos_fix_alphaneg-beta-exp_task_list.sh fit_alphaneg-alphapos-exppos_fix_beta-expneg_task_list.sh fit_beta-exp_fix_alpha_task_list.sh fit_alphaneg-alphapos_fix_beta-exp_task_list.sh fit_beta-expneg-exppos_fix_alpha_task_list.sh fit_alphaneg-beta-exp_fix_alphapos_task_list.sh fit_beta-expneg_fix_alpha-exppos_task_list.sh fit_alphaneg-beta-expneg-exppos_fix_alphapos_task_list.sh fit_beta-exppos_fix_alpha-expneg_task_list.sh
+do
+sed -e "s/{TASK_LIST}/$task_list/g" fit_rl.batch
+done

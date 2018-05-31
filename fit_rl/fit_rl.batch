@@ -1,33 +1,16 @@
 #!/bin/bash
 
-#SBATCH -J fit_rl_fix-{FIX_VARS}_fit-{FIT_VARS}
+#SBATCH -J {TASK_LIST}
 #SBATCH --array=1-78%10
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=03:00:00
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/fit_rl_fix-{FIX_VARS}_fit-{FIT_VARS}-%A-%a.out
-#SBATCH -e ../.err/fit_rl_fix-{FIX_VARS}_fit-{FIT_VARS}-%A-%a.err
+#SBATCH -o ../.out/{TASK_LIST}-%A-%a.out
+#SBATCH -e ../.err/{TASK_LIST}-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
 source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
 
-#another string replacement here to change the task list for each batch job
-#first string replacement to loop through the task lists
-#the second should be passed down as a variable from run_fit_rl.sh
-eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" .rl_task_lists/task_list_rl_fix-{FIX_VARS}_fit-{FIT_VARS}.sh )
-
-#what should the arrays be?
-#one per subject? 78 arrays with 43 jobs each
-#one per model? 43 arrays with 78 jobs each [leaning towards this because eventually you'll converge on #model instead of wanting to always running all models]
-
-#will i need 43 different batch scripts?
-#no should be able to take care of this in run_fit_rl.sh
-
-so you'd need another shell script to loop through models - run_fit_rl.sh - that calls fit_rl.batch
-
-fit_rl.batch should call fit_rl.py
-
-one line for the task list for this array should look like:
-python fit_rl.py {SUBJECT} {N_FITS} {DATA_PATH} {OUTPUT_PATH} {PARS}
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" .rl_task_lists/{TASK_LIST} )
