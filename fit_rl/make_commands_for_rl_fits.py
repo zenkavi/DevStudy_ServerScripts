@@ -1,5 +1,4 @@
 import csv
-import json
 import numpy as np
 import pandas as pd
 import os
@@ -13,7 +12,7 @@ subjects = [ x.split("ProbLearn")[1].split(".")[0] for x in beh_file_names ]
 
 data_path = todo_path+"/behav_data_tb_organized/machine_game/"
 
-output_path = server_scripts+"/fit_rl/.fits"
+output_path = server_scripts+"/fit_rl/.fits/"
 
 tasklist_path = server_scripts+"/fit_rl/.rl_task_lists/"
 
@@ -82,6 +81,10 @@ for pars in pars_list:
     
     pd.DataFrame(task_list).to_csv(tasklist_path+file_name, header=False, index=False, quoting=csv.QUOTE_NONE, escapechar=' ')
     task_list = []    
+
+#RUN THESE TWO ON CMD LINE
+#find ./ -type f -exec sed -i -e 's/{/"{/g' {} \;
+#find ./ -type f -exec sed -i -e 's/}/}"/g' {} \;
 
 #Sample command
 #python fit_rl.py {SUBJECT} {N_FITS} {DATA_PATH} {OUTPUT_PATH} {PARS}
