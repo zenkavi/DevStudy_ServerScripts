@@ -220,7 +220,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     #write out sorted data
     Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
 
-select_optimal_parameters(subject=subject, inpath=data_path, outpath=output_path, n_fits=n_fits, pars = pars)
+select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars)
 
 # Based on http://zenkavi.github.io/DevStudy/output/reports/ExploratoryDVs.nb.html
 # the age difference in this task lies in learning from high variance negative feedback
