@@ -1,3 +1,5 @@
+import csv
+import json
 import numpy as np
 import pandas as pd
 import os
@@ -12,6 +14,8 @@ subjects = [ x.split("ProbLearn")[1].split(".")[0] for x in beh_file_names ]
 data_path = todo_path+"/behav_data_tb_organized/machine_game/"
 
 output_path = server_scripts+"fit_rl/.fits"
+
+tasklist_path = server_scripts+"fit_rl/.rl_task_lists/"
 
 n_fits = 50
 
@@ -45,10 +49,33 @@ for i in range(len(rl_models)):
     
     pars_list.append(pars)
 
+def extract_pars(pars):
+    fixparams = []
+    fitparams = []
+
+    for key in sorted(pars.keys()):
+        if np.isnan(pars[key]):
+            fitparams.append(key)
+        else:
+            fixparams.append(key)
+
+    out = {'fitparams':fitparams, 'fixparams':fixparams}
+
+    return(out)
+
+task_list = []
+
 for pars in pars_list:
+    
     for subject in subjects:
         command = 'python fit_rl.py ' + str(subject) + ' ' + str(n_fits) + ' ' + data_path + ' ' + output_path + ' ' + str(pars)
-        print(command)
+        
+        task_list.append(command)
+        
+        file_name = 'fit_'+ '-'.join(extract_pars(pars)['fitparams']) + '_fix_'+ '-'.join(extract_pars(pars)['fixparams'])+'_task_list.sh'
+    
+    pd.DataFrame(task_list).to_csv(tasklist_path+file_name, header=False, index=False, quoting=csv.QUOTE_NONE, escapechar=' ')
+    task_list = []    
 
 #Sample command
 #python fit_rl.py {SUBJECT} {N_FITS} {DATA_PATH} {OUTPUT_PATH} {PARS}

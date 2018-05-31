@@ -12,6 +12,10 @@ data_path = sys.argv[3]
 output_path = sys.argv[4]
 pars = sys.argv[5]
 
+#text wrangling to turn the pars string to dictionary
+pars = json.loads(pars.replace('nan', '"nan"').replace("'", "\""))
+pars = {k: np.nan if "nan" else v for k, v in pars.items() }
+
 #data_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_Developmental study/Task/Dev_Learning_Study/Output/fMRI/'
 
 #output_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/DevStudy_Analyses/output/fits/'
