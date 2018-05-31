@@ -136,7 +136,7 @@ def calculate_prediction_error(x0,data, pars):
     return(neglogprob)
 
 
-def select_optimal_parameters(subject, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan}, data_path, output_path):
+def select_optimal_parameters(subject, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan}, inpath, outpath):
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
@@ -219,7 +219,7 @@ def select_optimal_parameters(subject, n_fits=50, pars = {'alpha_neg':np.nan, 'a
     #write out sorted data
     Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
 
-select_optimal_parameters(subject=subject, n_fits=n_fits, pars = pars, data_path=data_path, output_path=output_path)
+select_optimal_parameters(subject=subject, n_fits=n_fits, pars = pars, inpath=data_path, outpath=output_path)
 
 # Based on http://zenkavi.github.io/DevStudy/output/reports/ExploratoryDVs.nb.html
 # the age difference in this task lies in learning from high variance negative feedback
