@@ -1,10 +1,3 @@
-#read in a csv of models
-#for each row in the csv create list of fix and fit vars
-#get col names where value is 1 -> fit vars
-#get col names where value is fix
-#concat in pars form dictionary
-#append to list of models
-
 import numpy as np
 import pandas as pd
 import os
@@ -25,8 +18,6 @@ n_fits = 50
 rl_models = pd.read_csv('possible_rl_models.csv')
 
 pars_list = []
-
-#pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan}
 
 for i in range(len(rl_models)):
     
