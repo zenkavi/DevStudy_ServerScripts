@@ -23,7 +23,7 @@ for (k,v) in pars.items():
 
 #data_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_Developmental study/Task/Dev_Learning_Study/Output/fMRI/'
 
-#output_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/DevStudy_Analyses/output/fits/'
+#output_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_DevStudy_Analyses/output/fits/'
 
 def extract_pars(pars):
     fixparams = []
@@ -148,7 +148,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob']
 
 
-    Results = pd.DataFrame(np.nan, columns=cols, index=range(n_fits))
+    Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
     fixparams = extract_pars(pars)['fixparams']
     fitparams = extract_pars(pars)['fitparams']
@@ -199,7 +199,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         x0_dict = dict(zip(fitparams,x0))
 
         try:
-            print(x0)
+            print(x0_dict)
 
             #Fit model
             try:
@@ -220,6 +220,9 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
             #add neg log of fit to Results output
             Results.neglogprob[i] = calculate_prediction_error(xopt,data,pars)
+            
+            #add subject column
+            Results.sub_id = subject
 
         except:
             print("fmin error")
