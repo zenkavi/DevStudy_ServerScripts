@@ -15,7 +15,11 @@ pars = sys.argv[5]
 
 #text wrangling to turn the pars string to dictionary
 pars = json.loads(pars.replace('nan', '"nan"').replace("'", "\""))
-pars = {k: np.nan if "nan" else v for k, v in pars.items() }
+#pars = {k: np.nan if "nan" else v for k, v in pars.items() }
+
+for (k,v) in pars.items():
+    if v == "nan":
+        pars[k] = np.nan
 
 #data_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_Developmental study/Task/Dev_Learning_Study/Output/fMRI/'
 
