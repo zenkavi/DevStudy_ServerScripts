@@ -145,7 +145,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
-    cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob']
+    cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id']
 
 
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
