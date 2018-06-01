@@ -220,9 +220,9 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
             #add neg log of fit to Results output
             Results.neglogprob[i] = calculate_prediction_error(xopt,data,pars)
-            
+
             #add subject column
-            Results.sub_id = subject
+            Results.sub_id[i] = subject
 
         except:
             print("fmin error")
