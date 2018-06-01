@@ -9,7 +9,7 @@ import sys
 
 try:
     model_name = sys.argv[1]
-except NameError:
+except:
     model_name = 'all'
 
 data_dir = os.environ['SERVER_SCRIPTS']+"/fit_rl/.fits/"
