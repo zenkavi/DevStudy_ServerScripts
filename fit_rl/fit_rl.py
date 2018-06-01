@@ -151,9 +151,9 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     #make string containing info on fitted pars for output file name
     if len(fixparams) == 0:
-        model_name = 'LearningParamsFix'+ '_'.join(fixparams) + '_Fit_'+ '_'.join(fitparams)
+        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix'+ '-'.join(fixparams)
     else:
-        model_name = 'LearningParamsFix_'+ '_'.join(fixparams) + '_Fit_'+ '_'.join(fitparams)
+        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix'+ '-'.join(fixparams)
 
     def sample_x0(pars):
 
