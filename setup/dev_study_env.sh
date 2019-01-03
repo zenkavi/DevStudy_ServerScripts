@@ -3,9 +3,9 @@
 if [ $HOME == '/home/users/zenkavi' ]; then
   source activate dev_study
   export TODO_PATH=/oak/stanford/groups/russpold/data/ds000054/todo
-  export SERVER_SCRIPTS=/home/users/zenkavi/research/DevStudy_ServerScripts
+  export SERVER_SCRIPTS=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts
   export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1
-  export R_LIB=/home/users/zenkavi/miniconda/envs/dev_study/lib/R/library
+  export R_LIB=/home/groups/russpold/software/miniconda/envs/dev_study/lib/R/library
 # tacc
 else
   source activate dev_study
