@@ -16,8 +16,6 @@
 # ------------------------------------------
 
 module load system
-#module load singularity
-#source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 
 unset PYTHONPATH
 #export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
