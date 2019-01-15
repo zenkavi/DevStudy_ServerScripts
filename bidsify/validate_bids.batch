@@ -13,5 +13,5 @@
 source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 
 module load nodejs
-
+function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 npm-do bids-validator --verbose $DATA_LOC > $SERVER_SCRIPTS/bidsify/validator_out.txt
