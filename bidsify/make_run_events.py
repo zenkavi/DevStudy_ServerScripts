@@ -7,7 +7,7 @@ if len(sys.argv) < 5:
     sys.exit("Usage: makeRunEvents.py file.csv number_of_trials task_name sub_id sub_dir_name")
 
 filename = sys.argv[1]
-file_length = sum(1 for row in csv.reader(open(filename,'rb'))) - 1
+file_length = sum(1 for row in csv.reader(open(filename,'rt'))) - 1
 N = int(sys.argv[2])
 task_name = sys.argv[3]
 sub_id = sys.argv[4]
@@ -52,7 +52,7 @@ def makeStimPresentationOnset(run_events_list):
     return output
 
 def makeResponseOnset(run_events_list):
-	noheader = run_events_list[1:len(run_events_list)]
+    noheader = run_events_list[1:len(run_events_list)]
     trial_start_time_index = run_events_list[0].index('Trial_start_time')
     stim_end_time_index = run_events_list[0].index('Stim_end_time')
     stim_index = run_events_list[0].index('Trial_type')
