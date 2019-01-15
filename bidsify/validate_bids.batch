@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#SBATCH -J bids-validator
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=01:00:00
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/bids-validator.out
+#SBATCH -e ../.err/bids-validator.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+
+npm-do bids-validator --verbose $DATA_LOC > $SERVER_SCRIPTS/bidsify/validator_out.txt
