@@ -17,9 +17,9 @@
 # ------------------------------------------
 
 module load system
-source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
 
 unset PYTHONPATH
 
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" mriqc_task_list.sh )
-rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.10.5
+
+rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2
