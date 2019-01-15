@@ -10,6 +10,6 @@
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
-source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 
 npm-do bids-validator --verbose $DATA_LOC > $SERVER_SCRIPTS/bidsify/validator_out.txt
