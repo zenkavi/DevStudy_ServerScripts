@@ -17,3 +17,10 @@ Basic workflow:
 - QA
 - Group level analyses
 - QA
+
+todo:
+run mriqc for participants with 14.2
+run mriqc for group with 10.5
+  - problem:
+fmribrainstats videos
+fmri prep reports
