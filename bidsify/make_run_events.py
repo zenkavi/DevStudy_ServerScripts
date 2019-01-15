@@ -102,7 +102,7 @@ with open(filename) as csvfile:
 		run_onsets.sort()
 		run_onsets_header = ["onset", "duration", "trial_type", "response", "stimulus", "response_time", "points_earned", "iti_start_time", "iti_length"]
 		#with open('/corral-repl/utexas/poldracklab/users/zenkavi/dev_study/data/sub-'+sub_dir_name+'/func/sub-'+sub_id+'_task-'+task_name+'_run-0'+str(i+1)+'_events.tsv', 'wb') as tsvfile:
-        with open('/oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-'+sub_dir_name+'/func/sub-'+sub_id+'_task-'+task_name+'_run-0'+str(i+1)+'_events.tsv', 'wb') as tsvfile:    
+        with open('/oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-'+sub_dir_name+'/func/sub-'+sub_id+'_task-'+task_name+'_run-0'+str(i+1)+'_events.tsv', 'wb') as tsvfile:
 #		with open('./Downloads/test_task-machinegame_run-0'+str(i+1)+'_events.tsv', 'wb') as tsvfile:
 			writer = csv.writer(tsvfile, quoting=csv.QUOTE_NONE, delimiter='\t', quotechar='')
 			writer.writerow(run_onsets_header)
