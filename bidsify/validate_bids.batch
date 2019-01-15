@@ -5,8 +5,8 @@
 #SBATCH --time=01:00:00
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/bids-validator.out
-#SBATCH -e ../.err/bids-validator.err
+#SBATCH -o /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/.out/bids-validator.out
+#SBATCH -e /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/.err/bids-validator.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
