@@ -16,6 +16,3 @@ module load nodejs
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 cd /home/groups/russpold/software
 npm-do bids-validator --verbose $DATA_LOC > $SERVER_SCRIPTS/bidsify/validator_out.txt
-
-singularity exec /home/groups/russpold/singularity_images/poldracklab_mriqc_0.10.5-2018-05-28-9954e8c774c2.img
-    bids-validator --verbose /oak/stanford/groups/russpold/data/ds000054/0.0.1/ > /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/bidsify/validator_out.txt
