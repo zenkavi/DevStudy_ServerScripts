@@ -4,6 +4,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
 - **[DONE]** Convert DICOM to NIfTI
 - QA
   - Check files
+    - Notes from BIDS report
   - Check BOLD volumes
     - Problem files:
     0,/oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-100241/func/sub-100241_task-machinegame_run-04_bold.nii.gz,11
