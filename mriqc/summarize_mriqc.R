@@ -12,7 +12,9 @@ output_path <- args[4]
 
 data = read.csv(paste0(input_path, mriqc_ver, file_name, '.csv'))
 
-library(tidyverse)
+lib_path = Sys.getenv()[["R_LIB"]]
+#install.packages(c('tidyverse'), repos='http://cran.rstudio.com/', lib = lib_path)
+library(tidyverse, lib.loc = lib_path)
 
 #"pos" if higher better, "neg" if lower better, NA if neither/unknown
 valence_list = list(cjv = "neg",
@@ -113,7 +115,7 @@ valence_list = list(cjv = "neg",
 out = data.frame()
 
 for(var in names(data)[-which(names(data) %in% c("subject_id", "task_id", "run_id"))]){
-  
+
   if(valence_list[var] == "pos"){
     tmp = data %>% arrange(!! as.name(var))
     strikers = tmp[1:10,"subject_id"]
@@ -125,16 +127,16 @@ for(var in names(data)[-which(names(data) %in% c("subject_id", "task_id", "run_i
   if(is.na(valence_list[var])){
     tmp = data
     tmp[,var] = abs(scale(tmp[,var]))
-    tmp = tmp %>% 
+    tmp = tmp %>%
       mutate(strike = ifelse(!!as.name(var)>2,1,0)) %>%
       filter(strike == 1)
     strikers = tmp[, "subject_id"]
   }
-  
+
   if(length(strikers)>0){
     tmp_out = data.frame(var = var, strikers = strikers)
   }
-  
+
   out = plyr::rbind.fill(out, tmp_out)
 }
 
@@ -142,11 +144,11 @@ get_strike_vars = function(x){
   return(data.frame(vars = paste(c(as.character(x$var)), collapse = ', ')))
 }
 
-a = out %>% 
+a = out %>%
   group_by(strikers) %>%
   tally
 
-b = out %>% 
+b = out %>%
   group_by(strikers) %>%
   do(get_strike_vars(.))
 
