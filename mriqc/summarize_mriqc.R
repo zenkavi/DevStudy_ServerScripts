@@ -1,6 +1,10 @@
 #!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
 
+#Usage
+#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives mriqc_0.10.5 T1w /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
+#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives mriqc_0.10.5 bold /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
+
 input_path <- args[1]
 mriqc_ver <- paste0('/',args[2], '_')
 file_name <- args[3]
@@ -78,13 +82,37 @@ valence_list = list(cjv = "neg",
                   tpm_overlap_csf = NA,
                   tpm_overlap_gm = NA,
                   tpm_overlap_wm = NA,
-                  wm2max = NA)
+                  wm2max = NA,
+                  aor = NA,
+                  aqi = NA,
+                  dummy_trs = NA,
+                  dvars_nstd = NA,
+                  dvars_std = NA,
+                  dvars_vstd = NA,
+                  fd_mean = NA,
+                  fd_num = NA,
+                  fd_perc = NA,
+                  gcor = NA,
+                  gsr_x = NA,
+                  gsr_y = NA,
+                  size_t = NA,
+                  snr = "pos",
+                  spacing_tr = NA,
+                  summary_fg_k = NA,
+                  summary_fg_mad = NA,
+                  summary_fg_mean = NA,
+                  summary_fg_median = NA,
+                  summary_fg_n = NA,
+                  summary_fg_p05 = NA,
+                  summary_fg_p95 = NA,
+                  summary_fg_stdv = NA,
+                  tsnr = NA)
 
 #strike if in the worst x if !is.na(var_df$var) else 2SD's away in either direction
 
 out = data.frame()
 
-for(var in names(data)[-which(names(data)=="subject_id")]){
+for(var in names(data)[-which(names(data) %in% c("subject_id", "task_id", "run_id"))]){
   
   if(valence_list[var] == "pos"){
     tmp = data %>% arrange(!! as.name(var))
