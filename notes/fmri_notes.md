@@ -1,10 +1,13 @@
 Notes on `FSL for task fMRI` series from mumfordbrainstats
 ==========================================================
 
-Basic workflow:
-- [DONE] Convert DICOM to NIfTI
+- **[DONE]** Convert DICOM to NIfTI
 - QA
-- Skull script strictural images
+  - Check files
+  - Check BOLD volumes
+    - Problem files:
+    
+- Skull script structural images
 - QA
 - Functionals preprocessing
   - Trim volumes from beginning
@@ -17,6 +20,3 @@ Basic workflow:
 - QA
 - Group level analyses
 - QA
-
-fmribrainstats videos
-fmri prep reports
