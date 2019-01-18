@@ -17,3 +17,35 @@ mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-304228/ /oak/stanford/g
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-308023/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-406989/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-411236/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*100060*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*200027*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*200081*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*304228*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*308023*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*406989*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2 -type f -name '*411236*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/mriqc_0.14.2  \;
+
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-100060/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-200027/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-200081/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-304228/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-308023/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-406989/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/freesurfer/sub-411236/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/freesurfer/
+
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-100060/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-200027/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-200081/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-304228/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-308023/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-406989/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep/sub-411236/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep/
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*100060*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*200027*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*200081*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*304228*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*308023*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*406989*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep -type f -name '*411236*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/derivatives/fmriprep  \;
