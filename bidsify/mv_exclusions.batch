@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#SBATCH -J mv_files
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=0:15:00
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/mv_files.out
+#SBATCH -e ../.err/mv_files.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-100060/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-200027/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-200081/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-304228/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-308023/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-406989/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.1/sub-411236/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/sourcedata/
