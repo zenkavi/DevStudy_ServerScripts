@@ -2,7 +2,7 @@
 
 #SBATCH -J mv_files
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=0:15:00
+#SBATCH --time=10:00:00
 
 # Outputs ----------------------------------
 #SBATCH -o ../.out/mv_files.out
