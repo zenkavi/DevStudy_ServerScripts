@@ -14,12 +14,12 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     Missing behavioral data for all runs of sub-411236 **[MOVED TO SOURCEDATA]**  
     *Missing behavioral data for run 6 for sub-100110*
   - Check BOLD volumes with volumes !=216:  
-    sub-100103/func/sub-100103_task-machinegame_run-03_bold.nii.gz,42 *[noted in Subject_fMRI_analysis_tracking]*
-    sub-100110/func/sub-100110_task-machinegame_run-06_bold.nii.gz,161 *[noted in Subject_fMRI_analysis_tracking]*  
-    sub-100188/func/sub-100188_task-machinegame_run-04_bold.nii.gz,153  
+    *sub-100103/func/sub-100103_task-machinegame_run-03_bold.nii.gz,42* *[noted in Subject_fMRI_analysis_tracking]*
+    *sub-100110/func/sub-100110_task-machinegame_run-06_bold.nii.gz,161* *[noted in Subject_fMRI_analysis_tracking]*  
+    *sub-100188/func/sub-100188_task-machinegame_run-04_bold.nii.gz,153*  
     sub-100215/func/sub-100215_task-machinegame_run-01_bold.nii.gz,141 **[MOVED TO SOURCEDATA]**   
-    sub-100241/func/sub-100241_task-machinegame_run-04_bold.nii.gz,11  
-    sub-306065/func/sub-306065_task-machinegame_run-01_bold.nii.gz,148  
+    *sub-100241/func/sub-100241_task-machinegame_run-04_bold.nii.gz,11*  
+    *sub-306065/func/sub-306065_task-machinegame_run-01_bold.nii.gz,148* *[noted in Subject_fMRI_analysis_tracking]*   
     sub-406989/func/sub-406989_task-machinegame_run-01_bold.nii.gz,131 **[MOVED TO SOURCEDATA]**  
   - Check fmap volumes != 96,96,56 (voxels):
     sub-406989/fmap/sub-406989_magnitude1.nii.gz, This file has the dimensions: 92,96,56 (voxels). **[MOVED TO SOURCEDATA]**  
