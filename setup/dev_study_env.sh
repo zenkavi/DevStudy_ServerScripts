@@ -1,6 +1,8 @@
 # change paths and modules depending on cluster
 # sherlock
 if [ $HOME == '/home/users/zenkavi' ]; then
+  module load system
+  module load x11
   source activate dev_study
   export TODO_PATH=/oak/stanford/groups/russpold/data/ds000054/todo
   export SERVER_SCRIPTS=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts
