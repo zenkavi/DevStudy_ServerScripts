@@ -13,6 +13,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     Missing behavioral data for all runs of sub-406989 **[MOVED TO SOURCEDATA]**  
     Missing behavioral data for all runs of sub-411236 **[MOVED TO SOURCEDATA]**  
     *Missing behavioral data for run 6 for sub-100110*
+    Missing images for runs 3-6 of sub-100109 **[MOVED TO SOURCEDATA]** 
   - Check BOLD volumes with volumes !=216:  
     *sub-100103/func/sub-100103_task-machinegame_run-03_bold.nii.gz,42* *[noted in Subject_fMRI_analysis_tracking]*
     *sub-100110/func/sub-100110_task-machinegame_run-06_bold.nii.gz,161* *[noted in Subject_fMRI_analysis_tracking]*  
@@ -29,7 +30,8 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     sub-406989/anat/sub-406989_T1w.nii.gz, This file has the resolution: 0.80mm x 0.85mm x 0.85mm. **[MOVED TO SOURCEDATA]**
 
 - Skull script structural images
-- QA
+- QA (check brain extraction, orientation)
+
 - Functionals preprocessing
   - Trim volumes from beginning
   - Fix orientation issues
