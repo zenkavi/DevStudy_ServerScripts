@@ -21,7 +21,7 @@ module load system
 unset PYTHONPATH
 export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1
-
+mkdir $LOCAL_SCRATCH/out/
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_task_list.sh )
 
 rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep_1.2.5
