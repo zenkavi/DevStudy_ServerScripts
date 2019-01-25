@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#SBATCH -J fmriprep
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=48:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=6400M
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/fmriprep-test.out
+#SBATCH -e ../.err/fmriprep-test.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+
+module load system
+
+unset PYTHONPATH
+export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1
+mkdir $LOCAL_SCRATCH/out/
+singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img $DATA_LOC/ $LOCAL_SCRATCH/out/ participant -w $LOCAL_SCRATCH/work --participant_label 100128 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv
+
+rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep_1.2.5
