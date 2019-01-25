@@ -1,3 +1,3 @@
 module load system
-module load singularity
-singularity run /share/PI/russpold/singularity_images/bids_validator-2018-05-19-505df799730d.img /oak/stanford/groups/russpold/data/ds000054/0.0.1/
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1
+singularity exec /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img bids-validator --verbose $DATA_LOC
