@@ -18,7 +18,7 @@
 module load system
 
 unset PYTHONPATH
-export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
+export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1
 mkdir $LOCAL_SCRATCH/out/
 singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img $DATA_LOC/ $LOCAL_SCRATCH/out/ participant -w $LOCAL_SCRATCH/work --participant_label 100128 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
