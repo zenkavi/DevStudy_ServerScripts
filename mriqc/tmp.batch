@@ -20,16 +20,16 @@ module load system
 unset PYTHONPATH
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
 
-rsync -r $DATA_LOC/dataset_description.json $HOME/data/
-rsync -r $DATA_LOC/participants.json $HOME/data/
-rsync -r $DATA_LOC/participants.tsv $HOME/data/
-rsync -r $DATA_LOC/phasediff.json $HOME/data/
-rsync -r $DATA_LOC/task-bart_events.json $HOME/data/
-rsync -r $DATA_LOC/task-machinegame_events.json $HOME/data/
-rsync -r $DATA_LOC/task-machinegame_bold.json $HOME/data/
-rsync -r $DATA_LOC/task-machinegame_bold.json $HOME/data/
-rsync -r $DATA_LOC/sub-100207 $HOME/data/
+rsync -r $DATA_LOC/dataset_description.json /tmp/data/
+rsync -r $DATA_LOC/participants.json /tmp/data/
+rsync -r $DATA_LOC/participants.tsv /tmp/data/
+rsync -r $DATA_LOC/phasediff.json /tmp/data/
+rsync -r $DATA_LOC/task-bart_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+rsync -r $DATA_LOC/sub-100207 /tmp/data/
 
-singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img $HOME/data/ $HOME/out/ participant -w $HOME/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
+singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img /tmp/data/ /tmp/out/ participant -w /tmp/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
 
-rsync -r $HOME/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2
+rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2

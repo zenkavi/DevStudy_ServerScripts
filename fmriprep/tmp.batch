@@ -21,16 +21,16 @@ unset PYTHONPATH
 export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
 
-rsync -r $DATA_LOC/dataset_description.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/participants.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/participants.tsv $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/phasediff.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/task-bart_events.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/task-machinegame_events.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/task-machinegame_bold.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/task-machinegame_bold.json $LOCAL_SCRATCH/data/
-rsync -r $DATA_LOC/sub-100128 $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/dataset_description.json /tmp/data/
+rsync -r $DATA_LOC/participants.json /tmp/data/
+rsync -r $DATA_LOC/participants.tsv /tmp/data/
+rsync -r $DATA_LOC/phasediff.json /tmp/data/
+rsync -r $DATA_LOC/task-bart_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+rsync -r $DATA_LOC/sub-100128 /tmp/data/
 
-singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img $LOCAL_SCRATCH/data/ $LOCAL_SCRATCH/out/ participant -w $LOCAL_SCRATCH/work --participant_label 100128 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
+singularity run /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img /tmp/data/ /tmp/out/ participant -w /tmp/work --participant_label 100128 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
 
-rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep_1.2.5
+rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep_1.2.5
