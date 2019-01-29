@@ -20,6 +20,19 @@ module load system
 
 unset PYTHONPATH
 
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
+
+rsync -r $DATA_LOC/dataset_description.json /tmp/data/
+rsync -r $DATA_LOC/participants.json /tmp/data/
+rsync -r $DATA_LOC/participants.tsv /tmp/data/
+rsync -r $DATA_LOC/phasediff.json /tmp/data/
+rsync -r $DATA_LOC/task-bart_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_events.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json /tmp/data/
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" lsmove_task_list.sh )
+
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" mriqc_task_list.sh )
 
 rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2
