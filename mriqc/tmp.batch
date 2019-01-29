@@ -18,7 +18,18 @@
 module load system
 
 unset PYTHONPATH
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
 
-singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img /oak/stanford/groups/russpold/data/ds000054/0.0.1/ $LOCAL_SCRATCH/out/ participant -w $LOCAL_SCRATCH/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
+rsync -r $DATA_LOC/dataset_description.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/participants.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/participants.tsv $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/phasediff.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/task-bart_events.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/task-machinegame_events.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/task-machinegame_bold.json $LOCAL_SCRATCH/data/
+rsync -r $DATA_LOC/sub-100207 $LOCAL_SCRATCH/data/
+
+singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img $LOCAL_SCRATCH/data/ $LOCAL_SCRATCH/out/ participant -w $LOCAL_SCRATCH/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
 
 rsync -r $LOCAL_SCRATCH/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2

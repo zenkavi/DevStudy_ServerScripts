@@ -20,7 +20,6 @@ module load system
 unset PYTHONPATH
 export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
-mkdir $LOCAL_SCRATCH/out/
 
 rsync -r $DATA_LOC/dataset_description.json $LOCAL_SCRATCH/data/
 rsync -r $DATA_LOC/participants.json $LOCAL_SCRATCH/data/
