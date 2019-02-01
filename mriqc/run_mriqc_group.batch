@@ -18,8 +18,6 @@
 module load system
 
 unset PYTHONPATH
-#export FS_LICENSE=/home/users/zenkavi/research/DevStudy_ServerScripts/fmriprep/license.txt
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
 
-singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img /oak/stanford/groups/russpold/data/ds000054/0.0.1/ /tmp/out/ group -w /tmp/work --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
-
-rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2
+singularity exec -B ${DATA_LOC}:${DATA_LOC} /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img $DATA_LOC $DATA_LOC/derivatives/mriqc_0.14.2/ group -w /tmp/work --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
