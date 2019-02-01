@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#SBATCH -J fix_nifti_header_tr
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=12:00:00
+#SBATCH -o ../.out/fix_nifti_header_tr.out
+#SBATCH -e ../.err/fix_nifti_header_tr.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+python fix_nifti_header_tr.py
