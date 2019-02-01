@@ -7,5 +7,5 @@
 #SBATCH -e ../.err/fix_nifti_header_tr.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
-source /home/users/zenkavi/research/DevStudy_ServerScripts/setup/dev_study_env.sh
+source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 python fix_nifti_header_tr.py
