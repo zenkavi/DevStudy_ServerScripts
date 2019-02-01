@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import os
 import glob
-import subprocess
-
+import nibabel as nib
 try:
     data_loc = os.environ['DATA_LOC']
 except KeyError:
@@ -12,15 +11,12 @@ except KeyError:
 bold_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_bold.nii.gz'%(data_loc))
 
 for cur_bold in bold_files:
-    out = subprocess.check_output('fslinfo %s | grep "pixdim"'%(cur_bold), shell=True, stderr=subprocess.STDOUT).decode("utf-8")
-    out_split = out.split('\n')
+    cur_img = nib.load(cur_bold)
+    print('Loaded %s'%(cur_bold))
+    if cur_img.header['pixdim'][4] != 2:
+        print('Fixing TR for %s'%(cur_bold))
+        cur_img.header['pixdim'][4] = 2
     try:
-        out_split.remove('')
-    out_split = [o.replace('        ', ':') for o in out_split]
-    out_dict = {k:v for k,v in (x.split(':') for x in out_split)}
-    pixdim1 = out_dict.get('pixdim1')
-    pixdim2 = out_dict.get('pixdim2')
-    pixdim3 = out_dict.get('pixdim3')
-    pixdim4 = out_dict.get('pixdim4')
-    if(pixdim4 != '2.000000'):
-        pixdim4 = '2.000000'
+        nib.save(cur_img, cur_bold)
+    except:
+        print('Failed saving TR for %s'%(cur_bold))
