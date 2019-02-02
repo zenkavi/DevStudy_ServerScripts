@@ -4,7 +4,7 @@ import glob
 import pandas as pd
 import subprocess
 
-path = '/oak/stanford/groups/russpold/data/ds000054/0.0.1/'
+path = '/oak/stanford/groups/russpold/data/ds000054/0.0.2/'
 
 boldfiles = glob.glob('%s/sub-[0-9][0-9][0-9][0-9][0-9][0-9]/func/sub-[0-9][0-9][0-9][0-9][0-9][0-9]_task-machinegame_run-0[0-9]_bold.nii.gz'%(path))
 

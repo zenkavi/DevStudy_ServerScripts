@@ -20,7 +20,7 @@ module load system
 
 unset PYTHONPATH
 export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
-export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
 mkdir /tmp/out/
 
 rsync -r $DATA_LOC/dataset_description.json  /tmp/data/
@@ -36,7 +36,7 @@ eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" lsmove_task_list.sh )
 
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_task_list.sh )
 
-rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/fmriprep_1.2.5
+rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.2.5
 
 #Add back to task list later
 #rsync -r $DATA_LOC/sub-100128  /tmp/data//

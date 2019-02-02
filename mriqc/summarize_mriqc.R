@@ -2,8 +2,8 @@
 args = commandArgs(trailingOnly=TRUE)
 
 #Usage
-#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives mriqc_0.10.5 T1w /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
-#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives mriqc_0.10.5 bold /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
+#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives mriqc_0.10.5 T1w /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
+#Rscript --vanilla summarize_mriqc.R /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives mriqc_0.10.5 bold /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/mriqc
 
 input_path <- args[1]
 mriqc_ver <- paste0('/',args[2], '_')

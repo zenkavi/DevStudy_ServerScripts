@@ -20,7 +20,7 @@ module load system
 
 unset PYTHONPATH
 
-export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
 
 rsync -r $DATA_LOC/dataset_description.json /tmp/data/
 rsync -r $DATA_LOC/participants.json /tmp/data/
@@ -35,6 +35,6 @@ eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" lsmove_task_list.sh )
 
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" mriqc_task_list.sh )
 
-rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.1/derivatives/mriqc_0.14.2
+rsync -r /tmp/out/ /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/mriqc_0.14.2
 #Add back to task list later
-#singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img /oak/stanford/groups/russpold/data/ds000054/0.0.1/ /tmp/out/ participant -w /tmp/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
+#singularity run /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img /oak/stanford/groups/russpold/data/ds000054/0.0.2/ /tmp/out/ participant -w /tmp/work --participant_label 100207 --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv

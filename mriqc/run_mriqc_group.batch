@@ -18,6 +18,6 @@
 module load system
 
 unset PYTHONPATH
-export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.1/
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
 
 singularity run -B ${DATA_LOC}:${DATA_LOC} /share/PI/russpold/singularity_images/poldracklab_mriqc_0.14.2-2018-08-21-070e53b20a43.img $DATA_LOC $DATA_LOC/derivatives/mriqc_0.14.2/ group -w /tmp/work --mem_gb 50 --n_procs 10 --ants-nthreads 8 -vvv
