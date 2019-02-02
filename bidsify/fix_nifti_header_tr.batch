@@ -2,7 +2,7 @@
 
 #SBATCH -J fix_nifti_header_tr
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=12:00:00
+#SBATCH --time=24:00:00
 #SBATCH -o ../.out/fix_nifti_header_tr.out
 #SBATCH -e ../.err/fix_nifti_header_tr.err
 #SBATCH --mail-user=zenkavi@stanford.edu
