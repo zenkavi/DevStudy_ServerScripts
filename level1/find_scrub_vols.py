@@ -33,7 +33,7 @@ for cur_confounds in fmriprep_counfounds_files:
     nums = re.findall('\d+', out_file_name)
     subnum = int(nums[0])
     runnum = int(nums[1])
-    out_path = os.path.join(data_loc, 'derivative/level_1/sub-%s'%(str(subnum)))
+    out_path = os.path.join(data_loc, 'derivatives/level_1/sub-%s'%(str(subnum)))
     os.makedirs(out_path, exist_ok=True)
     np.savetxt(os.path.join(out_path, out_file_name), scrub_vols.astype(int), fmt='%i', delimiter='\n')
     scrub_report = scrub_report.append({'sub_id': subnum, 'run': runnum, 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
