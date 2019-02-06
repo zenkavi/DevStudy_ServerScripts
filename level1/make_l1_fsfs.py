@@ -9,7 +9,7 @@ except KeyError:
     os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
     data_loc = os.environ['DATA_LOC']
 
-fsfdir="%s/derivatives/level1_inputs/"%(data_loc)
+fsfdir="%s/derivatives/level_1/"%(data_loc)
 
 #DOUBLE CHECK WHAT THIS WAS IN THE ORIGINAL SCRIPT
 subdirs=glob.glob("%s/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))

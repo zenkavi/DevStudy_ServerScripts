@@ -28,11 +28,14 @@ scrub_report = pd.DataFrame(columns=['sub_id', 'run', 'pct_scrubbed'])
 for cur_confounds in fmriprep_counfounds_files:
     cur_df = pd.read_csv(cur_confounds, sep='\t')
     scrub_vols = np.where(cur_df.framewise_displacement>fd_thresh,1,0)
-    out_path = os.path.dirname(cur_confounds)
     out_file_name = os.path.basename(cur_confounds)
     out_file_name = re.sub("desc-confounds_regressors.tsv", "scrub_vols.txt", out_file_name)
+    nums = int(re.findall('\d+', out_file_name)[0])
+    subnum = nums[0]
+    runnum = nums[1]
+    out_path = os.path.join(data_loc, 'derivative/level_1/sub-%s'%(subnum))
     np.savetxt(os.path.join(out_path, out_file_name), scrub_vols.astype(int), fmt='%i', delimiter='\n')
-    scrub_report = scrub_report.append({'sub_id': int(re.findall('\d+', out_file_name)[0]), 'run': int(re.findall('\d+', out_file_name)[1]), 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
+    scrub_report = scrub_report.append({'sub_id': subnum, 'run': runnum, 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
 
 #output report on how many/what percent of volumes per run are scrubbed
-scrub_report.to_csv('/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.2.5/fmriprep/scrub_fd_%s_report.csv'%(str(fd_thresh)))
+scrub_report.to_csv('/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/scrub_fd_%s_report.csv'%(str(fd_thresh)))
