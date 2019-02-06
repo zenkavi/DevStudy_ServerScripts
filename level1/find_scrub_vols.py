@@ -4,6 +4,11 @@ import numpy as np
 import os
 import pandas as pd
 import re
+import sys
+
+#Usage: find_scrub_vols.py fd_thresh
+
+fd_thresh = float(sys.argv[1])
 
 try:
     data_loc = os.environ['DATA_LOC']
@@ -20,7 +25,7 @@ scrub_report = pd.DataFrame(columns=['sub_id', 'run', 'pct_scrubbed'])
 #get index of vols where fd>0.9
 for cur_confounds in fmriprep_counfounds_files:
     cur_df = pd.read_csv(cur_confounds, sep='\t')
-    scrub_vols = np.where(cur_df.framewise_displacement>0.9,1,0)
+    scrub_vols = np.where(cur_df.framewise_displacement>fd_thresh,1,0)
     out_path = os.path.dirname(cur_confounds)
     out_file_name = os.path.basename(cur_confounds)
     out_file_name = re.sub("desc-confounds_regressors.tsv", "scrub_vols.txt", out_file_name)
@@ -28,4 +33,4 @@ for cur_confounds in fmriprep_counfounds_files:
     scrub_report = scrub_report.append({'sub_id': int(re.findall('\d+', out_file_name)[0]), 'run': int(re.findall('\d+', out_file_name)[1]), 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
 
 #output report on how many/what percent of volumes per run are scrubbed
-scrub_report.to_csv('/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.2.5/fmriprep/scrub_report.csv')
+scrub_report.to_csv('/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.2.5/fmriprep/scrub_fd_%s_report.csv'%(str(fd_thresh)))
