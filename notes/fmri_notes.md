@@ -36,7 +36,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
 - QA (check brain extraction, orientation)
 
 - Functionals preprocessing
-  - Trim volumes from beginning [??]
+  - *Trim volumes from beginning [??]*
   - Fix orientation issues
   - Assess motion
 - QA
