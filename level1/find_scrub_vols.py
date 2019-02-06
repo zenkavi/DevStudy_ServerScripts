@@ -30,10 +30,10 @@ for cur_confounds in fmriprep_counfounds_files:
     scrub_vols = np.where(cur_df.framewise_displacement>fd_thresh,1,0)
     out_file_name = os.path.basename(cur_confounds)
     out_file_name = re.sub("desc-confounds_regressors.tsv", "scrub_vols.txt", out_file_name)
-    nums = int(re.findall('\d+', out_file_name)[0])
-    subnum = nums[0]
-    runnum = nums[1]
-    out_path = os.path.join(data_loc, 'derivative/level_1/sub-%s'%(subnum))
+    nums = re.findall('\d+', out_file_name)
+    subnum = int(nums[0])
+    runnum = int(nums[1])
+    out_path = os.path.join(data_loc, 'derivative/level_1/sub-%s'%(str(subnum)))
     np.savetxt(os.path.join(out_path, out_file_name), scrub_vols.astype(int), fmt='%i', delimiter='\n')
     scrub_report = scrub_report.append({'sub_id': subnum, 'run': runnum, 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
 
