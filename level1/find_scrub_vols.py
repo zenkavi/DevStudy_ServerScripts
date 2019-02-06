@@ -5,8 +5,6 @@ import os
 import pandas as pd
 import re
 
-np.set_printoptions(precision=1, suppress=True)
-
 try:
     data_loc = os.environ['DATA_LOC']
 except KeyError:
