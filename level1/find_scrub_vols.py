@@ -7,6 +7,8 @@ import re
 import sys
 
 #Usage: find_scrub_vols.py fd_thresh
+#Acceptable fd_thresh = 0.5
+#Stringent fd_thresh = 0.2
 
 fd_thresh = float(sys.argv[1])
 

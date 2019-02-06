@@ -16,3 +16,6 @@ module load nodejs
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 cd /home/groups/russpold/software
 npm-do bids-validator --verbose $DATA_LOC > $SERVER_SCRIPTS/bidsify/validator_out.txt
+
+# DO NOT USE THIS ANY LONGER. SEE run_bids_validator.sh TO RUN IT THROUGH THE MOST RECENT FMRIPREP CONTAINER
+# KEEPING THIS HERE ONLY TO REMEMBER HOW TO RUN APPS USING NODEJS
