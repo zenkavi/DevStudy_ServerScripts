@@ -19,8 +19,9 @@ for dir in list(subdirs):
   runnum = int(re.findall('\d+', os.path.basename(dir))[1])
 
   ntime = os.popen('fslnvols %s'%(dir)).read().rstrip()
+  outdir = '%s/sub-%s/'%(fsfdir, subnum)
 
-  replacements = {'SUBNUM':subnum, 'NTPTS':ntime, 'RUNNUM':runnum}
+  replacements = {'SUBNUM':subnum, 'NTPTS':ntime, 'RUNNUM':runnum, 'OUTDIR': outdir}
 
   with open("%s/template_l1.fsf"%(fsfdir)) as infile:
     with open("%s/sub-%s/l1_design_sub-%s_run-%s.fsf"%(fsfdir, subnum, subnum, runnum), 'w') as outfile:
