@@ -22,7 +22,8 @@ for cur_ef in events_files:
     runnum = nums[1]
     cond1 = df.query('points_earned>0')[['onset', 'duration', 'points_earned']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond1.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
-    cond2
+    cond2 = df.query('points_earned<0')[['onset', 'duration', 'points_earned']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond2.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond3
     cond4
     cond5
