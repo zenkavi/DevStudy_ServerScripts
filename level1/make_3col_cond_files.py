@@ -24,18 +24,44 @@ for cur_ef in events_files:
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond1.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond2 = df.query('points_earned<0')[['onset', 'duration', 'points_earned']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond2.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
+    pre_choice_df = df.query('trial_type == "stim-presentation"')
     cond3
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond4
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond4.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
+    post_choice_df = df.query('trial_type == "response"')
     cond5
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond6
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
 
 
 #cond1.txt = gain (parametric)
 #cond2.txt = loss (parametric)
 #cond3.txt = pre correct choice (stim-presentation)
+    #trial_type == 'stim-presentation'
+        #stimulus == 1 & response == 2
+        #stimulus == 2 & response == 1
+        #stimulus == 3 & response == 1
+        #stimulus == 4 & response == 2
 #cond4.txt = pre incorrect choice (stim-presentation)
+    #trial_type == 'stim-presentation'
+        #stimulus == 1 & response == 1
+        #stimulus == 2 & response == 2
+        #stimulus == 3 & response == 2
+        #stimulus == 4 & response == 1
 #cond5.txt = post correct choice (response)
+    #trial_type == 'response'
+        #stimulus == 1 & response == 2
+        #stimulus == 2 & response == 1
+        #stimulus == 3 & response == 1
+        #stimulus == 4 & response == 2
 #cond6.txt = post incorrect choice (response)
+    #trial_type == 'response'
+        #stimulus == 1 & response == 1
+        #stimulus == 2 & response == 2
+        #stimulus == 3 & response == 2
+        #stimulus == 4 & response == 1
 
 #contrasts:
 #cond1 - baseline
