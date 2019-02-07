@@ -23,21 +23,26 @@ for cur_ef in events_files:
     cond1 = df.query('points_earned>0')[['onset', 'duration', 'points_earned']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond1.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond2 = df.query('points_earned<0')[['onset', 'duration', 'points_earned']]
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond2.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
-    pre_choice_df = df.query('trial_type == "stim-presentation"')
-    cond3 = pre_choice_df.query('stimulus == 1 & response == 2 or stimulus == 2 & response == 1 or stimulus == 3 & response == 1 or stimulus == 4 & response == 2')
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
-    cond4 = pre_choice_df - cond3
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond4.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond2.txt'%(out_path,subnum,subnum,runnum), cond2.values, fmt='%1.3f')
+
+    pre_choice_df = df.copy()
+    pre_choice_df.response = pre_choice_df.response.shift(-1)
+    pre_choice_df = pre_choice_df.query('trial_type == "stim_presentation"')
+
+    cond3 = pre_choice_df.query('(stimulus == 1 & response == 2) | (stimulus == 2 & response == 1) | (stimulus == 3 & response == 1) | (stimulus == 4 & response == 2)')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond3.values, fmt='%1.3f')
+    cond4 = pd.concat([pre_choice_df, cond3]).drop_duplicates(keep=False)
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond4.txt'%(out_path,subnum,subnum,runnum), cond4.values, fmt='%1.3f')
+
     post_choice_df = df.query('trial_type == "response"')
-    cond5 = post_choice_df.query('stimulus == 1 & response == 2 or stimulus == 2 & response == 1 or stimulus == 3 & response == 1 or stimulus == 4 & response == 2')
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
-    cond6 = post_choice_df - cond6
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
+    cond5 = post_choice_df.query('(stimulus == 1 & response == 2) | (stimulus == 2 & response == 1) | (stimulus == 3 & response == 1) | (stimulus == 4 & response == 2)')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond5.values, fmt='%1.3f')
+    cond6 = pd.concat([post_choice_df, cond5]).drop_duplicates(keep=False)
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
 
 
-#cond1.txt = gain (parametric)
-#cond2.txt = loss (parametric)
+#cond1.txt = gain outcome (parametric)
+#cond2.txt = loss outcome (parametric)
 #cond3.txt = pre correct choice (stim-presentation)
     #trial_type == 'stim-presentation'
         #stimulus == 1 & response == 2
@@ -62,6 +67,7 @@ for cur_ef in events_files:
         #stimulus == 2 & response == 2
         #stimulus == 3 & response == 2
         #stimulus == 4 & response == 1
+#cond7.txt = EV?
 
 #contrasts:
 #cond1 - baseline
