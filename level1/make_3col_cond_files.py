@@ -30,15 +30,28 @@ for cur_ef in events_files:
     pre_choice_df = pre_choice_df.query('trial_type == "stim_presentation"')
 
     cond3 = pre_choice_df.query('(stimulus == 1 & response == 2) | (stimulus == 2 & response == 1) | (stimulus == 3 & response == 1) | (stimulus == 4 & response == 2)')
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond3.values, fmt='%1.3f')
     cond4 = pd.concat([pre_choice_df, cond3]).drop_duplicates(keep=False)
+
+    cond3 = cond3[['onset', 'duration']]
+    cond3['correct'] = 1
+    cond4 = cond4[['onset', 'duration']]
+    cond4['incorrect'] = 1
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond3.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond4.txt'%(out_path,subnum,subnum,runnum), cond4.values, fmt='%1.3f')
 
     post_choice_df = df.query('trial_type == "response"')
     cond5 = post_choice_df.query('(stimulus == 1 & response == 2) | (stimulus == 2 & response == 1) | (stimulus == 3 & response == 1) | (stimulus == 4 & response == 2)')
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond5.values, fmt='%1.3f')
     cond6 = pd.concat([post_choice_df, cond5]).drop_duplicates(keep=False)
+
+    cond5 = cond3[['onset', 'duration']]
+    cond5['correct'] = 1
+    cond6 = cond4[['onset', 'duration']]
+    cond6['incorrect'] = 1
+
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond5.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
+
+    print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
 
 #cond1.txt = gain outcome (parametric)
