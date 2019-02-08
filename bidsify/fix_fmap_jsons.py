@@ -32,4 +32,4 @@ for json_file in json_files:
             json_dict.update({'IntendedFor': bold_files})
             json_dict = OrderedDict(sorted(json_dict.items()))
     with open(json_file, "w") as out_file:
-		json.dump(json_dict, out_file, indent=2)
+        json.dump(json_dict, out_file, indent=2)
