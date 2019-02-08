@@ -29,7 +29,9 @@ for json_file in json_files:
         if 'IntendedFor' not in json_dict:
             bold_files = glob.glob("%s/sub-%s/func/*_bold.nii.gz"%(data_loc, subnum))
             bold_files = ['func/'+os.path.basename(x) for x in bold_files]
+            bold_files.sort()
             json_dict.update({'IntendedFor': bold_files})
             json_dict = OrderedDict(sorted(json_dict.items()))
     with open(json_file, "w") as out_file:
         json.dump(json_dict, out_file, indent=2)
+    print('Fixed fmap sidecars for %s'%(subnum))
