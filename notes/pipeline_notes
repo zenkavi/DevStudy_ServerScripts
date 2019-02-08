@@ -1,78 +1,84 @@
 Dev Study pipeline
 
-General for running thing in this directory on TACC:
-- Begin on local repo to edit code
-- Push all changes to origin
-- Pull on TACC
-- Run all jobs on TACC
-- How to change all subdirectory names with pattern to another
-find . -name behav -type d -execdir mv {} beh \;
-
 ===================================================================
-===================================================================
+=======================OLD SCRIPTS FROM TACC=======================
 ===================================================================
 
-Setup environment [UPDATE WITH CORRECT PYTHON ENV]
-Input:
-Script: source setup/dev_study_env.sh
-Output:
+Setup environment
+Input: system, x11, libmng modules; dev_study python environment, TODO_PATH, SERVER_SCRIPTS, DATA_LOC, R_LIB paths
+Script: DevStudy_ServerScripts/setup/dev_study_env.sh
+Output: NA
 
+Make BIDS compatible directories for all subjects (TACC)
 Input: sub_dirname_list.txt
 Script: make_bids_subject_dirs.py
 Output: dev_study/data/sub-*
 
+Make BIDS compatible content directories for all subjects
 Input: sub_dirname_list.txt
 Script: make_bids_content_dirs.py
 Output: dev_study/data/sub-*/anat, dev_study/data/sub-*/func, dev_study/data/sub-*/fmap, dev_study/data/sub-*/behav
 
+Unzip DICOMs (TACC)
 Input: dev_study/01_DICOM_zipfiles_from_XNAT/*.zip
 Script: unzip_dicom_dirs.py
 Output: dev_study/02_DICOM_data_after_unzipping/*
 
+Make commands for DICOM to NIFTO conversion (TACC)
 Input: dev_study/02_DICOM_data_after_unzipping/*
 Script: python make_commands_for_nifti_conversion.py > exec_convert_dicoms_to_niftis.sh
 Output: dev_study/03_DICOM_to_NIFTI_conversions/* (shell directories), exec_convert_dicoms_to_niftis.sh
 
-[CAN USE IMPROVEMENT - Does the launch script currently actually parallelize all these commands?]
+Convert DICOMs to NIFTIs (TACC)
 Input: dev_study/02_DICOM_data_after_unzipping/* (unzipped dicom's)
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_convert_dicoms_to_niftis.sh -j dcm2nii -q normal -m zenkavi@stanford.edu
 Output: dev_study/03_DICOM_to_NIFTI_conversions/* (nifti files)
 
+Make commands for scripts to create behavioral events files (TACC)
 Input: dev_study/todo/behav_data_tb_organized/machine_game
 Script: python make_commands_for_run_events.py > exec_make_run_events.sh
 Output: exec_make_run_events.sh
 
-[CAN USE IMPROVEMENT - Does the launch script currently actually parallelize all these commands?]
+Make events files for functional scans
 Input: dev_study/todo/behav_data_tb_organized/machine_game, make_run_events.py
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_make_run_events.sh -j runevs
 Output: dev_study/data/sub-*/fun/sub-*/*_events.tsv
 
+Make commands to convert BART files to tsv's
 Input: setup/dev_study_env.sh
 Script: python make_commands_for_bart_conversion.py > task_list_bart_mat_to_tsv.sh
 Output: task_list_bart_mat_to_tsv.sh
 
+Convert BART mat files to tsv's
 Input: dev_study/todo/behav_data_tb_organized/bart/*.mat, convertBARTmat2tsv.R, 'R.matlab', 'RJSONIO', 'plyr', task_list_bart_mat_to_tsv.sh
 Script: sbatch convert_bart_to_tsv.batch
 Output: dev_study/data/sub-*/behav/*.tsv, dev_study/data/sub-*/behav/*.json
 
+Make commands to move converted NIFTIs into BIDS directories
 Input: dev_study/DevStudy_TaccScripts/sub_dirname_match_list.tsv
 Script: python make_commands_for_move_niftis.py > exec_move_niftis_to_bids.sh
 Output: exec_move_niftis_to_bids.sh
 
-[CAN USE IMPROVEMENT - move_niftis_to_bids.py NEEDS PY3/PATH UPDATE]
+Move NIFTIs to BIDS directories
 Input: dev_study/03_DICOM_to_NIFTI_conversion/*, dev_study/DevStudy_TaccScripts/move_niftis_to_bids.py
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_move_niftis_to_bids.sh -j movenii
 Output: dev_study/data/sub-*/anat/*, dev_study/data/sub-*/func/*, dev_study/data/sub-*/fmap/*
 
+Make commands to fix fieldmap json files
 Input: dev_study/data/* (subject directories)
 Script: python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
 Output: exec_fix_fmap_jsons.sh
 
-[CAN USE IMPROVEMENT - fix_fmap_jsons.py NEEDS PY2/PATH UPDATE]
+Fix fieldmap json files
 Input: dev_study/data/sub-*/fmap/*.json
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
 Output: dev_study/data/sub-*/fmap/*.json
 
-`check_bold_vols.py`: Script from Mumford video tutorials to check the volume of all bold niftis.
+===================================================================
+=====================NEW SCRIPTS FROM SHERLOCK=====================
+===================================================================
 
-`sbatch_template.sbatch`: Example batch script (not used)
+==============================bidsify==============================
+===============================mriqc===============================
+=============================fmriprep==============================
+==============================level1===============================
