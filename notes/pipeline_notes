@@ -70,15 +70,40 @@ Script: python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
 Output: exec_fix_fmap_jsons.sh
 
 Fix fieldmap json files
-Input: dev_study/data/sub-*/fmap/*.json
+Input: dev_study/data/sub-*/fmap/*.json, fix_fmap_jsons.py
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
 Output: dev_study/data/sub-*/fmap/*.json
+
+Manual corrections for BIDSification
+Script: manual_corrections.sh
 
 ===================================================================
 =====================NEW SCRIPTS FROM SHERLOCK=====================
 ===================================================================
 
 ==============================bidsify==============================
+
+Copy dataset on Sherlock to have write permissions for the remaining steps
+Input: /oak/stanford/groups/russpold/data/ds000054/0.0.1/
+Script: copy_dataset.batch
+Output: /oak/stanford/groups/russpold/data/ds000054/0.0.2/
+
+Input: fix_nifti_header_tr.py
+Script: fix_nifti_header_tr.batch
+
+Raw and preprocessed data of subjects that are moved to sourcedata
+Script: mv_exclusions.batch
+
+Check BIDS compatibility of dataset
+Input: /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img
+Scripts: run_bids_validator.sh
+Output: /bidsify/validator_out.txt
+
 ===============================mriqc===============================
+
+
+
 =============================fmriprep==============================
+
+
 ==============================level1===============================
