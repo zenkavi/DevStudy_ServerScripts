@@ -1,3 +1,4 @@
+rsync -r $DATA_LOC/sub-100128 /tmp/data/
 rsync -r $DATA_LOC/sub-407672 /tmp/data/
 rsync -r $DATA_LOC/sub-200199 /tmp/data/
 rsync -r $DATA_LOC/sub-100250 /tmp/data/
