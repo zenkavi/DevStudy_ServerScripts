@@ -64,16 +64,6 @@ Input: dev_study/03_DICOM_to_NIFTI_conversion/*, dev_study/DevStudy_TaccScripts/
 Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_move_niftis_to_bids.sh -j movenii
 Output: dev_study/data/sub-*/anat/*, dev_study/data/sub-*/func/*, dev_study/data/sub-*/fmap/*
 
-Make commands to fix fieldmap json files
-Input: dev_study/data/* (subject directories)
-Script: python make_commands_for_fmap_jsons.py > exec_fix_fmap_jsons.sh
-Output: exec_fix_fmap_jsons.sh
-
-Fix fieldmap json files
-Input: dev_study/data/sub-*/fmap/*.json, fix_fmap_jsons.py
-Script: launch -s /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/scripts/exec_fix_fmap_jsons.sh
-Output: dev_study/data/sub-*/fmap/*.json
-
 Manual corrections for BIDSification
 Script: manual_corrections.sh
 
@@ -94,6 +84,11 @@ Script: fix_nifti_header_tr.batch
 Raw and preprocessed data of subjects that are moved to sourcedata
 Script: mv_exclusions.batch
 
+Fix fieldmap json files
+Input: $DATA_LOC/sub-*/fmap/*.json
+Script: fix_fmap_jsons.py
+Output: $DATA_LOC/sub-*/fmap/*.json
+
 Check BIDS compatibility of dataset
 Input: /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.2.5-2018-12-04-2ef6b23ede2a.img
 Scripts: run_bids_validator.sh
@@ -101,12 +96,22 @@ Output: /bidsify/validator_out.txt
 
 ===============================mriqc===============================
 
+Input: NA
+Script: make_commands_for_mriqc.py > mriqc_task_list.sh
+Output: mriqc_task_list
 
+Input: $DATA_LOC (bidsified), mriqc_task_list.sh, mriqc container
+Script: run_mriqc_participant.batch
+Output: $DATA_LOC/derivatives/mriqc
+
+Input: $DATA_LOC (bidsified), $DATA_LOC/derivatives/mriqc
+Script: run_mriqc_group.batch
+Output: $DATA_LOC/derivatives/mriqc/bold.csv, $DATA_LOC/derivatives/mriqc/T1w.csv
 
 =============================fmriprep==============================
 
 Input: NA
-Script: make_commands_for_fmriprep.py
+Script: make_commands_for_fmriprep.py > fmriprep_task_list.sh
 Output: fmriprep_task_list.sh
 
 Input: $DATA_LOC (bidsified), fmriprep_task_list.sh, fmriprep container
