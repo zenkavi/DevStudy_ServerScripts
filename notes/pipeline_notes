@@ -119,3 +119,23 @@ Script: run_fmriprep.batch
 Output: $DATA_LOC/derivatives/fmriprep
 
 ==============================level1===============================
+
+Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/derivatives/fmriprep_*/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_desc-confounds_regressors.tsv
+Script: find_scrub_vols.py
+Output: $DATA_LOC/derivatives/level_1/scrub_fd_*_report.csv, $DATA_LOC/derivativatives/sub-*/sub-*_task-machinegame_run-*_scrub_vols.txt
+
+Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz, $SERVER_SCRIPTS/level1/templace_l1.fsf
+Script: make_l1_fsfs.py
+Output: $DATA_LOC/derivatives/level_1/sub-*/l1_design_sub-*_run-*.fsf
+
+Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/sub-*/func/sub-*_task-machinegame_run-*_events.tsv
+Script: make_3col_cond_files.py
+Output: $DATA_LOC/derivatives/level_1/sub-*/sub-*_task-machinegame_run-*_cond*.txt
+
+Input: $DATA_LOC/derivatives/fmriprep_*/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+Script: make_commands_for_level1.py > level1_tasklist.sh
+Output: level1_tasklist.sh
+
+Input: level1_tasklist.sh
+Script: run_level1.batch
+Output:
