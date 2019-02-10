@@ -105,5 +105,12 @@ Output: /bidsify/validator_out.txt
 
 =============================fmriprep==============================
 
+Input: NA
+Script: make_commands_for_fmriprep.py
+Output: fmriprep_task_list.sh
+
+Input: $DATA_LOC (bidsified), fmriprep_task_list.sh, fmriprep container
+Script: run_fmriprep.batch
+Output: $DATA_LOC/derivatives/fmriprep
 
 ==============================level1===============================
