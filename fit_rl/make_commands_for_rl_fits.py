@@ -51,34 +51,26 @@ for i in range(len(rl_models)):
 def extract_pars(pars):
     fixparams = []
     fitparams = []
-
     for key in sorted(pars.keys()):
         if np.isnan(pars[key]):
             fitparams.append(key)
         else:
             fixparams.append(key)
-
     out = {'fitparams':fitparams, 'fixparams':fixparams}
-
     return(out)
 
 task_list = []
 
 for pars in pars_list:
-
     for subject in subjects:
         command = 'python fit_rl.py ' + str(subject) + ' ' + str(n_fits) + ' ' + data_path + ' ' + output_path + ' ' + str(pars)
-
         task_list.append(command)
-
         fitparams = '-'.join(extract_pars(pars)['fitparams'])
         fixparams = '-'.join(extract_pars(pars)['fixparams'])
-
         if len(fixparams) == 0:
             file_name = 'fit_'+ fitparams + '_fix'+ fixparams +'_task_list.sh'
         else:
             file_name = 'fit_'+ fitparams + '_fix_'+ fixparams +'_task_list.sh'
-
     pd.DataFrame(task_list).to_csv(tasklist_path+file_name, header=False, index=False, quoting=csv.QUOTE_NONE, escapechar=' ')
     task_list = []
 
