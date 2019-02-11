@@ -71,6 +71,20 @@ Script: manual_corrections.sh
 =====================NEW SCRIPTS FROM SHERLOCK=====================
 ===================================================================
 
+==============================fit_rl===============================
+
+Input:
+Script: make_commands_for_rl_fits.py
+Output:
+
+Input: $SERVER_SCRIPTS/fit_rl/fit_rl.batch, $SERVER_SCRIPTS/fit_rl/fit_rl.py, $SERVER_SCRIPTS/fit_rl/.rl_task_lists, $SERVER_SCRIPTS/.err, $SERVER_SCRIPTS/.out
+Script: run_fit_rl.sh
+Output: $SERVER_SCRIPTS/fit_rl/.fits/LearningParams_Fit_*_Fix_*_{sub_num}.csv
+
+Input:
+Script: concat_model_fits.py
+Output:
+
 ==============================bidsify==============================
 
 Copy dataset on Sherlock to have write permissions for the remaining steps
