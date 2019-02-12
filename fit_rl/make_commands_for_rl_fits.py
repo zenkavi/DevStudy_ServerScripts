@@ -41,7 +41,7 @@ for i in range(len(rl_models)):
         if 'alpha' in par:
             pars[par] = 0.05
         elif 'exp' in par:
-            pars[par] = 0.5
+            pars[par] = 1
         elif 'beta' in par:
             pars[par] = 1
 
@@ -63,7 +63,8 @@ task_list = []
 
 for pars in pars_list:
     for subject in subjects:
-        command = 'python fit_rl.py ' + str(subject) + ' ' + str(n_fits) + ' ' + data_path + ' ' + output_path + ' ' + str(pars)
+        command = 'python fit_rl.py --subject ' + str(subject) + ' --pars "' + str(pars) + '"'
+        #python  fit_rl.py  --subject 100188 --pars "{'exp':  1 ,  'alpha':  nan ,  'beta':  nan}"
         task_list.append(command)
         fitparams = '-'.join(extract_pars(pars)['fitparams'])
         fixparams = '-'.join(extract_pars(pars)['fixparams'])
