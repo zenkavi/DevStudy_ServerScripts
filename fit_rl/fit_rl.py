@@ -14,7 +14,11 @@ output_path = sys.argv[4]
 pars = sys.argv[5]
 
 #text wrangling to turn the pars string to dictionary
-pars = json.loads(pars.replace('nan', '"nan"').replace("'", "\""))
+try:
+    pars = json.loads(pars.replace('nan', '"nan"').replace("'", "\""))
+except:
+    pars = json.loads(pars[0].replace('nan', '"nan"').replace("'", "\""))
+
 #pars = {k: np.nan if "nan" else v for k, v in pars.items() }
 
 for (k,v) in pars.items():
