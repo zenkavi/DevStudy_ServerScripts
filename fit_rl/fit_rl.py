@@ -6,12 +6,35 @@ import pandas as pd
 import random
 import scipy.optimize
 import sys
+from argparse import ArgumentParser
 
-subject = sys.argv[1]
-n_fits = sys.argv[2]
-data_path = sys.argv[3]
-output_path = sys.argv[4]
-pars = sys.argv[5]
+try:
+    todo_path = os.environ['TODO_PATH']
+    server_scripts = os.environ['SERVER_SCRIPTS']
+except KeyError:
+    os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
+    todo_path = os.environ['TODO_PATH']
+    server_scripts = os.environ['SERVER_SCRIPTS']
+
+parser = ArgumentParser()
+parser.add_argument("-s", "--subject", help="subject number")
+parser.add_argument("-n", "--n_fits", default=50, help="Number of iterations for model")
+parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
+parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.fits/', help="output path")
+parser.add_argument("-p", "--pars", help="parameters dictionary")
+args = parser.parse_args()
+
+subject = args.subject
+n_fits = args.n_fits
+data_path = args.data_path
+output_path = args.output_path
+pars = args.pars
+
+#subject = sys.argv[1]
+#n_fits = sys.argv[2]
+#data_path = sys.argv[3]
+#output_path = sys.argv[4]
+#pars = sys.argv[5]
 
 #text wrangling to turn the pars string to dictionary
 try:
