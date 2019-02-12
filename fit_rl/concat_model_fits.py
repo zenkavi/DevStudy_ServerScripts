@@ -4,8 +4,8 @@ import pandas as pd
 from string import digits
 import sys
 
-#python concat_mode_fits.py
-#python concat_mode_fits.py LearningParams_Fit_alpha-beta-exp_Fix_
+#python concat_model_fits.py
+#python concat_model_fits.py LearningParams_Fit_alpha-beta-exp_Fix_
 
 try:
     model_name = sys.argv[1]
