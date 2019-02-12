@@ -21,7 +21,7 @@ if model_name == 'all':
     #remove .csv and numbers and get unique
     all_models = list(set([s.strip('.csv').translate(remove_digits) for s in os.listdir(data_dir)]))
 else:
-    all_models = list(model_name)
+    all_models = [model_name]
 
 for model in all_models:
     filenames = glob.glob(data_dir+model+'*')
