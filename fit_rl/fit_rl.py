@@ -2,10 +2,11 @@ import copy
 import json
 import math
 import numpy as np
+import os
 import pandas as pd
 import random
 import scipy.optimize
-import sys
+#import sys
 from argparse import ArgumentParser
 
 try:
