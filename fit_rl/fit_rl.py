@@ -6,7 +6,6 @@ import os
 import pandas as pd
 import random
 import scipy.optimize
-#import sys
 from argparse import ArgumentParser
 
 try:
@@ -30,12 +29,6 @@ n_fits = args.n_fits
 data_path = args.data_path
 output_path = args.output_path
 pars = args.pars
-
-#subject = sys.argv[1]
-#n_fits = sys.argv[2]
-#data_path = sys.argv[3]
-#output_path = sys.argv[4]
-#pars = sys.argv[5]
 
 #text wrangling to turn the pars string to dictionary
 try:
