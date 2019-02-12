@@ -43,13 +43,18 @@ for cur_ef in events_files:
     cond5 = post_choice_df.query('(stimulus == 1 & response == 2) | (stimulus == 2 & response == 1) | (stimulus == 3 & response == 1) | (stimulus == 4 & response == 2)')
     cond6 = pd.concat([post_choice_df, cond5]).drop_duplicates(keep=False)
 
-    cond5 = cond3[['onset', 'duration']]
+    cond5 = cond5[['onset', 'duration']]
     cond5['correct'] = 1
-    cond6 = cond4[['onset', 'duration']]
+    cond6 = cond6[['onset', 'duration']]
     cond6['incorrect'] = 1
 
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond5.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
+
+    #Merge EV regressor to events df
+    ev_df = pd.read_csv(os.path.join(data_loc, 'sub-%s_task-machinegame_run-%s_ev.csv'%(subnum, runnum)))
+    pd.merge(post_choice_df, ev_df, on='')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond7.values, fmt='%1.3f')
 
     print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
