@@ -6,22 +6,23 @@ import pandas as pd
 import re
 from argparse import ArgumentParser
 
-#input: get_trial_ev.py --sub_id 100003 --model Fit_alpha-beta_Fix_exp --data_path --out_path
+#input: get_trial_ev.py --model Fit_alpha-beta-exp_neg-exp_pos_Fix_ --data_path --out_path
 #output: /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-*/sub-*_task-machinegame_run-*_ev_rpe.csv
 
 try:
     todo_path = os.environ['TODO_PATH']
     server_scripts = os.environ['SERVER_SCRIPTS']
+    data_loc = os.environ['DATA_LOC']
 except KeyError:
     os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
     todo_path = os.environ['TODO_PATH']
     server_scripts = os.environ['SERVER_SCRIPTS']
+    data_loc = os.environ['DATA_LOC']
 
 parser = ArgumentParser()
-parser.add_argument("-s", "--subject", help="subject number")
 parser.add_argument("-m", "--model", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
-parser.add_argument("-op", "--output_path", default=server_scripts+'/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/', help="output path")
+parser.add_argument("-op", "--output_path", default=data_loc+'/derivatives/level_1/', help="output path")
 args = parser.parse_args()
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
@@ -102,16 +103,11 @@ for subject_data in machine_game_data:
             fix_dict = {x.replace('x0_', ''): v for x, v in fix_dict.items()}
             pars_dict[k] = fix_dict[k]
 
-    evs = get_ev_rpe_df(data=df, pars=pars_dict)
+    df = get_ev_rpe_df(data=df, pars_dict=pars_dict)
+    df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE']]
 
     file_length = df.shape[0]
-
-    for i in range(file_length//30):
-        run_events_list = [header] + noheader[N*(i+1)-(N):N*(i+1)]
-        run_onsets = stim_presentation_onset+response_onset
-        run_onsets.sort()
-        evs_header = ["onset", "duration", "trial_type", "response", "stimulus", "response_time", "points_earned", "iti_start_time", "iti_length"]
-        with open(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machine_game_run-0'+str(i+1)+'_ev_rpe.csv'), 'wb') as tsvfile:
-            writer = csv.writer(tsvfile, quoting=csv.QUOTE_NONE, delimiter=',', quotechar='')
-            writer.writerow(evs_header)
-            writer.writerows(evs);
+    N=30
+    for i in range(file_length//N):
+        run_rows = df[N*(i+1)-(N):N*(i+1)]
+        run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-0'+str(i+1)+'_ev_rpe.csv'))
