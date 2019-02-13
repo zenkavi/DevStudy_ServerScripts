@@ -20,6 +20,9 @@ for cur_ef in events_files:
     nums = re.findall('\d+', os.path.basename(cur_ef))
     subnum = nums[0]
     runnum = nums[1]
+
+    print("Making condition files for sub-%s run-%s"%(subnum, runnum))
+
     cond1 = df.query('points_earned>0')[['onset', 'duration', 'points_earned']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond1.txt'%(out_path,subnum,subnum,runnum), cond1.values, fmt='%1.3f')
     cond2 = df.query('points_earned<0')[['onset', 'duration', 'points_earned']]
@@ -52,10 +55,11 @@ for cur_ef in events_files:
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
 
     #Merge EV regressor to events df
-    ev_rpe_df = pd.read_csv(os.path.join(data_loc, 'sub-%s_task-machinegame_run-%s_ev_rpe.csv'%(subnum, runnum)))
-
-    pd.merge(pre_choice_df, ev_rpe_df, on='') #EV cond
-    pd.merge(post_choice_df, ev__rpe_df, on='') #PE cond
+    ev_rpe_df = pd.read_csv(os.path.join(data_loc, 'derivatives/level_1/sub-%s/sub-%s_task-machinegame_run-%s_ev_rpe.csv'%(subnum, subnum, runnum)))
+    pre_choice_df = pd.concat([pre_choice_df.reset_index(drop=True), ev_rpe_df.EV], axis=1)
+    cond7 = pre_choice_df[['onset', 'duration', 'EV']]
+    post_choice_df = pd.concat([post_choice_df.reset_index(drop=True), ev_rpe_df.PE], axis=1)
+    cond8 = post_choice_df[['onset', 'duration', 'PE']]
 
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond7.txt'%(out_path,subnum,subnum,runnum), cond7.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond8.txt'%(out_path,subnum,subnum,runnum), cond8.values, fmt='%1.3f')
