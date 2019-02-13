@@ -114,4 +114,7 @@ for subject_data in machine_game_data:
     N=30
     for i in range(file_length//N):
         run_rows = df[N*(i+1)-(N):N*(i+1)]
-        run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-0'+str(i+1)+'_ev_rpe.csv'))
+        try:
+            run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-0'+str(i+1)+'_ev_rpe.csv'))
+        except:
+            print('Data not saved for sub-%s'%(subnum))
