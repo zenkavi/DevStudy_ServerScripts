@@ -93,8 +93,10 @@ def get_ev_rpe_df(data, pars_dict):
     return(data)
 
 for subject_data in machine_game_data:
+
     df = pd.read_csv(subject_data)
     subnum = re.findall('\d+', os.path.basename(subject_data))[0]
+    print('Beginning EV/PE calculation for sub-%s'%(subnum))
 
     pars_row = model_pars_data.query("sub_id == %s"%(float(subnum)))
     pars_dict = pars_row.filter(regex='xopt').to_dict('records')[0]
@@ -117,4 +119,4 @@ for subject_data in machine_game_data:
         try:
             run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-0'+str(i+1)+'_ev_rpe.csv'))
         except:
-            print('Data not saved for sub-%s'%(subnum))
+            print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
