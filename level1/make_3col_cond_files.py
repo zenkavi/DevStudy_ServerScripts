@@ -52,9 +52,13 @@ for cur_ef in events_files:
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
 
     #Merge EV regressor to events df
-    ev_df = pd.read_csv(os.path.join(data_loc, 'sub-%s_task-machinegame_run-%s_ev.csv'%(subnum, runnum)))
-    pd.merge(post_choice_df, ev_df, on='')
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond7.values, fmt='%1.3f')
+    ev_rpe_df = pd.read_csv(os.path.join(data_loc, 'sub-%s_task-machinegame_run-%s_ev_rpe.csv'%(subnum, runnum)))
+
+    pd.merge(pre_choice_df, ev_rpe_df, on='') #EV cond
+    pd.merge(post_choice_df, ev__rpe_df, on='') #PE cond
+
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond7.txt'%(out_path,subnum,subnum,runnum), cond7.values, fmt='%1.3f')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond8.txt'%(out_path,subnum,subnum,runnum), cond8.values, fmt='%1.3f')
 
     print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
@@ -85,7 +89,8 @@ for cur_ef in events_files:
         #stimulus == 2 & response == 2
         #stimulus == 3 & response == 2
         #stimulus == 4 & response == 1
-#cond7.txt = EV?
+#cond7.txt = EV
+#cond8.txt = PE
 
 #contrasts:
 #cond1 - baseline
