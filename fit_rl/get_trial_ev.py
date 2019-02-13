@@ -6,7 +6,7 @@ import pandas as pd
 import re
 from argparse import ArgumentParser
 
-#input: get_trial_ev.py --model Fit_alpha-beta-exp_neg-exp_pos_Fix_ --data_path --out_path
+#Usage: python get_trial_ev.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
 #output: /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-*/sub-*_task-machinegame_run-*_ev_rpe.csv
 
 try:
@@ -20,10 +20,14 @@ except KeyError:
     data_loc = os.environ['DATA_LOC']
 
 parser = ArgumentParser()
-parser.add_argument("-m", "--model", help="model name")
+parser.add_argument("-m", "--model_name", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=data_loc+'/derivatives/level_1/', help="output path")
 args = parser.parse_args()
+
+model_name = args.model_name
+data_path = args.data_path
+output_path = args.output_path
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
 machine_game_data.sort()
