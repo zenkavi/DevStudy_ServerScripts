@@ -58,7 +58,9 @@ for cur_ef in events_files:
     ev_rpe_df = pd.read_csv(os.path.join(data_loc, 'derivatives/level_1/sub-%s/sub-%s_task-machinegame_run-%s_ev_rpe.csv'%(subnum, subnum, runnum)))
     pre_choice_df = pd.concat([pre_choice_df.reset_index(drop=True), ev_rpe_df.EV], axis=1)
     cond7 = pre_choice_df[['onset', 'duration', 'EV']]
+
     post_choice_df = pd.concat([post_choice_df.reset_index(drop=True), ev_rpe_df.PE], axis=1)
+    post_choice_df = post_choice_df[np.isfinite(post_choice_df['PE'])]
     cond8 = post_choice_df[['onset', 'duration', 'PE']]
 
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond7.txt'%(out_path,subnum,subnum,runnum), cond7.values, fmt='%1.3f')

@@ -90,6 +90,8 @@ def get_ev_rpe_df(data, pars_dict):
             data.EV[i] = EV[int(TrialNum[i]-1)]
             data.PE[i] = Prediction_Error
             EV[int(TrialNum[i]-1)] += Prediction_Error
+        elif Outcome[i] == 0:
+            data.EV[i] = EV[int(TrialNum[i]-1)]
     return(data)
 
 for subject_data in machine_game_data:
