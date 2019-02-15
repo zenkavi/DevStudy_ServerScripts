@@ -19,9 +19,9 @@ bold_files.sort()
 for cur_bold in bold_files:
     cur_img = nib.load(cur_bold)
     print('Loaded %s'%(cur_bold))
-    if cur_img.header['pixdim'][4] != 2:
+    if cur_img.header['pixdim'][4] != 1:
         print('Fixing TR for %s'%(cur_bold))
-        cur_img.header['pixdim'][4] = 2
+        cur_img.header['pixdim'][4] = 1
     try:
         nib.save(cur_img, cur_bold)
     except:
