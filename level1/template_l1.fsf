@@ -33,7 +33,7 @@ set fmri(sscleanup_yn) 0
 set fmri(outputdir) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-100003/model/run-01"
 
 # TR(s)
-set fmri(tr) 2.000000
+set fmri(tr) 1.000000
 
 # Total volumes
 set fmri(npts) 216

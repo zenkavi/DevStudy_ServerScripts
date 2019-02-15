@@ -11,7 +11,7 @@ except KeyError:
 # Raw data
 raw_bold_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_bold.nii.gz'%(data_loc))
 # Preprocessed data
-bold_files = glob.glob("%s/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
+bold_files = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
 bold_files = raw_bold_files.append(bold_files)
 bold_files.sort()
 
