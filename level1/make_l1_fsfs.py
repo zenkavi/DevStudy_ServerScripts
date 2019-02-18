@@ -13,17 +13,16 @@ except KeyError:
     server_scripts = os.environ['SERVER_SCRIPTS']
 
 fsfdir="%s/derivatives/level_1"%(data_loc)
-
-#DOUBLE CHECK WHAT THIS WAS IN THE ORIGINAL SCRIPT
 subdirs=glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
+subdirs.sort()
 
-for dir in list(subdirs):
+for dir in subdirs:
   subnum = re.findall('\d+', os.path.basename(dir))[0]
   runnum = re.findall('\d+', os.path.basename(dir))[1]
 
   outdir = "%s/sub-%s/model/run-%s"%(fsfdir, subnum, runnum)
   cur_img = nib.load(dir)
-  ntpts = cur_img.header['dim'][4]
+  ntpts = int(cur_img.header['dim'][4])
   featdir = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"%(data_loc, subnum, subnum, runnum)
   scrubvols = "%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"%(fsfdir, subnum, subnum, runnum)
   anat = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"%(data_loc, subnum, subnum)
