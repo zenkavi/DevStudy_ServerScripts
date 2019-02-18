@@ -20,7 +20,7 @@ for dir in subdirs:
   subnum = re.findall('\d+', os.path.basename(dir))[0]
   runnum = re.findall('\d+', os.path.basename(dir))[1]
 
-  outdir = '"%s/sub-%s/model/run-%s"''%(fsfdir, subnum, runnum)
+  outdir = '"%s/sub-%s/model/run-%s"'%(fsfdir, subnum, runnum)
   cur_img = nib.load(dir)
   ntpts = str(int(cur_img.header['dim'][4]))
   featdir = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"'%(data_loc, subnum, subnum, runnum)
@@ -33,7 +33,7 @@ for dir in subdirs:
   cev5 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond5.txt"'%(fsfdir, subnum, subnum, runnum)
   cev6 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond6.txt"'%(fsfdir, subnum, subnum, runnum)
   cev7 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond7.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev8 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond8.txt"'%(fsfdir, subnum, subnum, runnum)
+  cev8 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond8   .txt"'%(fsfdir, subnum, subnum, runnum)
 
   replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cev1, "CEV2": cev2, "CEV3": cev3, "CEV4": cev4, "CEV5": cev5, "CEV6": cev6, "CEV7": cev7, "CEV8": cev8}
 
