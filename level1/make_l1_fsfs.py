@@ -12,7 +12,7 @@ except KeyError:
 fsfdir="%s/derivatives/level_1/"%(data_loc)
 
 #DOUBLE CHECK WHAT THIS WAS IN THE ORIGINAL SCRIPT
-subdirs=glob.glob("%s/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
+subdirs=glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
 
 for dir in list(subdirs):
   subnum = int(re.findall('\d+', os.path.basename(dir))[0])
@@ -29,3 +29,27 @@ for dir in list(subdirs):
           for src, target in replacements.items():
             line = line.replace(src, target)
           outfile.write(line)
+
+OUTDIR
+# Output directory
+set fmri(outputdir) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-100003/model/run-01"
+
+NTPTS
+# Total volumes
+set fmri(npts) 216
+
+FEATDIR
+# 4D AVW data or FEAT directory (1)
+set feat_files(1) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.3.0/fmriprep/sub-100003/func/sub-100003_task-machinegame_run-01_space-MNI152NLin2009cAsym_desc-preproc_bold"
+
+SCRUBVOLS
+# Confound EVs text file for analysis 1
+set confoundev_files(1) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-100003/sub-100003_task-machinegame_run-01_scrub_vols.txt"
+
+ANAT
+# Subject's structural image for analysis 1
+set highres_files(1) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/fmriprep_1.3.0/fmriprep/sub-100003/anat/sub-100003_space-MNI152NLin2009cAsym_desc-preproc_T1w"
+
+CEV1 - CEV8
+# Custom EV file (EV 1)
+set fmri(custom1) "/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-100003/sub-100003_task-machinegame_run-01_cond1.txt"
