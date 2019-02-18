@@ -27,14 +27,14 @@ for dir in list(subdirs):
   featdir = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"%(data_loc, subnum, subnum, runnum)
   scrubvols = "%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"%(fsfdir, subnum, subnum, runnum)
   anat = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"%(data_loc, subnum, subnum)
-  cev1 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond1.txt"(fsfdir, subnum, subnum, runnum)
-  cev2 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond2.txt"(fsfdir, subnum, subnum, runnum)
-  cev3 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond3.txt"(fsfdir, subnum, subnum, runnum)
-  cev4 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond4.txt"(fsfdir, subnum, subnum, runnum)
-  cev5 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond5.txt"(fsfdir, subnum, subnum, runnum)
-  cev6 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond6.txt"(fsfdir, subnum, subnum, runnum)
-  cev7 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond7.txt"(fsfdir, subnum, subnum, runnum)
-  cev8 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond8.txt"(fsfdir, subnum, subnum, runnum)
+  cev1 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond1.txt"%(fsfdir, subnum, subnum, runnum)
+  cev2 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond2.txt"%(fsfdir, subnum, subnum, runnum)
+  cev3 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond3.txt"%(fsfdir, subnum, subnum, runnum)
+  cev4 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond4.txt"%(fsfdir, subnum, subnum, runnum)
+  cev5 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond5.txt"%(fsfdir, subnum, subnum, runnum)
+  cev6 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond6.txt"%(fsfdir, subnum, subnum, runnum)
+  cev7 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond7.txt"%(fsfdir, subnum, subnum, runnum)
+  cev8 = "%s/sub-%s/sub-%s_task-machinegame_run-%s_cond8.txt"%(fsfdir, subnum, subnum, runnum)
 
   replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cev1, "CEV2": cev2, "CEV3": cev3, "CEV4": cev4, "CEV5": cev5, "CEV6": cev6, "CEV7": cev7, "CEV8": cev8}
 
