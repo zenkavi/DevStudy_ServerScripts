@@ -12,7 +12,7 @@ except KeyError:
     data_loc = os.environ['DATA_LOC']
     server_scripts = os.environ['SERVER_SCRIPTS']
 
-fsfdir="%s/derivatives/level_1/"%(data_loc)
+fsfdir="%s/derivatives/level_1"%(data_loc)
 
 #DOUBLE CHECK WHAT THIS WAS IN THE ORIGINAL SCRIPT
 subdirs=glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
