@@ -22,7 +22,7 @@ for dir in subdirs:
 
   outdir = "%s/sub-%s/model/run-%s"%(fsfdir, subnum, runnum)
   cur_img = nib.load(dir)
-  ntpts = int(cur_img.header['dim'][4])
+  ntpts = str(int(cur_img.header['dim'][4]))
   featdir = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"%(data_loc, subnum, subnum, runnum)
   scrubvols = "%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"%(fsfdir, subnum, subnum, runnum)
   anat = "%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"%(data_loc, subnum, subnum)
