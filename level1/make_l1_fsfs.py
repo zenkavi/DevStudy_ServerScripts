@@ -18,13 +18,23 @@ for dir in list(subdirs):
   subnum = int(re.findall('\d+', os.path.basename(dir))[0])
   runnum = int(re.findall('\d+', os.path.basename(dir))[1])
 
+  outdir = "%s/derivatives/level_1/sub-100003/model/run-01"%(data_loc)
   ntime = os.popen('fslnvols %s'%(dir)).read().rstrip()
-  outdir = '%s/sub-%s/'%(fsfdir, subnum)
+  featdir
+  scrubvols
+  cev1
+  cev2
+  cev3
+  cev4
+  cev5
+  cev6
+  cev7
+  cev8
 
-  replacements = {'SUBNUM':subnum, 'NTPTS':ntime, 'RUNNUM':runnum, 'OUTDIR': outdir}
+  replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "CEV1": cev1, "CEV2": cev2, "CEV3": cev3, "CEV4": cev4, "CEV5": cev5, "CEV6": cev6, "CEV7": cev7, "CEV8": cev8}
 
   with open("%s/template_l1.fsf"%(fsfdir)) as infile:
-    with open("%s/sub-%s/l1_design_sub-%s_run-%s.fsf"%(fsfdir, subnum, subnum, runnum), 'w') as outfile:
+    with open("%s/sub-%s/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, subnum, runnum), 'w') as outfile:
         for line in infile:
           for src, target in replacements.items():
             line = line.replace(src, target)
