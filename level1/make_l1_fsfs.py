@@ -18,8 +18,8 @@ fsfdir="%s/derivatives/level_1/"%(data_loc)
 subdirs=glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(data_loc))
 
 for dir in list(subdirs):
-  subnum = int(re.findall('\d+', os.path.basename(dir))[0])
-  runnum = int(re.findall('\d+', os.path.basename(dir))[1])
+  subnum = re.findall('\d+', os.path.basename(dir))[0]
+  runnum = re.findall('\d+', os.path.basename(dir))[1]
 
   outdir = "%s/sub-%s/model/run-%s"%(fsfdir, subnum, runnum)
   cur_img = nib.load(dir)
