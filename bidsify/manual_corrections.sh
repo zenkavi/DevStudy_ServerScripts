@@ -71,6 +71,9 @@ mv sub-100062_phasediff2.json ./sub-100062_run-02_phasediff.json
 mv sub-100062_phasediff3.nii.gz ./sub-100062_run-03_phasediff.nii.gz
 mv sub-100062_phasediff3.json ./sub-100062_run-03_phasediff.json
 
+#Based on /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/DevStudy_100103/scans
+#first fieldmaps intended for runs -
+#second fieldmaps intended for runs 1-6
 mv sub-100103_magnitude1.nii.gz ./sub-100103_run-01_magnitude1.nii.gz
 mv sub-100103_magnitude1.json ./sub-100103_run-01_magnitude1.json
 mv sub-100103_magnitude2.nii.gz ./sub-100103_run-01_magnitude2.nii.gz
