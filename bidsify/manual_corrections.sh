@@ -130,3 +130,7 @@ mv sub-306065_phasediff2.nii.gz ./sub-306065_run-2_phasediff.nii.gz
 mv sub-306065_phasediff2.json ./sub-306065_run-2_phasediff.json
 mv sub-306065_phasediff3.nii.gz ./sub-306065_run-3_phasediff.nii.gz
 mv sub-306065_phasediff3.json ./sub-306065_run-3_phasediff.json
+
+#Based on /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/DevStudy_100009/scans
+#first fieldmaps intended for runs 1,2
+#second fieldmaps intended for runs 3,4,5,6
