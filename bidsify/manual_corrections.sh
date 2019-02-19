@@ -15,6 +15,10 @@ rm -rf sub-test
 rm sub-100110_2_task-machinegame_run-01_events.tsv
 
 #change multiple fmaps to runs
+
+#Based on /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/DevStudy_100009/scans
+#first fieldmaps intended for runs 1,2
+#second fieldmaps intended for runs 3,4,5,6
 mv sub-100009_magnitude1.nii.gz ./sub-100009_run-1_magnitude1.nii.gz
 mv sub-100009_magnitude1.json ./sub-100009_run-1_magnitude1.json
 mv sub-100009_magnitude2.nii.gz ./sub-100009_run-1_magnitude2.nii.gz
@@ -41,6 +45,10 @@ mv sub-100051_phasediff1.json ./sub-100051_run-1_phasediff.json
 mv sub-100051_phasediff2.nii.gz ./sub-100051_run-2_phasediff.nii.gz
 mv sub-100051_phasediff2.json ./sub-100051_run-2_phasediff.json
 
+#Based on /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/03_DICOM_to_NIFTI_conversions/100062_DS
+#first fieldmaps inteded for runs: 1
+#second fieldmaps inteded for runs: -
+#third fieldmaps inteded for runs: 2,3,4,5,6
 mv sub-100062_magnitude1.nii.gz ./sub-100062_run-1_magnitude1.nii.gz
 mv sub-100062_magnitude1.json ./sub-100062_run-1_magnitude1.json
 mv sub-100062_magnitude2.nii.gz ./sub-100062_run-1_magnitude2.nii.gz
@@ -130,7 +138,3 @@ mv sub-306065_phasediff2.nii.gz ./sub-306065_run-2_phasediff.nii.gz
 mv sub-306065_phasediff2.json ./sub-306065_run-2_phasediff.json
 mv sub-306065_phasediff3.nii.gz ./sub-306065_run-3_phasediff.nii.gz
 mv sub-306065_phasediff3.json ./sub-306065_run-3_phasediff.json
-
-#Based on /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/DevStudy_100009/scans
-#first fieldmaps intended for runs 1,2
-#second fieldmaps intended for runs 3,4,5,6

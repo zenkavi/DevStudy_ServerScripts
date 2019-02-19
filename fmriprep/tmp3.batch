@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#SBATCH -J fmriprep
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=48:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=6400M
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/fmriprep-100062.out
+#SBATCH -e ../.err/fmriprep-100062.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+
+module load system
+
+unset PYTHONPATH
+export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
+
+singularity exec -B ${DATA_LOC}:${DATA_LOC},/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt:${FS_LICENSE},${OAK}/data/templateflow:/opt/templateflow /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.3.0-1-2019-02-08-1b5ad521ee2a.simg fmriprep $DATA_LOC $DATA_LOC/derivatives/fmriprep_1.3.0 participant -w /tmp/work --participant_label  100062 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
