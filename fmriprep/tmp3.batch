@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J fmriprep
+#SBATCH -J fmriprep-100062
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=48:00:00
 #SBATCH -n 1
