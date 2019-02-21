@@ -19,7 +19,7 @@ except KeyError:
     data_loc = os.environ['DATA_LOC']
 
 #load fmriprep_counfounds file
-fmriprep_counfounds_files = glob.glob('%s/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_desc-confounds_regressors.tsv'%(data_loc))
+fmriprep_counfounds_files = glob.glob('%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_desc-confounds_regressors.tsv'%(data_loc))
 fmriprep_counfounds_files.sort()
 
 scrub_report = pd.DataFrame(columns=['sub_id', 'run', 'pct_scrubbed'])
