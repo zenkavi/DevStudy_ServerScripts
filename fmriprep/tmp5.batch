@@ -21,4 +21,4 @@ unset PYTHONPATH
 export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
 export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
 
-singularity exec -B ${DATA_LOC}:${DATA_LOC},/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt:${FS_LICENSE},${OAK}/data/templateflow:/opt/templateflow /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.3.0-1-2019-02-08-1b5ad521ee2a.simg fmriprep $DATA_LOC $DATA_LOC/derivatives/fmriprep_1.3.0 participant -w /tmp/work --participant_label  100103 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
+singularity exec -B ${DATA_LOC}:${DATA_LOC},/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt:${FS_LICENSE},${OAK}/data/templateflow:/opt/templateflow /share/PI/russpold/singularity_images/poldracklab_fmriprep_1.3.0.post2-2019-02-14-37640b826070.simg fmriprep $DATA_LOC $DATA_LOC/derivatives/fmriprep_1.3.0 participant -w /tmp/work --participant_label  100103 --mem-mb 50000 --nthreads 10 --omp-nthreads 8 -vv --skip_bids_validation
