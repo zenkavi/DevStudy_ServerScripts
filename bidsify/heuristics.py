@@ -22,11 +22,11 @@ def infotodict(seqinfo):
         if (s.dim1 == 256) and (s.dim2 == 256) and ('T1w_MPR1_PMC' in s.protocol_name):
             info[t1w].append(s.series_id)
         if (s.dim3 == 112) and (s.dim4 == 1) and ('fieldmap' in s.protocol_name):
-            info[fmap_mag] = [s.series_id]
+            info[fmap_mag].append(s.series_id)
         if (s.dim3 == 56) and (s.dim4 == 1) and ('fieldmap' in s.protocol_name):
-            info[fmap_phase] = [s.series_id]
+            info[fmap_phase].append(s.series_id)
         if (s.dim3 == 56) and (s.dim4 == 1) and ('task001' in s.protocol_name):
-            info[func] = [s.series_id]
+            info[func].append(s.series_id)
         if (s.dim3 == 56) and (s.dim4 == 216) and ('task001' in s.protocol_name):
-            info[func_sbref] = [s.series_id]
+            info[func_sbref].append(s.series_id)
     return info
