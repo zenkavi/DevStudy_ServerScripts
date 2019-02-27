@@ -2,6 +2,7 @@
 
 #SBATCH -J heudiconv
 #SBATCH -n 16
+#SBATCH -N 2
 #SBATCH -p normal
 #SBATCH -o ../../.out/launch-heudiconv.o%j.out
 #SBATCH -e ../../.err/launch-heudiconv.o%j.err
