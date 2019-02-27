@@ -1,4 +1,3 @@
-set -e
 jobnum=0
 while read task; do
   ((jobnum++))
