@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J heudiconv
-#SBATCH --array=1-74%30
+#SBATCH --array=1-83%83
 #SBATCH --time=00:30:00
 
 # Outputs ----------------------------------
