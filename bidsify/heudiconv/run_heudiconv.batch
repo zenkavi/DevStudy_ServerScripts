@@ -15,4 +15,4 @@
 
 module load dcm2niix/7July2016
 
-${TASK}
+heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}*/scans/*/resources/DICOM/files/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heuristics.py -s {SUBNUM} -c dcm2niix -b --overwrite
