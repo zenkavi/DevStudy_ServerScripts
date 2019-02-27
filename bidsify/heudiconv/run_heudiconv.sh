@@ -6,8 +6,8 @@ done
 
 module load dcm2niix/7July2016
 
-heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}*/scans/*/DICOM/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heuristics.py -s 100062 -c dcm2niix -b --overwrite
+heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}*/scans/*/DICOM/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heudiconv/heuristics.py -s 100062 -c dcm2niix -b --overwrite
 
-heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}*/scans/*/DICOM/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heuristics.py -s 406620 -c dcm2niix -b --overwrite
+heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}*/scans/*/DICOM/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heudiconv/heuristics.py -s 406620 -c dcm2niix -b --overwrite
 
-heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}/scans/*/resources/DICOM/files/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heuristics.py -s 407260 -c dcm2niix -b --overwrite
+heudiconv -d /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/02_DICOM_data_after_unzipping/*{subject}/scans/*/resources/DICOM/files/*.dcm -o /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/04_HEUDICONV_conversion/ -f /corral-repl/utexas/poldracklab/users/zenkavi/dev_study/DevStudy_ServerScripts/bidsify/heudiconv/heuristics.py -s 407260 -c dcm2niix -b --overwrite
