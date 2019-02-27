@@ -26,7 +26,7 @@ def infotodict(seqinfo):
         if (s.dim3 == 56) and (s.dim4 == 1) and ('fieldmap' in s.protocol_name):
             info[fmap_phase].append(s.series_id)
         if (s.dim3 == 56) and (s.dim4 == 1) and ('task001' in s.protocol_name):
-            info[func].append(s.series_id)
-        if (s.dim3 == 56) and (s.dim4 == 216) and ('task001' in s.protocol_name):
             info[func_sbref].append(s.series_id)
+        if (s.dim3 == 56) and (s.dim4 == 216) and ('task001' in s.protocol_name):
+            info[func].append(s.series_id)
     return info
