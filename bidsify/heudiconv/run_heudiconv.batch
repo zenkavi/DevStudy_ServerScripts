@@ -16,4 +16,4 @@
 
 module load dcm2niix/7July2016
 
-eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" heudiconv_tasklist.sh )
+{TASK}
