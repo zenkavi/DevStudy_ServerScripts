@@ -3,6 +3,7 @@
 #SBATCH -J heudiconv
 #SBATCH --array=1-83%83
 #SBATCH -p normal
+#SBATCH -n 1
 #SBATCH --time=00:30:00
 
 # Outputs ----------------------------------
