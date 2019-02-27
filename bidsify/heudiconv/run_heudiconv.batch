@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH -J heudiconv
+#SBATCH --array=1-74%30
+#SBATCH --time=00:30:00
+
+# Outputs ----------------------------------
+#SBATCH -o ../.out/heudiconv-%A-%a.out
+#SBATCH -e ../.err/heudiconv-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL
+# ------------------------------------------
+
+module load dcm2niix/7July2016
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" heudiconv_tasklist.sh )
