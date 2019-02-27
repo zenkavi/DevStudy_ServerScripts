@@ -7,8 +7,8 @@
 #SBATCH --time=00:30:00
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/heudiconv-{SUBNUM}.out
-#SBATCH -e ../.err/heudiconv-{SUBNUM}.err
+#SBATCH -o ../../.out/heudiconv-{SUBNUM}.out
+#SBATCH -e ../../.err/heudiconv-{SUBNUM}.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
