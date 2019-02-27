@@ -15,7 +15,7 @@ def infotodict(seqinfo):
     fmap_mag =  create_key('sub-{subject}/fmap/sub-{subject}_run-00{item:01d}_magnitude')
     fmap_phase = create_key('sub-{subject}/fmap/sub-{subject}_run-00{item:01d}_phasediff')
     func = create_key('sub-{subject}/func/sub-{subject}_task-machinegame_run-00{item:01d}_bold')
-    func_sbref = create_key('sub-{subject}/func/sub-{subject}_task-machinegame_run-00{item:01d}_bold')
+    func_sbref = create_key('sub-{subject}/func/sub-{subject}_task-machinegame_run-00{item:01d}_sbref')
     info = {t1w: [], fmap_mag: [], fmap_phase: [], func: [], func_sbref: []}
 
     for idx, s in enumerate(seqinfo):
