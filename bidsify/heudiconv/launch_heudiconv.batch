@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH -J heudiconv
+#SBATCH -n 16
+#SBATCH -p normal
+#SBATCH -o ../../.out/launch-heudiconv.o%j.out
+#SBATCH -e ../../.err/launch-heudiconv.o%j.err
+#SBATCH -t 03:00:00
+
+ml load launcher
+
+export LAUNCHER_PLUGIN_DIR=$LAUNCHER_DIR/plugins
+export LAUNCHER_RMI=SLURM
+export LAUNCHER_JOB_FILE=tmp.sh
+
+$LAUNCHER_DIR/paramrun
