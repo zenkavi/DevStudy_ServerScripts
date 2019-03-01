@@ -20,6 +20,6 @@ module load system
 
 unset PYTHONPATH
 export FS_LICENSE=/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fmriprep/license.txt
-export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.2/
+export DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.4/
 
 eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" fmriprep_task_list.sh )
