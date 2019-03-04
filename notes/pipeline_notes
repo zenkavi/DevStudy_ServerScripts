@@ -143,10 +143,10 @@ returns 434 because
 100103 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100110 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100188 missing run 6 - converted manually on TACC; needs transfer to Sherlock
-100241 missing run 6
-200025 missing run 6 (no sbref's)
-306065 missing run 6
-408511 missing run 6
+100241 missing run 6 - converted manually on TACC; needs transfer to Sherlock
+200025 missing run 6 (no sbref's) - first volume corrupt
+306065 missing run 6 - converted manually on TACC; needs transfer to Sherlock
+408511 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 
 ==============================level1===============================
 
