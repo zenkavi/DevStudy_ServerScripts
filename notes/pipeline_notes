@@ -132,6 +132,18 @@ Input: $DATA_LOC (bidsified), fmriprep_task_list.sh, fmriprep container
 Script: run_fmriprep.batch
 Output: $DATA_LOC/derivatives/fmriprep
 
+Check output:
+Go through fmriprep reports to make sure nobody has errors
+Check:
+find . -name '*MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' | wc
+should be 444 without any missing runs for 74 subjects BUT
+find . -path ./sourcedata -prune -o -name 'sub-*_task-machinegame_run-*_bold.nii.gz' | wc
+returns 434 because
+100169 missing runs 4,5,6
+100103 missing run 6
+100110 missing run 6
+100188
+
 ==============================level1===============================
 
 Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/derivatives/fmriprep_*/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_desc-confounds_regressors.tsv
