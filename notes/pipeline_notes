@@ -139,12 +139,12 @@ find . -name '*MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' | wc
 should be 444 without any missing runs for 74 subjects BUT
 find . -path ./sourcedata -prune -o -name 'sub-*_task-machinegame_run-*_bold.nii.gz' | wc
 returns 434 because
-100169 missing runs 4,5,6
-100103 missing run 6
-100110 missing run 6
-100188 missing run 6
+100169 missing runs 4,5,6 (no DICOMs, noted in Subject_fMRI_analysis_tracking)
+100103 missing run 6 - converted manually on TACC; needs transfer to Sherlock
+100110 missing run 6 - converted manually on TACC; needs transfer to Sherlock
+100188 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100241 missing run 6
-200025 missing run 6
+200025 missing run 6 (no sbref's)
 306065 missing run 6
 408511 missing run 6
 

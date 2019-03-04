@@ -14,7 +14,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     Missing behavioral data for all runs of sub-411236 **[MOVED TO SOURCEDATA]**  
     *Missing behavioral data for run 6 for sub-100110*
     Missing images for runs 3-6 of sub-100109 **[MOVED TO SOURCEDATA]**
-    *Missing images for runs 4-6 of sub-100109*
+    *Missing images for runs 4-6 of sub-100169*
     *Missing images for runs 6 of sub-200025* **[first volume corrupt]**
     *Missing images for runs 6 of sub-408511* **[only 145 volumes with corrupt 145th]**
   - Check BOLD volumes with volumes !=216:  
@@ -31,7 +31,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     sub-406989/fmap/sub-406989_phasediff.nii.gz, This file has the dimensions: 92,96,56 (voxels). **[MOVED TO SOURCEDATA]**
   - Check anatomical != 0.80mm x 0.80mm x 0.80mm  
     sub-406989/anat/sub-406989_T1w.nii.gz, This file has the resolution: 0.80mm x 0.85mm x 0.85mm. **[MOVED TO SOURCEDATA]**
-  
+
 - Skull script structural images
 - QA (check brain extraction, orientation)
 
