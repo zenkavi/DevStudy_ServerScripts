@@ -137,16 +137,19 @@ Go through fmriprep reports to make sure nobody has errors
 Check:
 find . -name '*MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' | wc
 should be 444 without any missing runs for 74 subjects BUT
-find . -path ./sourcedata -prune -o -name 'sub-*_task-machinegame_run-*_bold.nii.gz' | wc
-returns 434 because
-100169 missing runs 4,5,6 (no DICOMs, noted in Subject_fMRI_analysis_tracking)
+
+find . -path ./sourcedata -prune -o -path ./derivatives -prune -o -name 'sub-*_task-machinegame_run-*_bold.nii.gz' | wc
+returns 434 + 439 because
+
 100103 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100110 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100188 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100241 missing run 6 - converted manually on TACC; needs transfer to Sherlock
-200025 missing run 6 (no sbref's) - first volume corrupt
 306065 missing run 6 - converted manually on TACC; needs transfer to Sherlock
-408511 missing run 6 - converted manually on TACC; needs transfer to Sherlock
+
+100169 missing runs 4,5,6 (no DICOMs, noted in Subject_fMRI_analysis_tracking)
+200025 missing run 6 (no sbref's) - first volume corrupt
+408511 missing run 6 - <216 volumes and last volume corrupt
 
 ==============================level1===============================
 

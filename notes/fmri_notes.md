@@ -16,6 +16,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     Missing images for runs 3-6 of sub-100109 **[MOVED TO SOURCEDATA]**
     *Missing images for runs 4-6 of sub-100169*
     *Missing images for runs 6 of sub-200025* **[first volume corrupt]**
+    *Missing images for runs 6 of sub-408511* **[last volume corrupt]**
   - Check BOLD volumes with volumes !=216:  
     *sub-100103/func/sub-100103_task-machinegame_run-03_bold.nii.gz,42* *[noted in Subject_fMRI_analysis_tracking]*
     *sub-100110/func/sub-100110_task-machinegame_run-06_bold.nii.gz,161* *[noted in Subject_fMRI_analysis_tracking]*  
