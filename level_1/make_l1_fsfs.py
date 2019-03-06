@@ -37,7 +37,7 @@ for dir in subdirs:
 
   replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cev1, "CEV2": cev2, "CEV3": cev3, "CEV4": cev4, "CEV5": cev5, "CEV6": cev6, "CEV7": cev7, "CEV8": cev8}
 
-  with open("%s/level1/template_l1.fsf"%(server_scripts)) as infile:
+  with open("%s/level_1/template_l1.fsf"%(server_scripts)) as infile:
     with open("%s/sub-%s/model/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, subnum, runnum), 'w') as outfile:
         for line in infile:
           for src, target in replacements.items():
