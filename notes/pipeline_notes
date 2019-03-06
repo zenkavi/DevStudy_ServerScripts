@@ -139,7 +139,7 @@ find . -name '*MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' | wc
 should be 444 without any missing runs for 74 subjects BUT
 
 find . -path ./sourcedata -prune -o -path ./derivatives -prune -o -name 'sub-*_task-machinegame_run-*_bold.nii.gz' | wc
-returns 434 + 439 because
+returns 434 + 5 = 439 because
 
 100103 missing run 6 - converted manually on TACC; needs transfer to Sherlock
 100110 missing run 6 - converted manually on TACC; needs transfer to Sherlock
