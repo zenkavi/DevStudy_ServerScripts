@@ -39,4 +39,4 @@ for cur_confounds in fmriprep_counfounds_files:
     scrub_report = scrub_report.append({'sub_id': subnum, 'run': runnum, 'pct_scrubbed': sum(scrub_vols)/len(scrub_vols)*100}, ignore_index=True)
 
 #output report on how many/what percent of volumes per run are scrubbed
-scrub_report.to_csv('/oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/scrub_fd_%s_report.csv'%(str(fd_thresh)))
+scrub_report.to_csv('%s/derivatives/level_1/scrub_fd_%s_report.csv'%(data_loc, str(fd_thresh)))
