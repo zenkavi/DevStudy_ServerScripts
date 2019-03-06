@@ -121,7 +121,7 @@ for subject_data in machine_game_data:
         try:
             if not os.path.exists(os.path.join(output_path, 'sub-%s'%(subnum))):
                 os.makedirs(os.path.join(output_path, 'sub-%s'%(subnum)))
-            run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-0'+str(i+1)+'_ev_rpe.csv'))
+            run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-00'+str(i+1)+'_ev_rpe.csv'))
             print('Done with sub-%s run-%s'%(subnum, str(i+1)))
         except:
             print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
