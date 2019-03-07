@@ -31,6 +31,8 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     sub-406989/fmap/sub-406989_phasediff.nii.gz, This file has the dimensions: 92,96,56 (voxels). **[MOVED TO SOURCEDATA]**
   - Check anatomical != 0.80mm x 0.80mm x 0.80mm  
     sub-406989/anat/sub-406989_T1w.nii.gz, This file has the resolution: 0.80mm x 0.85mm x 0.85mm. **[MOVED TO SOURCEDATA]**
+  - Check behavioral variability
+    /sub-408988/sub-408988_task-machinegame_run-005_cond1.txt - subject asleep?
 
 - Skull script structural images
 - QA (check brain extraction, orientation)
