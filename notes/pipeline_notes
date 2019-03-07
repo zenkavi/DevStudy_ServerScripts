@@ -179,3 +179,17 @@ Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
 
 Check if all jobs worked:
 find . -name '*run-*+.feat'
+
+==============================level2===============================
+
+Input:
+Script: make_l2_fsfs.py
+Output:
+
+Input:
+Script: make_commands_for_level2.py > level2_tasklist.sh
+Output: level2_tasklist.sh
+
+Input: level2_tasklist.sh
+Script: run_level2.batch
+Output: $DATA_LOC/derivatives/level_2/sub-*/model/level_2.gfeat
