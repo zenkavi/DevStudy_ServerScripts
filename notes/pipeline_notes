@@ -175,4 +175,7 @@ Output: level1_tasklist.sh
 
 Input: level1_tasklist.sh
 Script: run_level1.batch
-Output:
+Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
+
+Check if all jobs worked:
+find . -name '*run-*+.feat'

@@ -39,6 +39,10 @@ for cur_ef in events_files:
     cond3['correct'] = 1
     cond4 = cond4[['onset', 'duration']]
     cond4['incorrect'] = 1
+    if len(cond4) == 0:
+        cond4 = pd.DataFrame(data={'onset': [0], 'duration': [0], 'incorrect': [1]})
+        cols = ['onset', 'duration', 'incorrect']
+        cond4 = cond4[cols]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond3.txt'%(out_path,subnum,subnum,runnum), cond3.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond4.txt'%(out_path,subnum,subnum,runnum), cond4.values, fmt='%1.3f')
 
@@ -50,7 +54,10 @@ for cur_ef in events_files:
     cond5['correct'] = 1
     cond6 = cond6[['onset', 'duration']]
     cond6['incorrect'] = 1
-
+    if len(cond6) == 0:
+        cond6 = pd.DataFrame(data={'onset': [0], 'duration': [0], 'incorrect': [1]})
+        cols = ['onset', 'duration', 'incorrect']
+        cond6 = cond6[cols]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond5.txt'%(out_path,subnum,subnum,runnum), cond5.values, fmt='%1.3f')
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond6.txt'%(out_path,subnum,subnum,runnum), cond6.values, fmt='%1.3f')
 
