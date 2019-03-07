@@ -33,6 +33,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     sub-406989/anat/sub-406989_T1w.nii.gz, This file has the resolution: 0.80mm x 0.85mm x 0.85mm. **[MOVED TO SOURCEDATA]**
   - Check behavioral variability
     /sub-408988/sub-408988_task-machinegame_run-005_cond1.txt - subject asleep?
+  - No confounds file for sub-100051 run 1
 
 - Skull script structural images
 - QA (check brain extraction, orientation)
