@@ -20,7 +20,7 @@ all_featdirs = glob.glob('%s/*/model/run*'%(l1dir))
 
 for dir in subdirs:
   subnum = re.findall('\d+', os.path.dirname(dir))[5]
-  outdir = '"%s/sub-%s/model/"'%(l2dir, subnum)
+  outdir = '"%s/sub-%s/model/%s"'%(l2dir, subnum, subnum)
   if not os.path.exists('%s/sub-%s/model/'%(l2dir, subnum)):
       os.makedirs('%s/sub-%s/model/'%(l2dir, subnum))
   featdirs = [i for i in all_featdirs if subnum in i]
