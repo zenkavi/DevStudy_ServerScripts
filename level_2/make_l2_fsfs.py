@@ -18,9 +18,9 @@ subdirs.sort()
 for dir in subdirs:
   subnum = re.findall('\d+', os.path.dirname(dir))[5]
 
-  outdir = '"%s/sub-%s/model/sub-%s"'%(fsfdir, subnum, subnum)
+  outdir = '"%s/sub-%s/model/"'%(fsfdir, subnum)
   if not os.path.exists('%s/sub-%s/model/'%(fsfdir, subnum)):
-      os.makedirs(os.path.dirname(outdir))
+      os.makedirs('%s/sub-%s/model/'%(fsfdir, subnum))
 
   ntpts = ...
 
