@@ -179,6 +179,7 @@ Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
 
 Check if all jobs worked:
 find . -name '*run-*+.feat'
+find . -name '*run-*.feat'
 
 ==============================level2===============================
 
