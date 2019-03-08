@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J devstudy_level1
-#SBATCH --array=1-437%30
+#SBATCH --array=1-438%30
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=06:00:00
 #SBATCH -n 1
@@ -13,7 +13,7 @@
 #SBATCH -o ../.out/level1-%A-%a.out
 #SBATCH -e ../.err/level1-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=FAIL,END
 # ------------------------------------------
 
 source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh

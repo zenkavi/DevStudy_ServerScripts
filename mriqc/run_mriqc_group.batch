@@ -12,7 +12,7 @@
 #SBATCH -o ../.out/mriqc-group.out
 #SBATCH -e ../.err/mriqc-group.err
 #SBATCH --mail-user=zenkavi@stanford.edu
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=FAIL,END
 # ------------------------------------------
 
 module load system

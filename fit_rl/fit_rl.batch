@@ -9,7 +9,7 @@
 #SBATCH -o ../.out/{TASK_LIST}-%A-%a.out
 #SBATCH -e ../.err/{TASK_LIST}-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=FAIL,END
 # ------------------------------------------
 source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 

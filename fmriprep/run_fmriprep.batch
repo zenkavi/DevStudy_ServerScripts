@@ -13,7 +13,7 @@
 #SBATCH -o ../.out/fmriprep-%A-%a.out
 #SBATCH -e ../.err/fmriprep-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=FAIL,END
 # ------------------------------------------
 
 module load system
