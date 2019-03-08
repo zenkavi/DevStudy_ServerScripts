@@ -15,7 +15,7 @@
 #SBATCH --mail-type=FAIL
 # ------------------------------------------
 
-export OLD_DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.3/
-export NEW_DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.4/
+export OLD_DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.4/
+export NEW_DATA_LOC=/oak/stanford/groups/russpold/data/ds000054/0.0.5/
 
 rsync -r $OLD_DATA_LOC/ $NEW_DATA_LOC
