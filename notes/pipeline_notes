@@ -178,14 +178,16 @@ Script: run_level1.batch
 Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
 
 Check if all jobs worked:
-find . -name '*run-*+.feat'
-find . -name '*run-*.feat'
+There should be none of:
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*+.feat'
+There should be 438 of (excluding the run for 100051 with no behavioral variability)
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*.feat' | wc
 
 ==============================level2===============================
 
 Input: template_l2.fsf, template_l2_r3.fsf, template_l2_r5.fsf
 Script: make_l2_fsfs.py
-Output:
+Output: $DATA_LOC/derivatives/level_2/sub-*/model/sub-*_l2.fsf
 
 Input:
 Script: make_commands_for_level2.py > level2_tasklist.sh
