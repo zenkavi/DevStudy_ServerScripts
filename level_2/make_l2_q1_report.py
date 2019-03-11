@@ -16,7 +16,5 @@ f = open(outfile, "w")
 for file in all_feats:
     f.write("<p>==============================================")
     f.write("<p>%s"%(file))
-    f.write("<IMG SRC=\"https://login.sherlock.stanford.edu/pun/sys/files/fs/%s/inputreg/maskunique_overlay.png\">"%(file))
+    f.write("<IMG SRC=\"https://login.sherlock.stanford.edu/pun/sys/files/fs%s/inputreg/maskunique_overlay.png\">"%(file))
 f.close()
-
-https://login.sherlock.stanford.edu/pun/sys/files/fs/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100003/model/100003.gfeat/inputreg/
