@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J devstudy_level1_100128
+#SBATCH -J devstudy_level1_100152
 #SBATCH --array=1-4%4
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=06:00:00
