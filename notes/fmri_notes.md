@@ -12,7 +12,7 @@ Notes on `FSL for task fMRI` series from mumfordbrainstats
     Missing behavioral data for all runs of sub-308023 **[MOVED TO SOURCEDATA]**  
     Missing behavioral data for all runs of sub-406989 **[MOVED TO SOURCEDATA]**  
     Missing behavioral data for all runs of sub-411236 **[MOVED TO SOURCEDATA]**  
-    *Missing behavioral data for run 6 for sub-100110*
+    Missing behavioral data for run 6 for sub-100110 **[MOVED TO SOURCEDATA]**
     Missing images for runs 3-6 of sub-100109 **[MOVED TO SOURCEDATA]**
     *Missing images for runs 4-6 of sub-100169*
     *Missing images for runs 6 of sub-200025* **[first volume corrupt]**
