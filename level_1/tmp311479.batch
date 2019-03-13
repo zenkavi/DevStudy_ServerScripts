@@ -1,20 +1,21 @@
 #!/bin/bash
 
-#SBATCH -J devstudy_level2_100243
+#SBATCH -J devstudy_level1_311479
+#SBATCH --array=1-3%3
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=02:00:00
+#SBATCH --time=06:00:00
 #SBATCH -n 1
 #SBATCH --cpus-per-task=10
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=8G
+#SBATCH --mem-per-cpu=6400M
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/level2-100243.out
-#SBATCH -e ../.err/level2-100243.err
+#SBATCH -o ../.out/level1_311479-.out
+#SBATCH -e ../.err/level1_311479.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
 # ------------------------------------------
 
 source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 
-feat $DATA_LOC/derivatives/level_2/sub-100243/model/sub-100243_l2.fsf
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" tmp311479.sh )
