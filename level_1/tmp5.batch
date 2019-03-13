@@ -10,7 +10,7 @@
 #SBATCH --mem-per-cpu=6400M
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/level1_200211-.out
+#SBATCH -o ../.out/level1_200211.out
 #SBATCH -e ../.err/level1_200211.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
