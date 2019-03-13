@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J devstudy_level1_311479
-#SBATCH --array=1-3%3
+#SBATCH --array=1-6%6
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=06:00:00
 #SBATCH -n 1
