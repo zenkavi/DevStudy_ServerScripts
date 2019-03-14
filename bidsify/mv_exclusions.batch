@@ -64,3 +64,29 @@ mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100110/func/sub-100110_
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100110/func/sub-100110_task-machinegame_run-006_bold.nii.gz /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100110/func/
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100110/func/sub-100110_task-machinegame_run-006_sbref.json /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100110/func/
 mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100110/func/sub-100110_task-machinegame_run-006_sbref.nii.gz /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100110/func/
+
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-408511/func/sub-408511_task-machinegame_run-006_events.tsv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-408511/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-408511/func/sub-408511_task-machinegame_run-006_sbref.json /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-408511/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-408511/func/sub-408511_task-machinegame_run-006_sbref.nii.gz /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-408511/func/
+
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100103/func/sub-100103_task-machinegame_run-003_events.tsv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100103/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100103/func/sub-100103_task-machinegame_run-003_bold.json /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100103/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100103/func/sub-100103_task-machinegame_run-003_bold.nii.gz /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100103/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100103/func/sub-100103_task-machinegame_run-003_sbref.json /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100103/func/
+mv /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100103/func/sub-100103_task-machinegame_run-003_sbref.nii.gz /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100103/func/
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-100103/func -type f -name '*100103*run-003*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-100103  \;
+
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100188/func -type f -name '*100188*run-004*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100188  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-100188/func -type f -name '*100188*run-004*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-100188  \;
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-100241/func -type f -name '*100241*run-004*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-100241  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-100241/func -type f -name '*100241*run-004*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-100241  \;
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-306065/func -type f -name '*306065*run-001*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-306065  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-306065/func -type f -name '*306065*run-001*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-306065  \;
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/sub-408988/func -type f -name '*408988*run-005*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/sub-408988  \;
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-408988/func -type f -name '*408988*run-005*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-408988  \;
+
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep/sub-100051/func -type f -name '*100051*run-001*' -exec mv -i {} /oak/stanford/groups/russpold/data/ds000054/0.0.4/sourcedata/derivatives/fmriprep/sub-100051  \;

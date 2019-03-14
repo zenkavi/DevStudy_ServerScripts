@@ -64,45 +64,12 @@ for cur_ef in events_files:
     print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
 
-#cond1.txt = gain outcome (parametric)
-#cond2.txt = loss outcome (parametric)
-#cond3.txt = pre correct choice (stim-presentation)
-    #trial_type == 'stim-presentation'
-        #stimulus == 1 & response == 2
-        #stimulus == 2 & response == 1
-        #stimulus == 3 & response == 1
-        #stimulus == 4 & response == 2
-#cond4.txt = pre incorrect choice (stim-presentation)
-    #trial_type == 'stim-presentation'
-        #stimulus == 1 & response == 1
-        #stimulus == 2 & response == 2
-        #stimulus == 3 & response == 2
-        #stimulus == 4 & response == 1
-#cond5.txt = post correct choice (response)
-    #trial_type == 'response'
-        #stimulus == 1 & response == 2
-        #stimulus == 2 & response == 1
-        #stimulus == 3 & response == 1
-        #stimulus == 4 & response == 2
-#cond6.txt = post incorrect choice (response)
-    #trial_type == 'response'
-        #stimulus == 1 & response == 1
-        #stimulus == 2 & response == 2
-        #stimulus == 3 & response == 2
-        #stimulus == 4 & response == 1
-#cond7.txt = EV
-#cond8.txt = PE
-
-#contrasts:
-#cond1 - baseline
-#cond2 - baseline
-#cond2 - cond1
-#cond1 - cond2
-#cond3 - baseline
-#cond4 - baseline
-#cond4 - cond3
-#cond3 - cond4
-#cond5 - baseline
-#cond6 - baseline
-#cond6 - cond5
-#cond5 - cond6
+#MEAN OF ALL = 0
+#cond 1 = stim 1
+#cond 2 = stim 2
+#cond 3 = stim 3
+#cond 4 = stim 4
+#cond 5 = RT
+#cond 6 = junk
+#24 motion parameters
+#scrub volumes
