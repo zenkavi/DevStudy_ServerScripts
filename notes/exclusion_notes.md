@@ -21,7 +21,7 @@ Notes on exclusions for ds000054
   sub-100110/func/sub-100110_task-machinegame_run-06_bold.nii.gz,161 **[MOVED TO SOURCEDATA]**
   sub-100188/func/sub-100188_task-machinegame_run-04_bold.nii.gz,153 **[MOVED TO SOURCEDATA]**
   sub-100241/func/sub-100241_task-machinegame_run-04_bold.nii.gz,11 **[MOVED TO SOURCEDATA]**
-  *sub-306065/func/sub-306065_task-machinegame_run-01_bold.nii.gz,148* *[noted in Subject_fMRI_analysis_tracking]*   
+  sub-306065/func/sub-306065_task-machinegame_run-01_bold.nii.gz,148 **[MOVED TO SOURCEDATA]**   
   sub-406989/func/sub-406989_task-machinegame_run-01_bold.nii.gz,131 **[MOVED TO SOURCEDATA]**  
 
 - Fmap volumes != 96,96,56 (voxels):
