@@ -155,7 +155,7 @@ returns 434 + 5 = 439 because
 
 Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/derivatives/fmriprep_*/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_desc-confounds_regressors.tsv
 Script: find_scrub_vols.py
-Output: $DATA_LOC/derivatives/level_1/scrub_fd_*_report.csv, $DATA_LOC/derivativatives/sub-*/sub-*_task-machinegame_run-*_scrub_vols.txt
+Output: $DATA_LOC/derivatives/level_1/scrub_fd_*_report.csv, $DATA_LOC/derivativatives/sub-*/sub-*_task-machinegame_run-*_scrub_vols.txt, $DATA_LOC/sourcedata/derivativatives/fmriprep/{EXCLUDED_RUN}
 
 Input:
 Script: get_trial_ev.py
