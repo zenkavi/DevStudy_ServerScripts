@@ -109,7 +109,7 @@ for cur_ef in events_files:
     cond_pe_hv.PE = cond_pe_hv.PE - cond_pe_hv.PE.mean()
     if len(cond_pe_hv)<1:
         cond_pe_hv = pd.DataFrame(data={'onset': [0], 'duration': [0], 'PE': [0]})[['onset', 'duration', 'PE']]
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe_hv.txt'%(out_path,subnum,subnum,runnum), cond_pe_lv.values, fmt='%1.3f')
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe_hv.txt'%(out_path,subnum,subnum,runnum), cond_pe_hv.values, fmt='%1.3f')
 
     df['response_shift'] = df.response.shift(-1)
     cond_junk = df.query('response == 0 & response_shift == 0')[['onset', 'duration']]
