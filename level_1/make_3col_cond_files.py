@@ -62,7 +62,7 @@ for cur_ef in events_files:
         cond_m4 = pd.DataFrame(data={'onset': [0], 'duration': [0], 'machine4': [1]})[['onset', 'duration', 'machine4']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m4.txt'%(out_path,subnum,subnum,runnum), cond_m4.values, fmt='%1.3f')
 
-    df.rt_shift = df.response_time.shift(-1)
+    df['rt_shift'] = df.response_time.shift(-1)
 
     cond_m1_rt = df.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
     cond_m1_rt['duration'] = mean_rt
@@ -107,7 +107,7 @@ for cur_ef in events_files:
         cond_pe_hv = pd.DataFrame(data={'onset': [0], 'duration': [0], 'PE': [0]})[['onset', 'duration', 'PE']]
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe_hv.txt'%(out_path,subnum,subnum,runnum), cond_pe_lv.values, fmt='%1.3f')
 
-    df.response_shift = df.response.shift(-1)
+    df['response_shift'] = df.response.shift(-1)
     cond_junk = df.query('response == 0 & response_shift == 0')[['onset', 'duration']]
     cond_junk['junk'] = 1
     if len(cond_junk)<1:
