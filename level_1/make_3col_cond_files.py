@@ -25,6 +25,8 @@ all_events = all_events[all_events['response_time'].notnull()]
 
 mean_rt = all_events.response_time.mean()
 
+del all_events
+
 for cur_ef in events_files:
     df = pd.read_csv(cur_ef, sep = '\t')
     nums = re.findall('\d+', os.path.basename(cur_ef))
@@ -76,16 +78,24 @@ for cur_ef in events_files:
 
     post_choice_df = pd.concat([post_choice_df.reset_index(drop=True), ev_rpe_df.PE], axis=1)
     post_choice_df = post_choice_df[np.isfinite(post_choice_df['PE'])]
-    cond_pe = post_choice_df[['onset', 'duration', 'PE']]
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe.txt'%(out_path,subnum,subnum,runnum), cond_pe.values, fmt='%1.3f')
 
+    cond_pe_lv = post_choice_df.query("stimulus == 1 | stimulus == 3")[['onset', 'duration', 'PE']]
+    cond_pe_lv.PE = cond_pe_lv.PE - cond_pe_lv.PE.mean()
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe_lv.txt'%(out_path,subnum,subnum,runnum), cond_pe_lv.values, fmt='%1.3f')
 
-    cond_junk = df.query('response == 0')[['onset', 'duration']]
+    cond_pe_hv = post_choice_df.query("stimulus == 2 | stimulus == 4")[['onset', 'duration', 'PE']]
+    cond_pe_hv.PE = cond_pe_hv.PE - cond_pe_hv.PE.mean()
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe_hv.txt'%(out_path,subnum,subnum,runnum), cond_pe_lv.values, fmt='%1.3f')
+
+    df.response_shift = df.response.shift(-1)
+    cond_junk = df.query('response == 0 & response_shift == 0')[['onset', 'duration']]
     cond_junk['junk'] = 1
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_junk.txt'%(out_path,subnum,subnum,runnum), cond_junk.values, fmt='%1.3f')
 
     print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
+
+#low var machines: 1, 3; high var machines: 2, 4
 #PLUS:
 #Temporal derivatives
 #24 motion parameters
