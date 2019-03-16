@@ -69,24 +69,28 @@ for cur_ef in events_files:
     cond_m1_rt['demaned_rt'] = df.rt_shift - mean_rt
     if len(cond_m1_rt)<1:
         cond_m1_rt = pd.DataFrame(data={'onset': [0], 'duration': [0], 'demaned_rt': [0]})[['onset', 'duration', 'demaned_rt']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m1_rt.txt'%(out_path,subnum,subnum,runnum), cond_m1_rt.values, fmt='%1.3f')
 
     cond_m2_rt = df.query('trial_type == "stim_presentation" & stimulus == 2')[['onset']]
     cond_m2_rt['duration'] = mean_rt
     cond_m2_rt['demaned_rt'] = df.rt_shift - mean_rt
     if len(cond_m2_rt)<1:
         cond_m2_rt = pd.DataFrame(data={'onset': [0], 'duration': [0], 'demaned_rt': [0]})[['onset', 'duration', 'demaned_rt']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m2_rt.txt'%(out_path,subnum,subnum,runnum), cond_m2_rt.values, fmt='%1.3f')
 
     cond_m3_rt = df.query('trial_type == "stim_presentation" & stimulus == 3')[['onset']]
     cond_m3_rt['duration'] = mean_rt
     cond_m3_rt['demaned_rt'] = df.rt_shift - mean_rt
     if len(cond_m3_rt)<1:
         cond_m3_rt = pd.DataFrame(data={'onset': [0], 'duration': [0], 'demaned_rt': [0]})[['onset', 'duration', 'demaned_rt']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m3_rt.txt'%(out_path,subnum,subnum,runnum), cond_m3_rt.values, fmt='%1.3f')
 
     cond_m4_rt = df.query('trial_type == "stim_presentation" & stimulus == 4')[['onset']]
     cond_m4_rt['duration'] = mean_rt
     cond_m4_rt['demaned_rt'] = df.rt_shift - mean_rt
     if len(cond_m4_rt)<1:
         cond_m4_rt = pd.DataFrame(data={'onset': [0], 'duration': [0], 'demaned_rt': [0]})[['onset', 'duration', 'demaned_rt']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m4_rt.txt'%(out_path,subnum,subnum,runnum), cond_m4_rt.values, fmt='%1.3f')
 
     post_choice_df = df.query('trial_type == "response"')
 
