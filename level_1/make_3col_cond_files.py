@@ -15,6 +15,16 @@ events_files.sort()
 
 out_path = "%s/derivatives/level_1/sub-"%(data_loc)
 
+all_events = pd.DataFrame()
+
+for cur_ef in events_files:
+    df = pd.read_csv(cur_ef, sep = '\t')
+    all_events = all_events.append(df, ignore_index= True)
+
+all_events = all_events[all_events['response_time'].notnull()]
+
+mean_rt = all_events.response_time.mean()
+
 for cur_ef in events_files:
     df = pd.read_csv(cur_ef, sep = '\t')
     nums = re.findall('\d+', os.path.basename(cur_ef))
@@ -22,21 +32,43 @@ for cur_ef in events_files:
     runnum = nums[1]
     print("Making condition files for sub-%s run-%s"%(subnum, runnum))
 
-    cond_m1 = df.query('trial_type == "stimulus_presentation" & stimulus == 1')[['onset', 'duration']]
+    cond_m1 = df.query('trial_type == "stimulus_presentation" & stimulus == 1')[['onset']]
+    cond_m1['duration'] = mean_rt
     cond_m1['machine1'] = 1
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m1.txt'%(out_path,subnum,subnum,runnum), cond_m1.values, fmt='%1.3f')
 
     cond_m2 = df.query('trial_type == "stimulus_presentation" & stimulus == 2')[['onset', 'duration']]
+    cond_m2['duration'] = mean_rt
     cond_m2['machine2'] = 1
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m2.txt'%(out_path,subnum,subnum,runnum), cond_m2.values, fmt='%1.3f')
 
     cond_m3 = df.query('trial_type == "stimulus_presentation" & stimulus == 3')[['onset', 'duration']]
+    cond_m3['duration'] = mean_rt
     cond_m3['machine3'] = 1
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m3.txt'%(out_path,subnum,subnum,runnum), cond_m3.values, fmt='%1.3f')
 
     cond_m4 = df.query('trial_type == "stimulus_presentation" & stimulus == 4')[['onset', 'duration']]
+    cond_m4['duration'] = mean_rt
     cond_m4['machine4'] = 1
     np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_m4.txt'%(out_path,subnum,subnum,runnum), cond_m4.values, fmt='%1.3f')
+
+    df.rt_shift = df.response_time.shift(-1)
+
+    cond_m1_rt = df.query('trial_type == "stimulus_presentation" & stimulus == 1')[['onset']]
+    cond_m1_rt['duration'] = mean_rt
+    cond_m1_rt['demaned_rt'] = df.rt_shift - mean_rt
+
+    cond_m2_rt = df.query('trial_type == "stimulus_presentation" & stimulus == 2')[['onset']]
+    cond_m2_rt['duration'] = mean_rt
+    cond_m2_rt['demaned_rt'] = df.rt_shift - mean_rt
+
+    cond_m3_rt = df.query('trial_type == "stimulus_presentation" & stimulus == 3')[['onset']]
+    cond_m3_rt['duration'] = mean_rt
+    cond_m3_rt['demaned_rt'] = df.rt_shift - mean_rt
+
+    cond_m4_rt = df.query('trial_type == "stimulus_presentation" & stimulus == 4')[['onset']]
+    cond_m4_rt['duration'] = mean_rt
+    cond_m4_rt['demaned_rt'] = df.rt_shift - mean_rt
 
     post_choice_df = df.query('trial_type == "response"')
 
@@ -45,11 +77,8 @@ for cur_ef in events_files:
     post_choice_df = pd.concat([post_choice_df.reset_index(drop=True), ev_rpe_df.PE], axis=1)
     post_choice_df = post_choice_df[np.isfinite(post_choice_df['PE'])]
     cond_pe = post_choice_df[['onset', 'duration', 'PE']]
+    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_pe.txt'%(out_path,subnum,subnum,runnum), cond_pe.values, fmt='%1.3f')
 
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond8.txt'%(out_path,subnum,subnum,runnum), cond_pe.values, fmt='%1.3f')
-
-    cond_rt = df.query('response_time > 0')[['onset', 'duration', 'response_time']]
-    np.savetxt(r'%s%s/sub-%s_task-machinegame_run-%s_cond_rt.txt'%(out_path,subnum,subnum,runnum), cond_rt.values, fmt='%1.3f')
 
     cond_junk = df.query('response == 0')[['onset', 'duration']]
     cond_junk['junk'] = 1
@@ -57,14 +86,7 @@ for cur_ef in events_files:
 
     print('Done saving condition files for sub-%s run-%s'%(subnum, runnum))
 
-
-#MEAN OF ALL = 0
-#cond 1 = stim 1 on during presentation
-#cond 2 = stim 2
-#cond 3 = stim 3
-#cond 4 = stim 4
-#cond 5 = PE during response
-#cond 6 = RT during response
-#cond 7 = junk
+#PLUS:
+#Temporal derivatives
 #24 motion parameters
 #scrub volumes
