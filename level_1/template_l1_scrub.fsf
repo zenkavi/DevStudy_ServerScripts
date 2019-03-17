@@ -1027,7 +1027,7 @@ set fmri(tempfilt_yn11) 1
 set fmri(deriv_yn11) 1
 
 # Custom EV file (EV 11)
-set fmri(custom11) CEV11
+set fmri(custom11) CEVXI
 
 # Gamma sigma (EV 11)
 set fmri(gammasigma11) 3
