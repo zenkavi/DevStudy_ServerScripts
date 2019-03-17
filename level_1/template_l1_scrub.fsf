@@ -956,7 +956,7 @@ set fmri(tempfilt_yn10) 1
 set fmri(deriv_yn10) 1
 
 # Custom EV file (EV 10)
-set fmri(custom10) CEV10
+set fmri(custom10) CEVX
 
 # Orthogonalise EV 10 wrt EV 0
 set fmri(ortho10.0) 0
