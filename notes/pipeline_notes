@@ -165,12 +165,16 @@ Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/sub-*/func/sub-*_task-m
 Script: make_3col_cond_files.py
 Output: $DATA_LOC/derivatives/level_1/sub-*/sub-*_task-machinegame_run-*_cond*.txt
 
-Check output: each of these should be
-find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name 'sub-*_task-machinegame_run-*_cond1.txt' | wc
+CHECK:
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name 'sub-*_task-machinegame_run-*_cond*.txt' | wc
 
 Input: $SERVER_SCRIPTS/setup/dev_study_env.sh, $DATA_LOC/derivatives/fmriprep_1.2.5/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz, $SERVER_SCRIPTS/level1/template_l1.fsf
 Script: make_l1_fsfs.py
 Output: $DATA_LOC/derivatives/level_1/sub-*/l1_design_sub-*_run-*.fsf
+
+CHECK output: these should be the number of runs
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/fmriprep_1.3.0/fmriprep -name 'sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' | wc
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name 'sub-*.fsf' | wc
 
 Input: $DATA_LOC/derivatives/fmriprep_*/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 Script: make_commands_for_level1.py > level1_tasklist.sh
@@ -183,9 +187,7 @@ Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
 Check if all jobs worked:
 There should be none of:
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*+.feat'
-There should be 438 of (excluding the run for 100051 with no behavioral variability)
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*.feat' | wc
-find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*reg_standard*' | wc
 
 ==============================level2===============================
 
