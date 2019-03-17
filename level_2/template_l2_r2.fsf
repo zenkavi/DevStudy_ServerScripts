@@ -307,15 +307,6 @@ set feat_files(1) FEATDIR1
 # 4D AVW data or FEAT directory (2)
 set feat_files(2) FEATDIR2
 
-# 4D AVW data or FEAT directory (3)
-set feat_files(3) FEATDIR3
-
-# 4D AVW data or FEAT directory (4)
-set feat_files(4) FEATDIR4
-
-# 4D AVW data or FEAT directory (5)
-set feat_files(5) FEATDIR5
-
 # Add confound EVs text file
 set fmri(confoundevs) 0
 
