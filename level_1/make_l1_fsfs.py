@@ -5,7 +5,7 @@ import nibabel as nib
 import re
 from argparse import ArgumentParser
 
-#Usage: python make_l1_fsfs -m 1 -ev1 m1 -ev2 m2 -ev3 m3 -ev4 m4 -ev5 m1_rt -ev6 m2_rt -ev7 m3_rt -ev8 m4_rt -ev9 pe_lv -ev10 pe_hv -ev11 junk
+#Usage: python make_l1_fsfs.py -m 1 -ev1 m1 -ev2 m2 -ev3 m3 -ev4 m4 -ev5 m1_rt -ev6 m2_rt -ev7 m3_rt -ev8 m4_rt -ev9 pe_lv -ev10 pe_hv -ev11 junk
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_number", help="model number")
@@ -30,6 +30,7 @@ subdirs.sort()
 for dir in subdirs:
   subnum = re.findall('\d+', os.path.basename(dir))[0]
   runnum = re.findall('\d+', os.path.basename(dir))[1]
+  print("Making design files for sub-%s run-%s"%(subnum, runnum))
 
   outdir = '"%s/sub-%s/model%s/run-%s"'%(fsfdir, subnum, model_num,runnum)
   cur_img = nib.load(dir)
