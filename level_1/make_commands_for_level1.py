@@ -16,6 +16,6 @@ subdirs = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/sub-*_tas
 for dir in subdirs:
     subnum = re.findall('\d+', os.path.basename(dir))[0]
     runnum = re.findall('\d+', os.path.basename(dir))[1]
-    command = 'feat $DATA_LOC/derivatives/level_1/sub-%s/model/sub-%s_run-%s_l1.fsf'%(subnum, subnum, runnum)
+    command = 'feat $DATA_LOC/derivatives/level_1/sub-%s/model1/sub-%s_run-%s_l1.fsf'%(subnum, subnum, runnum)
     print(command)
 #Example command: feat $DATA_LOC/derivatives/level1_inputs/sub-100003/design_sub-100003_run-01.fsf
