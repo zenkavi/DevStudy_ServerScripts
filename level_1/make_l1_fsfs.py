@@ -38,7 +38,7 @@ for dir in subdirs:
   scrubvols = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"'%(fsfdir, subnum, subnum, runnum)
   anat = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"'%(data_loc, subnum, subnum)
 
-  evs = [x for x in evs '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond%s.txt"'%(fsfdir, subnum, subnum, runnum, x)]
+  evs = ['"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond_%s.txt"'%(fsfdir, subnum, subnum, runnum, x) for x in evs ]
 
   replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": evs[0], "CEV2": evs[1], "CEV3": evs[2], "CEV4": evs[3], "CEV5": evs[4], "CEV6": evs[5], "CEV7": evs[6], "CEV8": evs[7], "CEV9": evs[8], "CEV10": evs[9], "CEV11": evs[10]}
 
