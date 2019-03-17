@@ -31,21 +31,16 @@ for dir in subdirs:
   subnum = re.findall('\d+', os.path.basename(dir))[0]
   runnum = re.findall('\d+', os.path.basename(dir))[1]
   print("Making design files for sub-%s run-%s"%(subnum, runnum))
-
   outdir = '"%s/sub-%s/model%s/run-%s"'%(fsfdir, subnum, model_num,runnum)
   cur_img = nib.load(dir)
   ntpts = str(int(cur_img.header['dim'][4]))
   featdir = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"'%(data_loc, subnum, subnum, runnum)
   scrubvols = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"'%(fsfdir, subnum, subnum, runnum)
   anat = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"'%(data_loc, subnum, subnum)
-
   evs = ['"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond_%s.txt"'%(fsfdir, subnum, subnum, runnum, x) for x in evs ]
-
   replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": evs[0], "CEV2": evs[1], "CEV3": evs[2], "CEV4": evs[3], "CEV5": evs[4], "CEV6": evs[5], "CEV7": evs[6], "CEV8": evs[7], "CEV9": evs[8], "CEV10": evs[9], "CEV11": evs[10]}
-
   if not os.path.exists("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)):
       os.makedirs(os.path.join("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)))
-
   with open("%s/level_1/template_l1_scrub.fsf"%(server_scripts)) as infile:
     with open("%s/sub-%s/model%s/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, model_num, subnum, runnum), 'w') as outfile:
         for line in infile:
