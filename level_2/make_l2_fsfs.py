@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_number", default = "1", help="model number")
-parser.add_argument("-s", "--subject", default = "0" help="model number")
+parser.add_argument("-s", "--subject", default = "0", help="model number")
 args = parser.parse_args()
 
 model_num = args.model_number
