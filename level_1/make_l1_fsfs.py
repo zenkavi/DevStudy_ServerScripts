@@ -45,7 +45,7 @@ for dir in subdirs:
   if not os.path.exists("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)):
       os.makedirs(os.path.join("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)))
 
-  with open("%s/level_1/template_l1.fsf"%(server_scripts)) as infile:
+  with open("%s/level_1/template_l1_scrub.fsf"%(server_scripts)) as infile:
     with open("%s/sub-%s/model%s/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, model_num, subnum, runnum), 'w') as outfile:
         for line in infile:
           for src, target in replacements.items():
