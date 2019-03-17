@@ -3,6 +3,17 @@ import os
 import glob
 import nibabel as nib
 import re
+from argparse import ArgumentParser
+
+#Usage: python make_l1_fsfs -m 1 -ev1 m1 -ev2 m2 -ev3 m3 -ev4 m4 -ev5 m1_rt -ev6 m2_rt -ev7 m3_rt -ev8 m4_rt -ev9 pe_lv -ev10 pe_hv -ev11 junk
+
+parser = ArgumentParser()
+parser.add_argument("-m", "--model_number", help="model number")
+parser.add_argument('-e','--evs', nargs='+', help='EVs', default = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'pe_lv', 'pe_hv', 'junk'])
+args = parser.parse_args()
+
+model_num = args.model_number
+evs = args.evs
 
 try:
     data_loc = os.environ['DATA_LOC']
@@ -20,28 +31,22 @@ for dir in subdirs:
   subnum = re.findall('\d+', os.path.basename(dir))[0]
   runnum = re.findall('\d+', os.path.basename(dir))[1]
 
-  outdir = '"%s/sub-%s/model/run-%s"'%(fsfdir, subnum, runnum)
+  outdir = '"%s/sub-%s/model%s/run-%s"'%(fsfdir, subnum, model_num,runnum)
   cur_img = nib.load(dir)
   ntpts = str(int(cur_img.header['dim'][4]))
   featdir = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold"'%(data_loc, subnum, subnum, runnum)
   scrubvols = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"'%(fsfdir, subnum, subnum, runnum)
   anat = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"'%(data_loc, subnum, subnum)
-  cev1 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond1.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev2 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond2.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev3 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond3.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev4 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond4.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev5 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond5.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev6 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond6.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev7 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond7.txt"'%(fsfdir, subnum, subnum, runnum)
-  cev8 = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond8.txt"'%(fsfdir, subnum, subnum, runnum)
 
-  replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cev1, "CEV2": cev2, "CEV3": cev3, "CEV4": cev4, "CEV5": cev5, "CEV6": cev6, "CEV7": cev7, "CEV8": cev8}
+  evs = [x for x in evs '"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond%s.txt"'%(fsfdir, subnum, subnum, runnum, x)]
 
-  if not os.path.exists("%s/sub-%s/model/"%(fsfdir, subnum)):
-      os.makedirs(os.path.join("%s/sub-%s/model/"%(fsfdir, subnum)))
+  replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": evs[0], "CEV2": evs[1], "CEV3": evs[2], "CEV4": evs[3], "CEV5": evs[4], "CEV6": evs[5], "CEV7": evs[6], "CEV8": evs[7], "CEV9": evs[8], "CEV10": evs[9], "CEV11": evs[10]}
+
+  if not os.path.exists("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)):
+      os.makedirs(os.path.join("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)))
 
   with open("%s/level_1/template_l1.fsf"%(server_scripts)) as infile:
-    with open("%s/sub-%s/model/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, subnum, runnum), 'w') as outfile:
+    with open("%s/sub-%s/model%s/sub-%s_run-%s_l1.fsf"%(fsfdir, subnum, model_num, subnum, runnum), 'w') as outfile:
         for line in infile:
           for src, target in replacements.items():
             line = line.replace(src, target)
