@@ -38,7 +38,7 @@ for dir in subdirs:
   scrubvols = '"%s/sub-%s/sub-%s_task-machinegame_run-%s_scrub_vols.txt"'%(fsfdir, subnum, subnum, runnum)
   anat = '"%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/anat/sub-%s_space-MNI152NLin2009cAsym_desc-preproc_T1w"'%(data_loc, subnum, subnum)
   cur_evs = ['"%s/sub-%s/sub-%s_task-machinegame_run-%s_cond_%s.txt"'%(fsfdir, subnum, subnum, runnum, x) for x in evs ]
-  replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cur_evs[0], "CEV2": cur_evs[1], "CEV3": cur_evs[2], "CEV4": cur_evs[3], "CEV5": cur_evs[4], "CEV6": cur_evs[5], "CEV7": cur_evs[6], "CEV8": cur_evs[7], "CEV9": cur_evs[8], "CEVX": cur_evs[9], "CEVXI": cur_evs[10]}
+  replacements = {"OUTDIR": outdir, "NTPTS": ntpts, "FEATDIR": featdir, "SCRUBVOLS": scrubvols, "ANAT": anat, "CEV1": cur_evs[0], "CEV2": cur_evs[1], "CEV3": cur_evs[2], "CEV4": cur_evs[3], "CEV5": cur_evs[4], "CEV6": cur_evs[5], "CEV7": cur_evs[6], "CEV8": cur_evs[7], "CEV9": cur_evs[8], "CEVX": cur_evs[9], "CEVII": cur_evs[10]}
   if not os.path.exists("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)):
       os.makedirs(os.path.join("%s/sub-%s/model%s/"%(fsfdir, subnum, model_num)))
   with open("%s/level_1/template_l1_scrub.fsf"%(server_scripts)) as infile:
