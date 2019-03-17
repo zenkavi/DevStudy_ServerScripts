@@ -51,6 +51,14 @@ for dir in subdirs:
                   for src, target in replacements.items():
                       line = line.replace(src, target)
                   outfile.write(line)
+  elif ntpts == 4:
+      replacements = {"OUTDIR": outdir, "NTPTS": str(ntpts), "FEATDIR1": '"%s"'%(featdirs[0]), "FEATDIR2": '"%s"'%(featdirs[1]), "FEATDIR3":'"%s"'%(featdirs[2]), "FEATDIR4": '"%s"'%(featdirs[3])}
+      with open("%s/level_2/template_l2_r4.fsf"%(server_scripts)) as infile:
+          with open("%s/sub-%s/model%s/sub-%s_l2.fsf"%(l2dir, subnum, model_num, subnum), 'w') as outfile:
+              for line in infile:
+                  for src, target in replacements.items():
+                      line = line.replace(src, target)
+                  outfile.write(line)
   elif ntpts == 3:
       replacements = {"OUTDIR": outdir, "NTPTS": str(ntpts), "FEATDIR1": '"%s"'%(featdirs[0]), "FEATDIR2": '"%s"'%(featdirs[1]), "FEATDIR3":'"%s"'%(featdirs[2])}
       with open("%s/level_2/template_l2_r3.fsf"%(server_scripts)) as infile:
@@ -59,3 +67,19 @@ for dir in subdirs:
                   for src, target in replacements.items():
                       line = line.replace(src, target)
                   outfile.write(line)
+  elif ntpts == 2:
+      replacements = {"OUTDIR": outdir, "NTPTS": str(ntpts), "FEATDIR1": '"%s"'%(featdirs[0]), "FEATDIR2": '"%s"'%(featdirs[1])}
+      with open("%s/level_2/template_l2_r2.fsf"%(server_scripts)) as infile:
+          with open("%s/sub-%s/model%s/sub-%s_l2.fsf"%(l2dir, subnum, model_num, subnum), 'w') as outfile:
+              for line in infile:
+                  for src, target in replacements.items():
+                      line = line.replace(src, target)
+                      outfile.write(line)
+  elif ntpts == 1:
+      replacements = {"OUTDIR": outdir, "NTPTS": str(ntpts), "FEATDIR1": '"%s"'%(featdirs[0])}
+      with open("%s/level_2/template_l2_r1.fsf"%(server_scripts)) as infile:
+          with open("%s/sub-%s/model%s/sub-%s_l2.fsf"%(l2dir, subnum, model_num, subnum), 'w') as outfile:
+              for line in infile:
+                  for src, target in replacements.items():
+                      line = line.replace(src, target)
+                      outfile.write(line)

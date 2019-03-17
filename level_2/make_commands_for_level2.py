@@ -18,6 +18,6 @@ subdirs.sort()
 
 for dir in subdirs:
     subnum = re.findall('\d+', os.path.dirname(dir))[5]
-    command = 'feat $DATA_LOC/derivatives/level_2/sub-%s/model/sub-%s_l2.fsf'%(subnum, subnum)
+    command = 'feat $DATA_LOC/derivatives/level_2/sub-%s/model1/sub-%s_l2.fsf'%(subnum, subnum)
     print(command)
 #Example command: feat $DATA_LOC/derivatives/level12/sub-100003/model/sub-100003_l2.fsf
