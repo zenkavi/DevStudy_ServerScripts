@@ -187,7 +187,9 @@ Output: $DATA_LOC/derivatives/level_1/sub-*/model/run-*.feat
 Check if all jobs worked:
 There should be none of:
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*+.feat'
+These should have the number of jobs
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name '*run-*.feat' | wc
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name 'stats' -type d | wc
 
 ==============================level2===============================
 

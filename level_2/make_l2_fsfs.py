@@ -35,7 +35,7 @@ for dir in subdirs:
   featdirs = [i for i in all_featdirs if subnum in i]
   featdirs.sort()
   ntpts = len(featdirs)
-  print("Making l2 fsf for sub-%s"(%subnum))
+  print("Making l2 fsf for sub-%s"%(subnum))
   if ntpts == 6:
       replacements = {"OUTDIR": outdir, "NTPTS": str(ntpts), "FEATDIR1": '"%s"'%(featdirs[0]), "FEATDIR2": '"%s"'%(featdirs[1]), "FEATDIR3":'"%s"'%(featdirs[2]), "FEATDIR4": '"%s"'%(featdirs[3]), "FEATDIR5": '"%s"'%(featdirs[4]), "FEATDIR6": '"%s"'%(featdirs[5])}
       with open("%s/level_2/template_l2.fsf"%(server_scripts)) as infile:
