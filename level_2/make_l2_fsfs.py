@@ -8,9 +8,11 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_number", default = "1", help="model number")
+parser.add_argument("-s", "--subject", default = "0" help="model number")
 args = parser.parse_args()
 
 model_num = args.model_number
+subject = args.subject
 
 try:
     data_loc = os.environ['DATA_LOC']
@@ -26,6 +28,10 @@ subdirs=glob.glob("%s/derivatives/level_1/sub-*/"%(data_loc))
 subdirs.sort()
 
 all_featdirs = glob.glob('%s/*/model%s/run*'%(l1dir, model_num))
+
+if(subject != 0):
+    subdirs = [x for x in subdirs if subject in x]
+    all_featdirs = [x for x in all_featdirs if subject in x]
 
 for dir in subdirs:
   subnum = re.findall('\d+', os.path.dirname(dir))[5]
