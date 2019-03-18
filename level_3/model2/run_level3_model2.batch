@@ -9,8 +9,8 @@
 #SBATCH --ntasks-per-node=1
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/level3-model2-%A-%a.out
-#SBATCH -e ../.err/level3-model2-%A-%a.err
+#SBATCH -o ../../.out/level3-model2-%A-%a.out
+#SBATCH -e ../../.err/level3-model2-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
 # ------------------------------------------
