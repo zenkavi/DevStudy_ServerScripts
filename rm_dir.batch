@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#SBATCH -J rm_dir
+#SBATCH --array=1-2%2
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=03:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+
+# Outputs ----------------------------------
+#SBATCH -o .out/rm_dir-%A-%a.out
+#SBATCH -e .err/rm_dir-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL,END
+# ------------------------------------------
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" rm_dir.sh )
