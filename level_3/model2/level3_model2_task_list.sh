@@ -1,0 +1,10 @@
+feat $DATA_LOC/derivatives/level_3/model2/m2/m2.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m3/m3.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m4/m4.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m1_rt/m1_rt.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m2_rt/m2_rt.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m3_rt/m3_rt.fsf
+feat $DATA_LOC/derivatives/level_3/model2/m4_rt/m4_rt.fsf
+feat $DATA_LOC/derivatives/level_3/model2/pe_lv/pe_lv.fsf
+feat $DATA_LOC/derivatives/level_3/model2/pe_hv/pe_hv.fsf
+feat $DATA_LOC/derivatives/level_3/model2/junk/junk.fsf

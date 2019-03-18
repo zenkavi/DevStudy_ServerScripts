@@ -207,5 +207,4 @@ Output: $DATA_LOC/derivatives/level_2/sub-*/model/sub*.gfeat
 
 Check if all jobs worked (should be 74)
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2 -name '*.gfeat' | wc
-
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2 -name '*maskunique_overlay.png' | wc
