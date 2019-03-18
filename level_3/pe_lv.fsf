@@ -30,13 +30,13 @@ set fmri(featwatcher_yn) 0
 set fmri(sscleanup_yn) 0
 
 # Output directory
-set fmri(outputdir) OUTPUT_DIR
+set fmri(outputdir) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/pe_lv/pe_lv"
 
 # TR(s)
 set fmri(tr) 3
 
 # Total volumes
-set fmri(npts) 74
+set fmri(npts) 67
 
 # Delete volumes
 set fmri(ndelete) 0
@@ -45,7 +45,7 @@ set fmri(ndelete) 0
 set fmri(tagfirst) 1
 
 # Number of first-level analyses
-set fmri(multiple) 74
+set fmri(multiple) 67
 
 # Higher-level input type
 # 1 : Inputs are lower-level FEAT directories
@@ -269,226 +269,205 @@ set fmri(paradigm_hp) 100
 set fmri(ncopeinputs) 0
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) FEATDIR1
+set feat_files(1) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100003/model1/100003.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (2)
-set feat_files(2) FEATDIR2
+set feat_files(2) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100009/model1/100009.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (3)
-set feat_files(3) FEATDIR3
+set feat_files(3) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100042/model1/100042.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (4)
-set feat_files(4) FEATDIR4
+set feat_files(4) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100057/model1/100057.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (5)
-set feat_files(5) FEATDIR5
+set feat_files(5) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100059/model1/100059.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (6)
-set feat_files(6) FEATDIR6
+set feat_files(6) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100062/model1/100062.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (7)
-set feat_files(7) FEATDIR7
+set feat_files(7) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100063/model1/100063.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (8)
-set feat_files(8) FEATDIR8
+set feat_files(8) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100068/model1/100068.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (9)
-set feat_files(9) FEATDIR9
+set feat_files(9) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100104/model1/100104.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (10)
-set feat_files(10) FEATDIR10
+set feat_files(10) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100110/model1/100110.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (11)
-set feat_files(11) FEATDIR11
+set feat_files(11) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100128/model1/100128.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (12)
-set feat_files(12) FEATDIR12
+set feat_files(12) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100129/model1/100129.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (13)
-set feat_files(13) FEATDIR13
+set feat_files(13) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100143/model1/100143.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (14)
-set feat_files(14) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100128/model/100128.gfeat/cope13.feat/stats/cope1.nii.gz"
+set feat_files(14) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100152/model1/100152.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (15)
-set feat_files(15) FEATDIR15
+set feat_files(15) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100169/model1/100169.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (16)
-set feat_files(16) FEATDIR16
+set feat_files(16) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100180/model1/100180.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (17)
-set feat_files(17) FEATDIR17
+set feat_files(17) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100185/model1/100185.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (18)
-set feat_files(18) FEATDIR18
+set feat_files(18) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100188/model1/100188.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (19)
-set feat_files(19) FEATDIR19
+set feat_files(19) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100191/model1/100191.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (20)
-set feat_files(20) FEATDIR20
+set feat_files(20) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100207/model1/100207.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (21)
-set feat_files(21) FEATDIR21
+set feat_files(21) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100214/model1/100214.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (22)
-set feat_files(22) FEATDIR22
+set feat_files(22) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100241/model1/100241.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (23)
-set feat_files(23) FEATDIR23
+set feat_files(23) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100243/model1/100243.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (24)
-set feat_files(24) FEATDIR24
+set feat_files(24) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100244/model1/100244.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (25)
-set feat_files(25) FEATDIR25
+set feat_files(25) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100247/model1/100247.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (26)
-set feat_files(26) FEATDIR26
+set feat_files(26) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100250/model1/100250.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (27)
-set feat_files(27) FEATDIR27
+set feat_files(27) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200025/model1/200025.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (28)
-set feat_files(28) FEATDIR28
+set feat_files(28) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200056/model1/200056.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (29)
-set feat_files(29) FEATDIR29
+set feat_files(29) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200061/model1/200061.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (30)
-set feat_files(30) FEATDIR30
+set feat_files(30) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200085/model1/200085.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (31)
-set feat_files(31) FEATDIR31
+set feat_files(31) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200088/model1/200088.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (32)
-set feat_files(32) FEATDIR32
+set feat_files(32) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200133/model1/200133.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (33)
-set feat_files(33) FEATDIR33
+set feat_files(33) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200148/model1/200148.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (34)
-set feat_files(34) FEATDIR34
+set feat_files(34) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200156/model1/200156.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (35)
-set feat_files(35) FEATDIR35
+set feat_files(35) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200162/model1/200162.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (36)
-set feat_files(36) FEATDIR36
+set feat_files(36) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200164/model1/200164.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (37)
-set feat_files(37) FEATDIR37
+set feat_files(37) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200166/model1/200166.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (38)
-set feat_files(38) FEATDIR38
+set feat_files(38) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200173/model1/200173.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (39)
-set feat_files(39) FEATDIR39
+set feat_files(39) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200199/model1/200199.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (40)
-set feat_files(40) FEATDIR40
+set feat_files(40) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200213/model1/200213.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (41)
-set feat_files(41) FEATDIR41
+set feat_files(41) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-200249/model1/200249.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (42)
-set feat_files(42) FEATDIR42
+set feat_files(42) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-306065/model1/306065.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (43)
-set feat_files(43) FEATDIR43
+set feat_files(43) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-306587/model1/306587.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (44)
-set feat_files(44) FEATDIR44
+set feat_files(44) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-310949/model1/310949.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (45)
-set feat_files(45) FEATDIR45
+set feat_files(45) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-311047/model1/311047.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (46)
-set feat_files(46) FEATDIR46
+set feat_files(46) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-311283/model1/311283.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (47)
-set feat_files(47) FEATDIR47
+set feat_files(47) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-311444/model1/311444.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (48)
-set feat_files(48) FEATDIR48
+set feat_files(48) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-311479/model1/311479.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (49)
-set feat_files(49) FEATDIR49
+set feat_files(49) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-311760/model1/311760.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (50)
-set feat_files(50) FEATDIR50
+set feat_files(50) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-400285/model1/400285.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (51)
-set feat_files(51) FEATDIR51
+set feat_files(51) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-402997/model1/402997.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (52)
-set feat_files(52) FEATDIR52
+set feat_files(52) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-405027/model1/405027.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (53)
-set feat_files(53) FEATDIR53
+set feat_files(53) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-406620/model1/406620.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (54)
-set feat_files(54) FEATDIR54
+set feat_files(54) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-406925/model1/406925.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (55)
-set feat_files(55) FEATDIR55
+set feat_files(55) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-407209/model1/407209.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (56)
-set feat_files(56) FEATDIR56
+set feat_files(56) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-407260/model1/407260.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (57)
-set feat_files(57) FEATDIR57
+set feat_files(57) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-407672/model1/407672.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (58)
-set feat_files(58) FEATDIR58
+set feat_files(58) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-408394/model1/408394.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (59)
-set feat_files(59) FEATDIR59
+set feat_files(59) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-408511/model1/408511.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (60)
-set feat_files(60) FEATDIR60
+set feat_files(60) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-408662/model1/408662.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (61)
-set feat_files(61) FEATDIR61
+set feat_files(61) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-408952/model1/408952.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (62)
-set feat_files(62) FEATDIR62
+set feat_files(62) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-408988/model1/408988.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (63)
-set feat_files(63) FEATDIR63
+set feat_files(63) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-409381/model1/409381.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (64)
-set feat_files(64) FEATDIR64
+set feat_files(64) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-409850/model1/409850.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (65)
-set feat_files(65) FEATDIR65
+set feat_files(65) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-409874/model1/409874.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (66)
-set feat_files(66) FEATDIR66
+set feat_files(66) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-411256/model1/411256.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (67)
-set feat_files(67) FEATDIR67
-
-# 4D AVW data or FEAT directory (68)
-set feat_files(68) FEATDIR68
-
-# 4D AVW data or FEAT directory (69)
-set feat_files(69) FEATDIR69
-
-# 4D AVW data or FEAT directory (70)
-set feat_files(70) FEATDIR70
-
-# 4D AVW data or FEAT directory (71)
-set feat_files(71) FEATDIR71
-
-# 4D AVW data or FEAT directory (72)
-set feat_files(72) FEATDIR72
-
-# 4D AVW data or FEAT directory (73)
-set feat_files(73) FEATDIR73
-
-# 4D AVW data or FEAT directory (74)
-set feat_files(74) FEATDIR74
+set feat_files(67) "/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-411477/model1/411477.gfeat/cope9.feat/stats/cope1.nii.gz"
 
 # Add confound EVs text file
 set fmri(confoundevs) 0
@@ -735,27 +714,6 @@ set fmri(evg66.1) 1.0
 # Higher-level EV value for EV 1 and input 67
 set fmri(evg67.1) 1.0
 
-# Higher-level EV value for EV 1 and input 68
-set fmri(evg68.1) 1.0
-
-# Higher-level EV value for EV 1 and input 69
-set fmri(evg69.1) 1.0
-
-# Higher-level EV value for EV 1 and input 70
-set fmri(evg70.1) 1.0
-
-# Higher-level EV value for EV 1 and input 71
-set fmri(evg71.1) 1.0
-
-# Higher-level EV value for EV 1 and input 72
-set fmri(evg72.1) 1.0
-
-# Higher-level EV value for EV 1 and input 73
-set fmri(evg73.1) 1.0
-
-# Higher-level EV value for EV 1 and input 74
-set fmri(evg74.1) 1.0
-
 # Group membership for input 1
 set fmri(groupmem.1) 1
 
@@ -956,27 +914,6 @@ set fmri(groupmem.66) 1
 
 # Group membership for input 67
 set fmri(groupmem.67) 1
-
-# Group membership for input 68
-set fmri(groupmem.68) 1
-
-# Group membership for input 69
-set fmri(groupmem.69) 1
-
-# Group membership for input 70
-set fmri(groupmem.70) 1
-
-# Group membership for input 71
-set fmri(groupmem.71) 1
-
-# Group membership for input 72
-set fmri(groupmem.72) 1
-
-# Group membership for input 73
-set fmri(groupmem.73) 1
-
-# Group membership for input 74
-set fmri(groupmem.74) 1
 
 # Contrast & F-tests mode
 # real : control real EVs

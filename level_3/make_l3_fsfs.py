@@ -10,6 +10,13 @@ ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/mo
 ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope10.feat/stats/cope1.nii.gz
 ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope11.feat/stats/cope1.nii.gz
 
-OUTPUT_DIR = '"/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/group_level/cope13_EV/model1"'
-FEATDIR1 = '"/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub-100003/model/100003.gfeat/cope13.feat/stats/cope1.nii.gz"'
-featdirs - FEATDIR1 - FEATDIR74
+rsync -avzh m2.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m2/
+rsync -avzh m3.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m3/
+rsync -avzh m4.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m4/
+rsync -avzh m1_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m1_rt/
+rsync -avzh m2_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m2_rt/
+rsync -avzh m3_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m3_rt/
+rsync -avzh m4_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/m4_rt/
+rsync -avzh pe_lv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/pe_lv/
+rsync -avzh pe_hv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/pe_hv/
+rsync -avzh junk.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/junk/
