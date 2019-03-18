@@ -1,5 +1,4 @@
 feat $DATA_LOC/derivatives/level_2/sub-100003/model1/sub-100003_l2.fsf
-feat $DATA_LOC/derivatives/level_2/sub-100009/model1/sub-100009_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-100042/model1/sub-100042_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-100051/model1/sub-100051_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-100057/model1/sub-100057_l2.fsf
@@ -30,7 +29,6 @@ feat $DATA_LOC/derivatives/level_2/sub-100244/model1/sub-100244_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-100247/model1/sub-100247_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-100250/model1/sub-100250_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-200025/model1/sub-200025_l2.fsf
-feat $DATA_LOC/derivatives/level_2/sub-200056/model1/sub-200056_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-200061/model1/sub-200061_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-200085/model1/sub-200085_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-200088/model1/sub-200088_l2.fsf
@@ -68,10 +66,12 @@ feat $DATA_LOC/derivatives/level_2/sub-407672/model1/sub-407672_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-408394/model1/sub-408394_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-408511/model1/sub-408511_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-408662/model1/sub-408662_l2.fsf
-feat $DATA_LOC/derivatives/level_2/sub-408952/model1/sub-408952_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-408988/model1/sub-408988_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-409381/model1/sub-409381_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-409850/model1/sub-409850_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-409874/model1/sub-409874_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-411256/model1/sub-411256_l2.fsf
 feat $DATA_LOC/derivatives/level_2/sub-411477/model1/sub-411477_l2.fsf
+feat $DATA_LOC/derivatives/level_2/sub-100009/model1/sub-100009_l2.fsf
+feat $DATA_LOC/derivatives/level_2/sub-200056/model1/sub-200056_l2.fsf
+feat $DATA_LOC/derivatives/level_2/sub-408952/model1/sub-408952_l2.fsf
