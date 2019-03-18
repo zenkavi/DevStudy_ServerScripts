@@ -2,6 +2,7 @@
 
 #SBATCH -J devstudy_level1_311444
 #SBATCH -p russpold,owners,normal
+#SBATCH --array=1-2%1
 #SBATCH --time=06:00:00
 #SBATCH -n 1
 #SBATCH --cpus-per-task=10
