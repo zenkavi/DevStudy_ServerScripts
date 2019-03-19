@@ -22,13 +22,14 @@ for cur_ef in events_files:
     all_events = all_events.append(df, ignore_index= True)
 
 all_events = all_events[all_events['response_time'].notnull()]
-all_events.rt = all_events.rt/1000
+all_events.response_time = all_events.response_time/1000
 mean_rt = all_events.response_time.mean()
 
 del all_events
 
 for cur_ef in events_files:
     df = pd.read_csv(cur_ef, sep = '\t')
+    df.response_time = df.response_time/1000
     nums = re.findall('\d+', os.path.basename(cur_ef))
     subnum = nums[0]
     runnum = nums[1]
