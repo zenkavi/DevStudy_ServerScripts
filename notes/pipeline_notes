@@ -194,7 +194,7 @@ find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_1 -name
 ==============================level2===============================
 
 Input: template_l2.fsf, template_l2_r3.fsf, template_l2_r5.fsf
-Script: make_l2_fsfs.py
+Script: python make_l2_fsfs.py -m 1
 Output: $DATA_LOC/derivatives/level_2/sub-*/model/sub-*_l2.fsf
 
 Input:
@@ -202,7 +202,7 @@ Script: make_commands_for_level2.py > level2_tasklist.sh
 Output: level2_tasklist.sh
 
 Input: level2_tasklist.sh
-Script: run_level2.batch
+Script: sbatch run_level2.batch
 Output: $DATA_LOC/derivatives/level_2/sub-*/model/sub*.gfeat
 
 Check if all jobs worked (should be 74)

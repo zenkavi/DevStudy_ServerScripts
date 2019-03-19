@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J devstudy_level2
-#SBATCH --array=1-74%74
+#SBATCH --array=1-77%77
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=02:00:00
 #SBATCH -n 1
