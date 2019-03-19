@@ -22,8 +22,8 @@ for cur_ef in events_files:
     all_events = all_events.append(df, ignore_index= True)
 
 all_events = all_events[all_events['response_time'].notnull()]
-
-mean_rt = all_events.response_time.mean()/1000
+all_events.rt = all_events.rt/1000
+mean_rt = all_events.response_time.mean()
 
 del all_events
 

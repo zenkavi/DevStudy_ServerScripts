@@ -38,6 +38,8 @@ Notes on exclusions for ds000054
 - No confounds file for sub-100051 run 1 **[currently excluded]**
 
 Excluded subjects:
+sub-100109
+sub-100215
 sub-100060
 sub-200027
 sub-200081
@@ -45,8 +47,6 @@ sub-304228
 sub-308023
 sub-406989
 sub-411236
-sub-100109
-sub-100215
 
 Excluded runs for missing data:
 sub-100110 run 6
