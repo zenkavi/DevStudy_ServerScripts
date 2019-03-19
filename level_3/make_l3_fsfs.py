@@ -10,6 +10,7 @@ ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/mo
 ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope10.feat/stats/cope1.nii.gz
 ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope11.feat/stats/cope1.nii.gz
 
+rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m1.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m1/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m2.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m2/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m3.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m3/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m4.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m4/
@@ -21,6 +22,7 @@ rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/pe_lv.fs
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/pe_hv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/pe_hv/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/junk.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/junk/
 
+rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m1.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m1/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m2.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m2/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m3.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m3/
 rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m4.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m4/
