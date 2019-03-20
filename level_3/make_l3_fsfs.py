@@ -26,7 +26,7 @@ except KeyError:
 copenums = {'m1': "cope1.feat", 'm2': "cope2.feat", 'm3':"cope3.feat", 'm4':"cope4.feat", 'm1_rt':"cope5.feat", 'm2_rt':"cope6.feat", 'm3_rt':"cope7.feat", 'm4_rt':"cope8.feat", 'pe_lv':"cope9.feat", 'pe_hv':"cope10.feat", 'junk':"cope11.feat"}
 
 for ev in evs:
-  print("Making design file for model %s EV %s"%(model_number, evs[i]))
+  print("Making design file for model %s EV %s"%(model_number, ev))
   replacements = {"EVN": ev, "COPENUM": copenums.get(ev)}
   if not os.path.exists("%s/derivatives/level_3/model%s"%(data_loc, model_number)):
       os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_loc, model_number)))
