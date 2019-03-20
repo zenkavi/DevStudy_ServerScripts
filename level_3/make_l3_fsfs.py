@@ -23,13 +23,13 @@ except KeyError:
     data_loc = os.environ['DATA_LOC']
     server_scripts = os.environ['SERVER_SCRIPTS']
 
-for i in range(evs):
+for i in range(1,len(evs)):
   print("Making design file for model %s"%(model_number))
-  replacements = {"EVN": evs[i], "COPENUM": i+1}
-  if not os.path.exists("%s/derivatives/level_3/model%s"%(data_dir, model_number)):
-      os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_dir, model_number)))
+  replacements = {"EVN": evs[i-1], "COPENUM": "cope%s.feat"%(str(i))}
+  if not os.path.exists("%s/derivatives/level_3/model%s"%(data_loc, model_number)):
+      os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_loc, model_number)))
   with open("%s/level_3/model%s/template_l3_model%s.fsf"%(server_scripts, model_number, model_number)) as infile:
-    with open("%s/derivatives/level_3/model%s/%s.fsf"%(data_loc, model_number, ev), 'w') as outfile:
+    with open("%s/derivatives/level_3/model%s/%s.fsf"%(data_loc, model_number, evs[i-1]), 'w') as outfile:
         for line in infile:
           for src, target in replacements.items():
             line = line.replace(src, target)
