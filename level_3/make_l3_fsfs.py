@@ -5,14 +5,14 @@ import nibabel as nib
 import re
 from argparse import ArgumentParser
 
-#Usage: python make_l1_fsfs.py -m 1
+#Usage: python make_l3_fsfs.py -m 1
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_number", help="model number")
 parser.add_argument('-e','--evs', nargs='+', help='EVs', default = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'pe_lv', 'pe_hv', 'junk'])
 args = parser.parse_args()
 
-model_num = args.model_number
+model_number = args.model_number
 evs = args.evs
 
 try:
