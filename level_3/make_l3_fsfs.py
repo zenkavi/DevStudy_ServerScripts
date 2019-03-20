@@ -1,4 +1,4 @@
-#!/usr/bin/python
+    #!/usr/bin/python
 import os
 import glob
 import nibabel as nib
@@ -23,9 +23,11 @@ except KeyError:
     data_loc = os.environ['DATA_LOC']
     server_scripts = os.environ['SERVER_SCRIPTS']
 
-for i in range(0,len(evs)):
+copenums = {'m1': "cope1.feat", 'm2': "cope2.feat", 'm3':"cope3.feat", 'm4':"cope4.feat", 'm1_rt':"cope5.feat", 'm2_rt':"cope6.feat", 'm3_rt':"cope7.feat", 'm4_rt':"cope8.feat", 'pe_lv':"cope9.feat", 'pe_hv':"cope10.feat", 'junk':"cope11.feat"}
+
+for ev in evs:
   print("Making design file for model %s EV %s"%(model_number, evs[i]))
-  replacements = {"EVN": evs[i], "COPENUM": "cope%s.feat"%(str(i+1))}
+  replacements = {"EVN": ev, "COPENUM": copenums.get(ev)}
   if not os.path.exists("%s/derivatives/level_3/model%s"%(data_loc, model_number)):
       os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_loc, model_number)))
   with open("%s/level_3/model%s/template_l3_model%s.fsf"%(server_scripts, model_number, model_number)) as infile:
