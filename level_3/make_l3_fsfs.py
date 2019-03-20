@@ -24,7 +24,7 @@ except KeyError:
     server_scripts = os.environ['SERVER_SCRIPTS']
 
 for i in range(0,len(evs)):
-  print("Making design file for model %s EV %s"%(model_number, evs[i-1]))
+  print("Making design file for model %s EV %s"%(model_number, evs[i]))
   replacements = {"EVN": evs[i], "COPENUM": "cope%s.feat"%(str(i+1))}
   if not os.path.exists("%s/derivatives/level_3/model%s"%(data_loc, model_number)):
       os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_loc, model_number)))
