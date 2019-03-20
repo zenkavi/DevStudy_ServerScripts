@@ -1,35 +1,38 @@
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope1.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope2.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope3.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope4.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope5.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope6.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope7.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope8.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope9.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope10.feat/stats/cope1.nii.gz
-ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope11.feat/stats/cope1.nii.gz
+#!/usr/bin/python
+import os
+import glob
+import nibabel as nib
+import re
+from argparse import ArgumentParser
 
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m1.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m1/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m2.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m2/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m3.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m3/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m4.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m4/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m1_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m1_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m2_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m2_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m3_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m3_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/m4_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/m4_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/pe_lv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/pe_lv/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/pe_hv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/pe_hv/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model1/junk.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model1/junk/
+#Usage: python make_l1_fsfs.py -m 1
 
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m1.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m1/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m2.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m2/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m3.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m3/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m4.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m4/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m1_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m1_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m2_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m2_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m3_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m3_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/m4_rt.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/m4_rt/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/pe_lv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/pe_lv/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/pe_hv.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/pe_hv/
-rsync -avzh ~/Dropbox/PoldrackLab/DevStudy_ServerScripts/level_3/model2/junk.fsf zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_3/model2/junk/
+parser = ArgumentParser()
+parser.add_argument("-m", "--model_number", help="model number")
+parser.add_argument('-e','--evs', nargs='+', help='EVs', default = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'pe_lv', 'pe_hv', 'junk'])
+args = parser.parse_args()
+
+model_num = args.model_number
+evs = args.evs
+
+try:
+    data_loc = os.environ['DATA_LOC']
+    server_scripts = os.environ['SERVER_SCRIPTS']
+except KeyError:
+    os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
+    data_loc = os.environ['DATA_LOC']
+    server_scripts = os.environ['SERVER_SCRIPTS']
+
+for i in range(evs):
+  print("Making design file for model %s"%(model_number))
+  replacements = {"EVN": evs[i], "COPENUM": i+1}
+  if not os.path.exists("%s/derivatives/level_3/model%s"%(data_dir, model_number)):
+      os.makedirs(os.path.join("%s/derivatives/level_3/model%s/"%(data_dir, model_number)))
+  with open("%s/level_3/model%s/template_l3_model%s.fsf"%(server_scripts, model_number, model_number)) as infile:
+    with open("%s/derivatives/level_3/model%s/%s.fsf"%(data_loc, model_number, ev), 'w') as outfile:
+        for line in infile:
+          for src, target in replacements.items():
+            line = line.replace(src, target)
+          outfile.write(line)
+
+#ls /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/level_2/sub*/model1/*.gfeat/cope1.feat/stats/cope1.nii.gz
