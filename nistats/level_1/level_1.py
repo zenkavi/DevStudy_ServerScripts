@@ -71,6 +71,9 @@ for run_events in sub_events:
 
     #read in events.tsv for that run
 
+    outdir = '...'
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
 
     fmri_glm = FirstLevelModel(t_r=cur_img_tr,
                            noise_model='ar1',
@@ -79,29 +82,25 @@ for run_events in sub_events:
                            drift_model='cosine',
                            smoothing_fwhm=5)
 
-#fmri_img: preproc_bold that the model will be fit on
-#events: 4 col events file for WHOLE RUN with onset, duration, trial_type, modulation
-#trial_type column:
-    #m1, m2, m3, m4 - onset: stimulus_presentation onset, duration: mean_rt, modulation: 1
-    #m1_rt, m2_rt, m3_rt, m4_rt - onset: stimulus_presentation, duration: mean_rt, modulation: rt-mean_rt
-    #gain - onset: response onset, duration: response duration, modulation: gain-mean_gain
-    #loss - onset: reponse onset, duration: response duration, modulation: loss-mean_loss
-    #junk: onset: response onset, duration: response duration, modulation: 1
-#confounds:
-    #6 movement + squares
-    #scrubbing ?
+    #fmri_img: preproc_bold that the model will be fit on
+    #events: 4 col events file for WHOLE RUN with onset, duration, trial_type, modulation
+    #trial_type column:
+        #m1, m2, m3, m4 - onset: stimulus_presentation onset, duration: mean_rt, modulation: 1
+        #m1_rt, m2_rt, m3_rt, m4_rt - onset: stimulus_presentation, duration: mean_rt, modulation: rt-mean_rt
+        #gain - onset: response onset, duration: response duration, modulation: gain-mean_gain
+        #loss - onset: reponse onset, duration: response duration, modulation: loss-mean_loss
+        #junk: onset: response onset, duration: response duration, modulation: 1
+    #confounds:
+        #6 movement + squares
+        #scrubbing ?
 
     fmri_glm = fmri_glm.fit(fmri_img, events)
 
-#Things to save from the model fit:
-#Design matrix
-
+    #Things to save from the model fit:
+    #Design matrix image
     design_matrix = fmri_glm.design_matrices_[0]
-
-    outdir = '...'
-    if not os.path.exists(outdir):
-        os.mkdir(outdir)
-
     plot_design_matrix(design_matrix, output_file=os.path.join(outdir, 'sub-%s_run-%s_level1_design_matrix.png' %(subnum, runnum)))
 
-#Model object that will be fed into level2s
+    #Design matrix itself
+
+    #Model object that will be fed into level2s
