@@ -77,6 +77,11 @@ for run_events in sub_events:
         #6 movement + squares
         #scrubbing ?
 
+    cur_events = ...
+
+    #process confounds
+    cur_confounds = ...
+
     #define GLM parmeters
     fmri_glm = FirstLevelModel(t_r=cur_img_tr,
                            noise_model='ar1',
@@ -86,7 +91,7 @@ for run_events in sub_events:
                            smoothing_fwhm=5)
 
     #fit glm to run image using run events
-    fmri_glm = fmri_glm.fit(fmri_img, events)
+    fmri_glm = fmri_glm.fit(fmri_img, events = cur_events, confounds = cur_confounds)
 
     #OUTPUTs:
     #Design matrix image
