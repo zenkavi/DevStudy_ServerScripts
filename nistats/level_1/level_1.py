@@ -77,7 +77,55 @@ for run_events in sub_events:
         #6 movement + squares
         #scrubbing ?
 
-    cur_events = ...
+    cur_events = pd.read_csv(run_events, sep = '\t')
+
+    cond_m1 = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
+    cond_m1['duration'] = mean_rt
+    cond_m1['modulation'] = 1
+    cond_m1['trial_type'] = 'm1'
+    cond_m2 = cur_events.query('trial_type == "stim_presentation" & stimulus == 2')[['onset']]
+    cond_m2['duration'] = mean_rt
+    cond_m2['modulation'] = 1
+    cond_m2['trial_type'] = 'm2'
+    cond_m3 = cur_events.query('trial_type == "stim_presentation" & stimulus == 3')[['onset']]
+    cond_m3['duration'] = mean_rt
+    cond_m3['modulation'] = 1
+    cond_m3['trial_type'] = 'm3'
+    cond_m4 = cur_events.query('trial_type == "stim_presentation" & stimulus == 4')[['onset']]
+    cond_m4['duration'] = mean_rt
+    cond_m4['modulation'] = 1
+    cond_m4['trial_type'] = 'm4'
+
+    cur_events['rt_shift'] = cur_events.response_time.shift(-1)
+
+    cond_m1_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset', 'rt_shift']]
+    cond_m1_rt['duration'] = mean_rt
+    cond_m1_rt['modulation'] = cond_m1_rt['rt_shift'] - mean_rt
+    cond_m1_rt = cond_m1_rt.drop(['rt_shift'], axis=1)
+    cond_m1_rt['trial_type'] = m1_rt
+    cond_m2_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 2')[['onset', 'rt_shift']]
+    cond_m2_rt['duration'] = mean_rt
+    cond_m2_rt['modulation'] = cond_m2_rt['rt_shift'] - mean_rt
+    cond_m2_rt = cond_m2_rt.drop(['rt_shift'], axis=1)
+    cond_m2_rt['trial_type'] = m2_rt
+    cond_m3_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 3')[['onset', 'rt_shift']]
+    cond_m3_rt['duration'] = mean_rt
+    cond_m3_rt['modulation'] = cond_m3_rt['rt_shift'] - mean_rt
+    cond_m3_rt = cond_m3_rt.drop(['rt_shift'], axis=1)
+    cond_m3_rt['trial_type'] = m3_rt
+    cond_m4_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 4')[['onset', 'rt_shift']]
+    cond_m4_rt['duration'] = mean_rt
+    cond_m4_rt['modulation'] = cond_m4_rt['rt_shift'] - mean_rt
+    cond_m4_rt = cond_m4_rt.drop(['rt_shift'], axis=1)
+    cond_m4_rt['trial_type'] = m4_rt
+
+    
+
+    formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt], ignore_index=True)
+
+    formatted_events.sort_values(by='onset')
+
+    formatted_events = formatted_events[['onset', 'duration', 'trial_type', 'modulation']
 
     #process confounds
     cur_confounds = ...
@@ -91,7 +139,7 @@ for run_events in sub_events:
                            smoothing_fwhm=5)
 
     #fit glm to run image using run events
-    fmri_glm = fmri_glm.fit(fmri_img, events = cur_events, confounds = cur_confounds)
+    fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = cur_confounds)
 
     #OUTPUTs:
     #Design matrix image
