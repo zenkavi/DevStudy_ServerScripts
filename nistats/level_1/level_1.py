@@ -51,6 +51,22 @@ def make_contrasts(design_matrix):
 
     return contrasts
 
+def add_transform(dataframe, columns=None, type=None):
+    if columns is None:
+        columns = dataframe.columns
+    if type == "td":
+        td = dataframe.loc[:,columns].apply(np.gradient)
+        td.iloc[0,:] = 0
+        for i,col in td.iteritems():
+            insert_loc = dataframe.columns.get_loc(i)
+            dataframe.insert(insert_loc+1, i+'_td', col)
+    if type == "sq":
+        sq = dataframe.loc[:,columns].apply(np.square)
+        sq.iloc[0,:] = 0
+        for i,col in sq.iteritems():
+            insert_loc = dataframe.columns.get_loc(i)
+            dataframe.insert(insert_loc+1, i+'_sq', col)
+
 for run_events in sub_events:
 
     runnum = re.findall('\d+', os.path.basename(run_events))[1]
@@ -138,7 +154,16 @@ for run_events in sub_events:
     formatted_events = formatted_events[['onset', 'duration', 'trial_type', 'modulation']].reset_index(drop=True)
 
     #process confounds
-    cur_confounds = ...
+    #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
+    cur_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t')
+
+    formatted_confounds = cur_confounds[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
+    add_transform(formatted_confounds, type="sq")
+    add_transform(formatted_confounds, type="td")
+    formatted_confounds[['std_dvars', 'framewise_displacement']] = cur_confounds[['std_dvars', 'framewise_displacement']]
+    formatted_confounds['std_dvars'].iloc[0] = 0
+    formatted_confounds['framewise_displacement'].iloc[0] = 0
+    formatted_confounds['scrub'] = np.where(formatted_confounds.framewise_displacement>0.5,1,0)
 
     #define GLM parmeters
     fmri_glm = FirstLevelModel(t_r=cur_img_tr,
@@ -149,7 +174,7 @@ for run_events in sub_events:
                            smoothing_fwhm=5)
 
     #fit glm to run image using run events
-    fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = cur_confounds)
+    fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = formatted_confounds)
 
     #OUTPUTs:
     #Design matrix image
