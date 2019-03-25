@@ -12,8 +12,8 @@ from argparse import ArgumentParser
 #WHAT DOES RANDOMISE NEED FOR LATER MULTIPLE COMPARISON CORRECTIONS?
 
 parser = ArgumentParser()
-parser.add_argument("-s", "--sub_num", help="subject number")
-sub_num = args.sub_num
+parser.add_argument("-s", "--subnum", help="subject number")
+subnum = args.subnum
 data_loc = os.environ['DATA_LOC']
 
 events_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_events.tsv'%(data_loc))
@@ -102,30 +102,40 @@ for run_events in sub_events:
     cond_m1_rt['duration'] = mean_rt
     cond_m1_rt['modulation'] = cond_m1_rt['rt_shift'] - mean_rt
     cond_m1_rt = cond_m1_rt.drop(['rt_shift'], axis=1)
-    cond_m1_rt['trial_type'] = m1_rt
+    cond_m1_rt['trial_type'] = "m1_rt"
     cond_m2_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 2')[['onset', 'rt_shift']]
     cond_m2_rt['duration'] = mean_rt
     cond_m2_rt['modulation'] = cond_m2_rt['rt_shift'] - mean_rt
     cond_m2_rt = cond_m2_rt.drop(['rt_shift'], axis=1)
-    cond_m2_rt['trial_type'] = m2_rt
+    cond_m2_rt['trial_type'] = "m2_rt"
     cond_m3_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 3')[['onset', 'rt_shift']]
     cond_m3_rt['duration'] = mean_rt
     cond_m3_rt['modulation'] = cond_m3_rt['rt_shift'] - mean_rt
     cond_m3_rt = cond_m3_rt.drop(['rt_shift'], axis=1)
-    cond_m3_rt['trial_type'] = m3_rt
+    cond_m3_rt['trial_type'] = "m3_rt"
     cond_m4_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 4')[['onset', 'rt_shift']]
     cond_m4_rt['duration'] = mean_rt
     cond_m4_rt['modulation'] = cond_m4_rt['rt_shift'] - mean_rt
     cond_m4_rt = cond_m4_rt.drop(['rt_shift'], axis=1)
-    cond_m4_rt['trial_type'] = m4_rt
+    cond_m4_rt['trial_type'] = "m4_rt"
 
-    
+    cond_gain = cur_events.query('points_earned>0')[['onset', 'duration','points_earned']]
+    cond_gain = cond_gain.rename(index=str, columns={"points_earned": "modulation"})
+    cond_gain['trial_type'] =  "gain"
 
-    formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt], ignore_index=True)
+    cond_loss = cur_events.query('points_earned<0')[['onset', 'duration','points_earned']]
+    cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
+    cond_loss['trial_type'] =  "loss"
 
-    formatted_events.sort_values(by='onset')
+    cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
+    cond_junk['modulation'] = 1
+    cond_junk['trial_type'] = "junk"
 
-    formatted_events = formatted_events[['onset', 'duration', 'trial_type', 'modulation']
+    formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
+
+    formatted_events = formatted_events.sort_values(by='onset')
+
+    formatted_events = formatted_events[['onset', 'duration', 'trial_type', 'modulation']].reset_index(drop=True)
 
     #process confounds
     cur_confounds = ...
