@@ -67,6 +67,9 @@ def add_transform(dataframe, columns=None, type=None):
             insert_loc = dataframe.columns.get_loc(i)
             dataframe.insert(insert_loc+1, i+'_sq', col)
 
+def stdize(X):
+    return (X - np.nanmean(X, axis=0))/np.nanstd(X, axis=0)
+
 for run_events in sub_events:
 
     runnum = re.findall('\d+', os.path.basename(run_events))[1]
@@ -76,10 +79,10 @@ for run_events in sub_events:
 
     #read in preproc_bold for that run
     cur_img = nib.load(fmri_img)
-    #CHANGE THIS TO CORRECT HEADER ATTRIBUTE
     cur_img_tr = cur_img.header['pixdim'][4]
 
     #read in events.tsv for that run
+    cur_events = pd.read_csv(run_events, sep = '\t')
 
     #process events for GLM
     #events: 4 col events file for WHOLE RUN with onset, duration, trial_type, modulation
@@ -89,11 +92,14 @@ for run_events in sub_events:
         #gain - onset: response onset, duration: response duration, modulation: gain-mean_gain
         #loss - onset: reponse onset, duration: response duration, modulation: loss-mean_loss
         #junk: onset: response onset, duration: response duration, modulation: 1
-    #confounds:
-        #6 movement + squares
-        #scrubbing ?
 
-    cur_events = pd.read_csv(run_events, sep = '\t')
+    cur_events.response_time = cur_events.response_time/1000
+    rt = cur_events.response_time
+    cur_events.loc[:,'response_time'] = rt - rt[rt>0].mean()
+    cur_events['rt_shift'] = cur_events.response_time.shift(-1)
+    cur_events['gain_loss'] = np.where(cur_events.points_earned>0, 1, np.where(cur_events.points_earned<0, -1, 0))
+    po = cur_events.points_earned
+    np.where(po == 5, 0.01, np.where(po == 495, 0.99, np.where(po == 10, 0.02, np.where(po == 100, 0.20, np.where(po == -5, -0.01, np.where(po == -495, -0.99, np.where(po == -10, -0.02, np.where(po == -100, -0.20, 0))))))))
 
     cond_m1 = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
     cond_m1['duration'] = mean_rt
@@ -111,38 +117,32 @@ for run_events in sub_events:
     cond_m4['duration'] = mean_rt
     cond_m4['modulation'] = 1
     cond_m4['trial_type'] = 'm4'
-
-    cur_events['rt_shift'] = cur_events.response_time.shift(-1)
-
     cond_m1_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset', 'rt_shift']]
     cond_m1_rt['duration'] = mean_rt
-    cond_m1_rt['modulation'] = cond_m1_rt['rt_shift'] - mean_rt
+    cond_m1_rt['modulation'] = cond_m1_rt['rt_shift']
     cond_m1_rt = cond_m1_rt.drop(['rt_shift'], axis=1)
     cond_m1_rt['trial_type'] = "m1_rt"
     cond_m2_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 2')[['onset', 'rt_shift']]
     cond_m2_rt['duration'] = mean_rt
-    cond_m2_rt['modulation'] = cond_m2_rt['rt_shift'] - mean_rt
+    cond_m2_rt['modulation'] = cond_m2_rt['rt_shift']
     cond_m2_rt = cond_m2_rt.drop(['rt_shift'], axis=1)
     cond_m2_rt['trial_type'] = "m2_rt"
     cond_m3_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 3')[['onset', 'rt_shift']]
     cond_m3_rt['duration'] = mean_rt
-    cond_m3_rt['modulation'] = cond_m3_rt['rt_shift'] - mean_rt
+    cond_m3_rt['modulation'] = cond_m3_rt['rt_shift']
     cond_m3_rt = cond_m3_rt.drop(['rt_shift'], axis=1)
     cond_m3_rt['trial_type'] = "m3_rt"
     cond_m4_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 4')[['onset', 'rt_shift']]
     cond_m4_rt['duration'] = mean_rt
-    cond_m4_rt['modulation'] = cond_m4_rt['rt_shift'] - mean_rt
+    cond_m4_rt['modulation'] = cond_m4_rt['rt_shift']
     cond_m4_rt = cond_m4_rt.drop(['rt_shift'], axis=1)
     cond_m4_rt['trial_type'] = "m4_rt"
-
     cond_gain = cur_events.query('points_earned>0')[['onset', 'duration','points_earned']]
     cond_gain = cond_gain.rename(index=str, columns={"points_earned": "modulation"})
     cond_gain['trial_type'] =  "gain"
-
     cond_loss = cur_events.query('points_earned<0')[['onset', 'duration','points_earned']]
     cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
     cond_loss['trial_type'] =  "loss"
-
     cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
     cond_junk['modulation'] = 1
     cond_junk['trial_type'] = "junk"
@@ -174,15 +174,15 @@ for run_events in sub_events:
                            smoothing_fwhm=5)
 
     #fit glm to run image using run events
+    print("Running GLM for sub-%s run-%s"%(subnum, runnum))
     fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = formatted_confounds)
 
-    #OUTPUTs:
-    #Design matrix image
+    #Save design matrix
     design_matrix = fmri_glm.design_matrices_[0]
-    plot_design_matrix(design_matrix, output_file=os.path.join(outdir, 'sub-%s_run-%s_level1_design_matrix.png' %(subnum, runnum)))
+    print("Saving design matrix for sub-%s run-%s"%(subnum, runnum))
+    design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
 
-    #Design matrix itself
-
+    #OUTPUTs:
     #Model object that will be fed into level2s
 
     #Whatever randomise needs
