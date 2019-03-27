@@ -14,7 +14,6 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
-args = parser.parse_args()
 subnum = args.subnum
 data_loc = os.environ['DATA_LOC']
 
