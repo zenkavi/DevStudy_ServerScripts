@@ -46,12 +46,22 @@ def make_contrasts(design_matrix):
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
-
-    # Add more complex contrasts
-    contrasts['task_on'] = (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4'])
-    contrasts['rt'] = (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])
-    contrasts['gain-loss'] = contrasts['gain'] - contrasts['loss']
-    contrasts['loss-gain'] = contrasts['loss'] - contrasts['gain']
+contrasts = {
+        'm1': contrasts['m1'],
+        'm2': contrasts['m2'],
+        'm3': contrasts['m3'],
+        'm4': contrasts['m4'],
+        'm1_rt': contrasts['m1_rt'],
+        'm2_rt': contrasts['m2_rt'],
+        'm3_rt': contrasts['m3_rt'],
+        'm4_rt': contrasts['m4_rt'],
+        'gain': contrasts['gain'],
+        'loss': contrasts['loss'],
+        'junk': contrasts['junk'],
+        'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+        'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
+        'gain-loss' : contrasts['gain'] - contrasts['loss'],
+        'loss-gain' : contrasts['loss'] - contrasts['gain']}
 
     return contrasts
 

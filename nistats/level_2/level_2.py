@@ -12,7 +12,6 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
-parser.add_argument('-c','--contrasts', nargs='+', help='contrasts', default = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain', 'loss','junk', 'task_on', 'rt', 'gain-loss','loss-gain'])
 subnum = args.subnum
 contrasts = args.contrasts
 data_loc = os.environ['DATA_LOC']
