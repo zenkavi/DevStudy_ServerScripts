@@ -4,6 +4,7 @@ from nistats.first_level_model import FirstLevelModel
 import numpy as np
 import os
 import pandas as pd
+import pickle
 import re
 from argparse import ArgumentParser
 
@@ -22,6 +23,10 @@ events_files.sort()
 out_path = "%s/derivatives/nistats/level_1/sub-%s"%(data_loc,subnum)
 if not os.path.exists(out_path):
     os.mkdir(out_path)
+
+contrasts_path = "%s/contrasts"%(out_path)
+if not os.path.exists(contrasts_path):
+    os.mkdir(contrasts_path)
 
 all_events = pd.DataFrame()
 
@@ -171,27 +176,30 @@ for run_events in sub_events:
                            standardize=False,
                            hrf_model='spm + derivative',
                            drift_model='cosine',
-                           smoothing_fwhm=5)
+                           smoothing_fwhm=5,
+                           mask='%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
 
     #fit glm to run image using run events
     print("Running GLM for sub-%s run-%s"%(subnum, runnum))
     fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = formatted_confounds)
+
+    print("Saving GLM for sub-%s run-%s"%(subnum, runnum))
+    f = open('%s/sub-%s_run-%s_l1_glm.pkl' %(out_path,subnum, runnum), 'wb')
+    pickle.dump(fmri_glm, f)
+    f.close()
 
     #Save design matrix
     design_matrix = fmri_glm.design_matrices_[0]
     print("Saving design matrix for sub-%s run-%s"%(subnum, runnum))
     design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
 
+    print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
     contrasts = make_contrasts(design_matrix)
     for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
-        z_map = first_level_model.compute_contrast(contrast_val, output_type='z_score')
+        z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
+        nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
+    print("Done saving contrasts for sub-%s run-%s"%(subnum, runnum))
 
     #OUTPUTs:
-    #Model object that will be fed into level2s
-
     #Whatever randomise needs: group level nifti, design matrix, contrast file
-    #group level nifti: filterest_func_data for one sample test
-
-    #Contrast zmaps
-
-    #Whatever else Ian is saving
+    #group level nifti: filtered_func_data for one sample test

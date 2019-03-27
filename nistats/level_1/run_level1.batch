@@ -3,7 +3,7 @@
 #SBATCH -J devstudy_level1
 #SBATCH --array=1-77%77
 #SBATCH -p russpold,owners,normal
-#SBATCH --time=06:00:00
+#SBATCH --time=03:00:00
 #SBATCH -n 1
 #SBATCH --cpus-per-task=10
 #SBATCH --ntasks-per-node=1
