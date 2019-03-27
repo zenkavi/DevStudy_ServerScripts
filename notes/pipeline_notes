@@ -150,3 +150,10 @@ returns 434 + 5 = 439 because
 100169 missing runs 4,5,6 (no DICOMs, noted in Subject_fMRI_analysis_tracking)
 200025 missing run 6 (no sbref's) - first volume corrupt
 408511 missing run 6 - <216 volumes and last volume corrupt
+
+=============================level_1==============================
+
+Should be 389:
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | wc
+If not check which files are empty in $SERVER_SCRIPTS/.out
+ls *{JOB ARRAY NUM}* -altS

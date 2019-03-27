@@ -9,7 +9,6 @@ python level_1.py -s 100068
 python level_1.py -s 100103
 python level_1.py -s 100104
 python level_1.py -s 100105
-python level_1.py -s 100109
 python level_1.py -s 100110
 python level_1.py -s 100128
 python level_1.py -s 100129
@@ -22,7 +21,6 @@ python level_1.py -s 100188
 python level_1.py -s 100191
 python level_1.py -s 100207
 python level_1.py -s 100214
-python level_1.py -s 100215
 python level_1.py -s 100241
 python level_1.py -s 100243
 python level_1.py -s 100244
@@ -59,7 +57,6 @@ python level_1.py -s 405027
 python level_1.py -s 406620
 python level_1.py -s 406925
 python level_1.py -s 406980
-python level_1.py -s 406989
 python level_1.py -s 407209
 python level_1.py -s 407260
 python level_1.py -s 407672
