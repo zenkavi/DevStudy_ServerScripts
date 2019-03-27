@@ -182,6 +182,10 @@ for run_events in sub_events:
     print("Saving design matrix for sub-%s run-%s"%(subnum, runnum))
     design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
 
+    contrasts = make_contrasts(design_matrix)
+    for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
+        z_map = first_level_model.compute_contrast(contrast_val, output_type='z_score')
+
     #OUTPUTs:
     #Model object that will be fed into level2s
 
