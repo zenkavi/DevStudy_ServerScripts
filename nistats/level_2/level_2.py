@@ -1,6 +1,6 @@
 import glob
 import nibabel as nib
-from nistats.first_level_model import FirstLevelModel
+from nistats.second_level_model import SecondLevelModel
 import numpy as np
 import os
 import pandas as pd
@@ -8,19 +8,19 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_1.py -s SUBNUM
-#Outputs:
-#WHAT DOES RANDOMISE NEED FOR LATER MULTIPLE COMPARISON CORRECTIONS?
+#Usage: python level_2.py -s SUBNUM
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
+parser.add_argument('-c','--contrasts', nargs='+', help='contrasts', default = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain', 'loss','junk', 'task_on', 'rt', 'gain-loss','loss-gain'])
 subnum = args.subnum
+contrasts = args.contrasts
 data_loc = os.environ['DATA_LOC']
 
-events_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_events.tsv'%(data_loc))
-events_files.sort()
+level_1_models = glob.glob('%s/derivatives/nistats/level_1/sub-*/contrasts/sub-*_run-*_l1_glm.pkl'%(data_loc))
+level_1_models.sort()
 
-out_path = "%s/derivatives/nistats/level_1/sub-%s"%(data_loc,subnum)
+out_path = "%s/derivatives/nistats/level_2/sub-%s"%(data_loc,subnum)
 if not os.path.exists(out_path):
     os.mkdir(out_path)
 
@@ -28,52 +28,7 @@ contrasts_path = "%s/contrasts"%(out_path)
 if not os.path.exists(contrasts_path):
     os.mkdir(contrasts_path)
 
-all_events = pd.DataFrame()
-
-for cur_ef in events_files:
-    df = pd.read_csv(cur_ef, sep = '\t')
-    all_events = all_events.append(df, ignore_index= True)
-
-all_events = all_events[all_events['response_time'].notnull()]
-all_events.response_time = all_events.response_time/1000
-mean_rt = all_events.response_time.mean()
-
-del all_events
-
-sub_events = [x for x in events_files if subnum in x]
-
-def make_contrasts(design_matrix):
-        # first generate canonical contrasts (i.e. regressors vs. baseline)
-    contrast_matrix = np.eye(design_matrix.shape[1])
-    contrasts = dict([(column, contrast_matrix[i])
-                      for i, column in enumerate(design_matrix.columns)])
-
-    # Add more complex contrasts
-    contrasts['task_on'] = (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4'])
-    contrasts['rt'] = (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])
-    contrasts['gain-loss'] = contrasts['gain'] - contrasts['loss']
-    contrasts['loss-gain'] = contrasts['loss'] - contrasts['gain']
-
-    return contrasts
-
-def add_transform(dataframe, columns=None, type=None):
-    if columns is None:
-        columns = dataframe.columns
-    if type == "td":
-        td = dataframe.loc[:,columns].apply(np.gradient)
-        td.iloc[0,:] = 0
-        for i,col in td.iteritems():
-            insert_loc = dataframe.columns.get_loc(i)
-            dataframe.insert(insert_loc+1, i+'_td', col)
-    if type == "sq":
-        sq = dataframe.loc[:,columns].apply(np.square)
-        sq.iloc[0,:] = 0
-        for i,col in sq.iteritems():
-            insert_loc = dataframe.columns.get_loc(i)
-            dataframe.insert(insert_loc+1, i+'_sq', col)
-
-def stdize(X):
-    return (X - np.nanmean(X, axis=0))/np.nanstd(X, axis=0)
+sub_l1s = [x for x in level_1_models if subnum in x]
 
 for run_events in sub_events:
 
