@@ -97,9 +97,9 @@ for run_events in sub_events:
     rt = cur_events.response_time
     cur_events.loc[:,'response_time'] = rt - rt[rt>0].mean()
     cur_events['rt_shift'] = cur_events.response_time.shift(-1)
-    cur_events['gain_loss'] = np.where(cur_events.points_earned>0, 1, np.where(cur_events.points_earned<0, -1, 0))
-    po = cur_events.points_earned
-    np.where(po == 5, 0.01, np.where(po == 495, 0.99, np.where(po == 10, 0.02, np.where(po == 100, 0.20, np.where(po == -5, -0.01, np.where(po == -495, -0.99, np.where(po == -10, -0.02, np.where(po == -100, -0.20, 0))))))))
+    #cur_events['gain_loss'] = np.where(cur_events.points_earned>0, 1, np.where(cur_events.points_earned<0, -1, 0))
+    #po = cur_events.points_earned
+    #cur_events.points_earned = np.where(po == 5, 0.01, np.where(po == 495, 0.99, np.where(po == 10, 0.02, np.where(po == 100, 0.20, np.where(po == -5, -0.01, np.where(po == -495, -0.99, np.where(po == -10, -0.02, np.where(po == -100, -0.20, 0))))))))
 
     cond_m1 = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
     cond_m1['duration'] = mean_rt
@@ -185,7 +185,8 @@ for run_events in sub_events:
     #OUTPUTs:
     #Model object that will be fed into level2s
 
-    #Whatever randomise needs
+    #Whatever randomise needs: group level nifti, design matrix, contrast file
+    #group level nifti: filterest_func_data for one sample test
 
     #Contrast zmaps
 
