@@ -1,7 +1,7 @@
 library(tidyverse)
 
-tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | sort")
-tmp2 = read.table("~/Dropbox/PoldrackLab/DevStudy_ServerScripts/fsl/level_1/level1_task_list.sh")
+tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | sort", intern=TRUE))
+tmp2 = read.table("/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fsl/level_1/level1_task_list.sh")
 
 tmp1 = tmp1 %>%
   mutate(V1 = gsub("/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1/", "", V1)) %>%
@@ -11,7 +11,7 @@ tmp1 = tmp1 %>%
 
 tmp2 = tmp2 %>%
   separate(V2, into=c("a", "b", "c", "d", "e", "f"), sep = '/') %>%
-  select("f") %>%
+  select(f) %>%
   mutate(f = gsub(".fsf", "",f))
 
 failed_runs = data.frame(tmp2$f[tmp2$f %in% tmp1$b == FALSE])
@@ -27,6 +27,6 @@ for(i in 1:length(failed_subs)){
 }
 
 print("Saving debug jobs...")
-write.table(debug_jobs, file = "/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/nistats/level_1/l1_debug_jobs.sh", quote=FALSE)
+write.table(debug_jobs, file = "/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/nistats/level_1/l1_debug_jobs.sh", quote=FALSE, row.names=FALSE, col.names=FALSE)
 print("Submitting debug jobs...")
 system("sbatch run_l1_debug_jobs.batch")
