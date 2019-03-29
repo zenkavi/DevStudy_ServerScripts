@@ -155,5 +155,5 @@ returns 434 + 5 = 439 because
 
 Should be 389:
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | wc
-If not check which files are empty in $SERVER_SCRIPTS/.out
-ls *{JOB ARRAY NUM}* -altS
+If not run:
+Rscript --vanilla debug_l1.R
