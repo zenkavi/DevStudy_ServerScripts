@@ -28,3 +28,9 @@ if not os.path.exists(contrasts_path):
     os.mkdir(contrasts_path)
 
 sub_l1s = [x for x in level_1_models if subnum in x]
+
+#how do level 2's work with
+    #level 1 objects
+    #contrasts: where contrast_map_filenames are e.g.  '/home/users/zenkavi/nilearn_data/brainomics_localizer/brainomics_data/S94/c_map_left_auditory_click.nii.gz'
+        #model = SecondLevelModel(smoothing_fwhm=5.0)
+        #model.fit(contrast_map_filenames, design_matrix=design_matrix)

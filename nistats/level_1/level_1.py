@@ -46,7 +46,7 @@ def make_contrasts(design_matrix):
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
-contrasts = {
+    contrasts = {
         'm1': contrasts['m1'],
         'm2': contrasts['m2'],
         'm3': contrasts['m3'],
