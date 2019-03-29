@@ -27,9 +27,8 @@ if not os.path.exists(contrasts_path):
 
 sub_contrasts = os.listdir(in_path)
 
-design_matrix = pd.DataFrame([1] * len(second_level_input), columns=['intercept'])
-
-contrasts = ['m1', 'm2', 'm3', 'm4', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain', 'loss', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain']
+contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain']
 
 for c in contrasts:
-    cur_contrasts = [x for x in sub_contrasts if c in x]
+    second_level_input = [x for x in sub_contrasts if c in x]
+    design_matrix = pd.DataFrame([1] * len(second_level_input), columns=['intercept'])
