@@ -1,3 +1,4 @@
+#!/usr/bin/Rscript
 library(tidyverse)
 
 tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | sort", intern=TRUE))
