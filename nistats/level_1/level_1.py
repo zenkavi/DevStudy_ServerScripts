@@ -193,28 +193,40 @@ for run_events in sub_events:
                                mask='%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
 
         #fit glm to run image using run events
+        print("***********************************************")
         print("Running GLM for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
         fmri_glm = fmri_glm.fit(fmri_img, events = formatted_events, confounds = formatted_confounds)
 
+        print("***********************************************")
         print("Saving GLM for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
         f = open('%s/sub-%s_run-%s_l1_glm.pkl' %(out_path,subnum, runnum), 'wb')
         pickle.dump(fmri_glm, f)
         f.close()
 
         #Save design matrix
         design_matrix = fmri_glm.design_matrices_[0]
+        print("***********************************************")
         print("Saving design matrix for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
         design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
 
+        print("***********************************************")
         print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
         contrasts = make_contrasts(design_matrix)
         for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
             z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
             nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
+        print("***********************************************")
         print("Done saving contrasts for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
 
     else:
+        print("***********************************************")
         print("No pre-processed BOLD found for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
 
     #OUTPUTs:
     #Whatever randomise needs: group level nifti, design matrix, contrast file
