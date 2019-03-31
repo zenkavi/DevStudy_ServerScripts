@@ -45,7 +45,7 @@ for c in contrasts:
     print("***********************************************")
     print("Saving GLM for sub-%s contrast %s"%(subnum, c))
     print("***********************************************")
-    f = open('%s/sub-%s_%_l2_glm.pkl' %(out_path,subnum, c), 'wb')
+    f = open('%s/sub-%s_%s_l2_glm.pkl' %(out_path,subnum, c), 'wb')
     pickle.dump(model, f)
     f.close()
 
