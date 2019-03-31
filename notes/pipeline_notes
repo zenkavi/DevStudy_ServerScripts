@@ -157,3 +157,8 @@ Should be 389:
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | wc
 If not run:
 Rscript --vanilla debug_l1.R
+
+=============================level_s==============================
+
+Should be 14*74 = 1036:
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_2 -name 'sub-*_l2_glm.pkl' | wc
