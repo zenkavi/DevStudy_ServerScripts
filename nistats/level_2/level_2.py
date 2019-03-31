@@ -30,5 +30,30 @@ sub_contrasts = os.listdir(in_path)
 contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain']
 
 for c in contrasts:
-    second_level_input = [x for x in sub_contrasts if c in x]
+    second_level_input = [os.path.join(in_path,x) for x in sub_contrasts if c in x]
     design_matrix = pd.DataFrame([1] * len(second_level_input), columns=['intercept'])
+    model = SecondLevelModel(smoothing_fwhm=5.0)
+
+    c = re.sub("\.","",c)
+
+    print("***********************************************")
+    print("Running GLM for sub-%s contrast %s"%(subnum, c))
+    print("***********************************************")
+    model = model.fit(second_level_input, design_matrix=design_matrix)
+
+    print("***********************************************")
+    print("Saving GLM for sub-%s contrast %s"%(subnum, c))
+    print("***********************************************")
+    f = open('%s/sub-%s_%_l2_glm.pkl' %(out_path,subnum, c), 'wb')
+    pickle.dump(model, f)
+    f.close()
+
+    print("***********************************************")
+    print("Running contrasts for sub-%s contrast %s"%(subnum, c))
+    print("***********************************************")
+    z_map = model.compute_contrast(output_type='z_score')
+
+    nib.save(z_map, '%s/sub-%s_%s.nii.gz'%(contrasts_path, subnum, c))
+    print("***********************************************")
+    print("Done saving contrasts for sub-%s contrast %s"%(subnum, c))
+    print("***********************************************")
