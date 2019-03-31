@@ -59,8 +59,15 @@ for c in contrasts:
         print("***********************************************")
         print("Done saving contrasts for sub-%s contrast %s"%(subnum, c))
         print("***********************************************")
+    elif len(second_level_input) == 1:
+        print("***********************************************")
+        print("1 level 1 image found for sub-%s contrast %s"%(subnum, c))
+        print("Skipping level 2 for sub-%s contrast %s"%(subnum, c))
+        print("Saving level 1 for level 2 for sub-%s contrast %s"%(subnum, c))
+        z_map = nib.load(second_level_input[0])
+        nib.save(z_map, '%s/sub-%s_%s.nii.gz'%(contrasts_path, subnum, c))
+        print("***********************************************")
     else:
         print("***********************************************")
-        print("<1 level 1 images found for sub-%s contrast %s"%(subnum, c))
-        print("Skipping level 2 for sub-%s contrast %s"%(subnum, c))
+        print("No level 1 image found for sub-%s contrast %s"%(subnum, c))
         print("***********************************************")

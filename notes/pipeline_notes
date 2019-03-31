@@ -160,5 +160,6 @@ Rscript --vanilla debug_l1.R
 
 =============================level_s==============================
 
-Should be 14*74 = 1036:
+Should be 15*74 = 1100:
+But there will be some subj's with only one run for
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_2 -name 'sub-*_l2_glm.pkl' | wc
