@@ -158,8 +158,10 @@ find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level
 If not run:
 Rscript --vanilla debug_l1.R
 
-=============================level_s==============================
+=============================level_2==============================
 
-Should be 15*74 = 1100:
-But there will be some subj's with only one run for
-find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_2 -name 'sub-*_l2_glm.pkl' | wc
+Should be 15*74 = 1110 - 5 = 1105 (due to no junk trials for sub-100062, sub-402997, sub-408952, sub-409381, sub-409850)
+find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_2 -name 'sub-*.nii.gz' | wc
+
+
+=============================level_3==============================

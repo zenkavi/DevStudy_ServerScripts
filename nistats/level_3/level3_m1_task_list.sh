@@ -1,0 +1,15 @@
+python level_3.py -m model1 -r m1
+python level_3.py -m model1 -r m2
+python level_3.py -m model1 -r m3
+python level_3.py -m model1 -r m4
+python level_3.py -m model1 -r m1_rt
+python level_3.py -m model1 -r m2_rt
+python level_3.py -m model1 -r m3_rt
+python level_3.py -m model1 -r m4_rt
+python level_3.py -m model1 -r gain
+python level_3.py -m model1 -r loss
+python level_3.py -m model1 -r junk
+python level_3.py -m model1 -r task_on
+python level_3.py -m model1 -r rt
+python level_3.py -m model1 -r gain-loss
+python level_3.py -m model1 -r loss-gain
