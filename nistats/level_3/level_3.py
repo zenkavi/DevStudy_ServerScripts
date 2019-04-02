@@ -31,26 +31,27 @@ if not os.path.exists(contrasts_path):
 level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
 level2_images.sort()
 
+age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
+age_info['kid'] = np.where(age_info['age']<13,1,0)
+age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
+age_info['adult'] = np.where(age_info['age']>18,1,0)
+age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
+subs = [os.path.basename(x).split("_")[0] for x in level2_images]
+age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
+
 #model1: everyone vs. baseline
 if mnum == "model1":
     design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
 
 #model2: age group differences
 if mnum == "model2":
-    age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
-    age_info['kid'] = np.where(age_info['age']<13,1,0)
-    age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
-    age_info['adult'] = np.where(age_info['age']>18,1,0)
-    age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
-    subs = [os.path.basename(x).split("_")[0] for x in level2_images]
-    age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
     design_matrix = age_info[['kid', 'teen', 'adult']]
     design_matrix['intercept'] = [1] * len(level2_images)
 
 #model2: age group differences
 if mnum == "model3":
-    design_matrix = pd.DataFrame(data={'age':,
-    'intercept': pd.DataFrame([1] * len(level2_images)})
+    design_matrix = age_info[['age']]
+    design_matrix['intercept'] = [1] * len(level2_images)
 
 model = SecondLevelModel(smoothing_fwhm=5.0)
 
