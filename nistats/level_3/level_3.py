@@ -37,7 +37,23 @@ if mnum == "model1":
 
 #model2: age group differences
 if mnum == "model2":
-    design_matrix = ...
+    age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
+    age_info['kid'] = np.where(age_info['age']<13,1,0)
+    age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
+    age_info['adult'] = np.where(age_info['age']>18,1,0)
+    age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
+    subs = [os.path.basename(x).split("_")[0] for x in level2_images]
+    age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
+
+    design_matrix = pd.DataFrame(data={'kid':,
+    'teen':,
+    'adult':,
+    'intercept': pd.DataFrame([1] * len(level2_images)})
+
+#model2: age group differences
+if mnum == "model3":
+    design_matrix = pd.DataFrame(data={'age':,
+    'intercept': pd.DataFrame([1] * len(level2_images)})
 
 model = SecondLevelModel(smoothing_fwhm=5.0)
 
@@ -56,9 +72,19 @@ f.close()
 print("***********************************************")
 print("Running contrasts for %s contrast %s"%(mnum, reg))
 print("***********************************************")
-z_map = model.compute_contrast(output_type='z_score')
+if mnum == "model1":
+    z_map = model.compute_contrast(output_type='z_score')
+    nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
 
-nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
+if mnum == "model2":
+    for c in ['kid', 'teen', 'adult']
+    z_map = model.compute_contrast(c,output_type='z_score')
+    nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
+
+if mnum == "model3":
+    z_map = model.compute_contrast('age',output_type='z_score')
+    nib.save(z_map, '%s/%s_%s_age.nii.gz'%(contrasts_path, mnum, reg))
+
 print("***********************************************")
 print("Done saving contrast for %s contrast %s"%(mnum, reg))
 print("***********************************************")
