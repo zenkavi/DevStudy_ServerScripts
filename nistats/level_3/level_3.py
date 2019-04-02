@@ -44,11 +44,8 @@ if mnum == "model2":
     age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
     subs = [os.path.basename(x).split("_")[0] for x in level2_images]
     age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
-
-    design_matrix = pd.DataFrame(data={'kid':,
-    'teen':,
-    'adult':,
-    'intercept': pd.DataFrame([1] * len(level2_images)})
+    design_matrix = age_info[['kid', 'teen', 'adult']]
+    design_matrix['intercept'] = [1] * len(level2_images)
 
 #model2: age group differences
 if mnum == "model3":
@@ -77,9 +74,9 @@ if mnum == "model1":
     nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
 
 if mnum == "model2":
-    for c in ['kid', 'teen', 'adult']
-    z_map = model.compute_contrast(c,output_type='z_score')
-    nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
+    for c in ['kid', 'teen', 'adult']:
+        z_map = model.compute_contrast(c,output_type='z_score')
+        nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
 
 if mnum == "model3":
     z_map = model.compute_contrast('age',output_type='z_score')
