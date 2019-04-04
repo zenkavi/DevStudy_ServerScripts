@@ -1,5 +1,6 @@
 import glob
 import nibabel as nib
+from nilearn.image import concat_imgs
 from nistats.second_level_model import SecondLevelModel
 import numpy as np
 import os
@@ -8,14 +9,16 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_3.py -m MNUM -r REG
+#Usage: python level_3.py -m MNUM -r REG -s True
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
+parser.add_argument("-s", "--runstats", help="run GLM and save contrasts", default=True)
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
+runstats = args.runstats
 data_loc = os.environ['DATA_LOC']
 
 in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
@@ -30,6 +33,8 @@ if not os.path.exists(contrasts_path):
 
 level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
 level2_images.sort()
+all_l2_images = concat_imgs(level2_images)
+nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
 age_info['kid'] = np.where(age_info['age']<13,1,0)
@@ -75,34 +80,35 @@ f.close()
 
 model = SecondLevelModel(smoothing_fwhm=5.0)
 
-print("***********************************************")
-print("Running GLM for %s contrast %s"%(mnum, reg))
-print("***********************************************")
-model = model.fit(level2_images, design_matrix=design_matrix)
+if runstats:
+    print("***********************************************")
+    print("Running GLM for %s contrast %s"%(mnum, reg))
+    print("***********************************************")
+    model = model.fit(level2_images, design_matrix=design_matrix)
 
-print("***********************************************")
-print("Saving GLM for %s contrast %s"%(mnum, reg))
-print("***********************************************")
-f = open('%s/%s_%s_glm.pkl' %(out_path,mnum,reg), 'wb')
-pickle.dump(model, f)
-f.close()
+    print("***********************************************")
+    print("Saving GLM for %s contrast %s"%(mnum, reg))
+    print("***********************************************")
+    f = open('%s/%s_%s_glm.pkl' %(out_path,mnum,reg), 'wb')
+    pickle.dump(model, f)
+    f.close()
 
-print("***********************************************")
-print("Running contrasts for %s contrast %s"%(mnum, reg))
-print("***********************************************")
-if mnum == "model1":
-    z_map = model.compute_contrast(output_type='z_score')
-    nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
+    print("***********************************************")
+    print("Running contrasts for %s contrast %s"%(mnum, reg))
+    print("***********************************************")
+    if mnum == "model1":
+        z_map = model.compute_contrast(output_type='z_score')
+        nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
 
-if mnum == "model2":
-    for c in ['kid', 'teen', 'adult']:
-        z_map = model.compute_contrast(c,output_type='z_score')
-        nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
+    if mnum == "model2":
+        for c in ['kid', 'teen', 'adult']:
+            z_map = model.compute_contrast(c,output_type='z_score')
+            nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
 
-if mnum == "model3":
-    z_map = model.compute_contrast('age',output_type='z_score')
-    nib.save(z_map, '%s/%s_%s_age.nii.gz'%(contrasts_path, mnum, reg))
+    if mnum == "model3":
+        z_map = model.compute_contrast('age',output_type='z_score')
+        nib.save(z_map, '%s/%s_%s_age.nii.gz'%(contrasts_path, mnum, reg))
 
-print("***********************************************")
-print("Done saving contrast for %s contrast %s"%(mnum, reg))
-print("***********************************************")
+    print("***********************************************")
+    print("Done saving contrast for %s contrast %s"%(mnum, reg))
+    print("***********************************************")
