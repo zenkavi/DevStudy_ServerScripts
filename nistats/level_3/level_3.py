@@ -19,8 +19,8 @@ args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
 runstats = args.runstats
-data_loc = os.environ['DATA_LOC']
 
+data_loc = os.environ['DATA_LOC']
 in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
 
 out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
