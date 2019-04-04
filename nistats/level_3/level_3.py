@@ -52,6 +52,8 @@ if mnum == "model1":
 if mnum == "model2":
     design_matrix = age_info[['kid', 'teen', 'adult']]
     design_matrix['intercept'] = [1] * len(level2_images)
+    if not os.path.exists("%s/rand_anova"%(out_path)):
+        os.mkdir("%s/rand_anova"%(out_path))
 
 #model3: continuous age differences
 if mnum == "model3":
