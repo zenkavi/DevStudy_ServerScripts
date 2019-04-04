@@ -47,30 +47,31 @@ if mnum == "model1":
 if mnum == "model2":
     design_matrix = age_info[['kid', 'teen', 'adult']]
     design_matrix['intercept'] = [1] * len(level2_images)
-    replacements = {"NPTS": str(design_matrix.shape[0])}
-    with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
-      with open('%s/%s_%s.mat'%(out_path, mnum, reg), 'w') as outfile:
-          for line in infile:
-            for src, target in replacements.items():
-              line = line.replace(src, target)
-            outfile.write(line)
-    f=open('%s/%s_%s.mat'%(out_path, mnum, reg),'ab')
-    np.savetxt(f,design_matrix.values, fmt='%1.3f')
-    f.close()
-    with open("%s/derivatives/nistats/level_3/%s/design_grp_header.grp"%(data_loc, mnum)) as infile:
-      with open('%s/%s_%s.grp'%(out_path, mnum, reg), 'w') as outfile:
-          for line in infile:
-            for src, target in replacements.items():
-              line = line.replace(src, target)
-            outfile.write(line)
-    f=open('%s/%s_%s.grp'%(out_path, mnum, reg),'ab')
-    np.savetxt(f,[1] * len(level2_images),fmt='%1.0f')
-    f.close()
 
-#model2: age group differences
+#model3: continuous age differences
 if mnum == "model3":
     design_matrix = age_info[['age']]
     design_matrix['intercept'] = [1] * len(level2_images)
+
+replacements = {"NPTS": str(design_matrix.shape[0])}
+with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
+  with open('%s/%s_%s.mat'%(out_path, mnum, reg), 'w') as outfile:
+      for line in infile:
+        for src, target in replacements.items():
+          line = line.replace(src, target)
+        outfile.write(line)
+f=open('%s/%s_%s.mat'%(out_path, mnum, reg),'ab')
+np.savetxt(f,design_matrix.values, fmt='%1.3f')
+f.close()
+with open("%s/derivatives/nistats/level_3/%s/design_grp_header.grp"%(data_loc, mnum)) as infile:
+  with open('%s/%s_%s.grp'%(out_path, mnum, reg), 'w') as outfile:
+      for line in infile:
+        for src, target in replacements.items():
+          line = line.replace(src, target)
+        outfile.write(line)
+f=open('%s/%s_%s.grp'%(out_path, mnum, reg),'ab')
+np.savetxt(f,[1] * len(level2_images),fmt='%1.0f')
+f.close()
 
 model = SecondLevelModel(smoothing_fwhm=5.0)
 
