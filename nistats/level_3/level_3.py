@@ -33,7 +33,13 @@ if not os.path.exists(contrasts_path):
 
 level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
 level2_images.sort()
+print("***********************************************")
+print("Concatenating level 2 images for %s contrast %s"%(mnum, reg))
+print("***********************************************")
 all_l2_images = concat_imgs(level2_images)
+print("***********************************************")
+print("Saving level 2 images for %s contrast %s"%(mnum, reg))
+print("***********************************************")
 nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
