@@ -33,6 +33,12 @@ if not os.path.exists(contrasts_path):
 
 level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
 level2_images.sort()
+
+if reg=="rt":
+    exclude = ['m1', 'm2', 'm3', 'm4']
+    filter_func = lambda s: not any(x in s for x in exclude)
+    level2_images = [x for x in level2_images if filter_func(x)]
+
 print("***********************************************")
 print("Concatenating level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
