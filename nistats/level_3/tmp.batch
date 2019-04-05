@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#SBATCH -J tmp
+#SBATCH --array=1-30%30
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=00:10:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+
+# Outputs ----------------------------------
+#SBATCH -o ../../.out/tmp-%A-%a.out
+#SBATCH -e ../../.err/tmp-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL,END
+# ------------------------------------------
+
+source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
+source activate fmri
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" tmp.sh )
