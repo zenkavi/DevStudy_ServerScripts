@@ -14,7 +14,7 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
-parser.add_argument("-s", "--runstats", help="run GLM and save contrasts", action='store_false', default=True)
+parser.add_argument("-s", "--runstats", help="run GLM and save contrasts", action='store_true', default=True)
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
