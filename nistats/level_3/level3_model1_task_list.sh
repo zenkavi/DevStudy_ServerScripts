@@ -1,15 +1,15 @@
-python level_3.py -m model1 -r m1
-python level_3.py -m model1 -r m2
-python level_3.py -m model1 -r m3
-python level_3.py -m model1 -r m4
-python level_3.py -m model1 -r m1_rt
-python level_3.py -m model1 -r m2_rt
-python level_3.py -m model1 -r m3_rt
-python level_3.py -m model1 -r m4_rt
-python level_3.py -m model1 -r gain
-python level_3.py -m model1 -r loss
-python level_3.py -m model1 -r junk
-python level_3.py -m model1 -r task_on
-python level_3.py -m model1 -r rt
-python level_3.py -m model1 -r gain-loss
-python level_3.py -m model1 -r loss-gain
+python level_3.py -m model1 -r m1 --runstats
+python level_3.py -m model1 -r m2 --runstats
+python level_3.py -m model1 -r m3 --runstats
+python level_3.py -m model1 -r m4 --runstats
+python level_3.py -m model1 -r m1_rt --runstats
+python level_3.py -m model1 -r m2_rt --runstats
+python level_3.py -m model1 -r m3_rt --runstats
+python level_3.py -m model1 -r m4_rt --runstats
+python level_3.py -m model1 -r gain --runstats
+python level_3.py -m model1 -r loss --runstats
+python level_3.py -m model1 -r junk --runstats
+python level_3.py -m model1 -r task_on --runstats
+python level_3.py -m model1 -r rt --runstats
+python level_3.py -m model1 -r gain-loss --runstats
+python level_3.py -m model1 -r loss-gain --runstats
