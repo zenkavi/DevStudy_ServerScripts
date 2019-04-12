@@ -27,7 +27,7 @@ else:
     all_models = [model_name]
 
 for model in all_models:
-    filenames = glob.glob(data_dir+model+'*')
+    filenames = glob.glob(data_dir+'*'+model+'*')
     all_fits = pd.concat( [ pd.read_csv(f) for f in filenames ] , sort=True)
     all_fits['model'] = model
     all_fits.reset_index()
