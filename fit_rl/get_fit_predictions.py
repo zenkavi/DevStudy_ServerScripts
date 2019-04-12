@@ -23,11 +23,15 @@ parser = ArgumentParser()
 parser.add_argument("-m", "--model_name", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=data_loc+'/derivatives/level_1/', help="output path")
+parser.add_argument("-p", "--probs", default=True, help="calculate choice probabilities in addition to PE and EV for each trial")
+parser.add_argument("-sr", "--save_by_run", default=False, help="save predicted values broken down by each scanning run")
 args = parser.parse_args()
 
 model_name = args.model_name
 data_path = args.data_path
 output_path = args.output_path
+probs = args.probs
+save_by_run = args.save_by_run
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
 machine_game_data.sort()
@@ -37,7 +41,7 @@ model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits/LearningParams_'+mod
 model_pars_data = model_pars_data[model_pars_data['neglogprob'] == model_pars_data.groupby('sub_id')['neglogprob'].transform('min')]
 model_pars_data = model_pars_data.sort_values('neglogprob').drop_duplicates('sub_id')
 
-def get_ev_rpe_df(data, pars_dict):
+def get_predicted_df(data, pars_dict):
     TrialNum = data.Trial_type
     Response = data.Response
     Outcome = data.Points_earned
@@ -111,17 +115,20 @@ for subject_data in machine_game_data:
             fix_dict = {x.replace('x0_', ''): v for x, v in fix_dict.items()}
             pars_dict[k] = fix_dict[k]
 
-    df = get_ev_rpe_df(data=df, pars_dict=pars_dict)
-    df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE']]
+    df = get_predicted_df(data=df, pars_dict=pars_dict)
+    #df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE']]
 
-    file_length = df.shape[0]
-    N=30
-    for i in range(file_length//N):
-        run_rows = df[N*(i+1)-(N):N*(i+1)]
-        try:
-            if not os.path.exists(os.path.join(output_path, 'sub-%s'%(subnum))):
-                os.makedirs(os.path.join(output_path, 'sub-%s'%(subnum)))
-            run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-00'+str(i+1)+'_ev_rpe.csv'))
-            print('Done with sub-%s run-%s'%(subnum, str(i+1)))
-        except:
-            print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
+    df.to_csv()
+
+    if(save_by_run):
+        file_length = df.shape[0]
+        N=30
+        for i in range(file_length//N):
+            run_rows = df[N*(i+1)-(N):N*(i+1)]
+            try:
+                if not os.path.exists(os.path.join(output_path, 'sub-%s'%(subnum))):
+                    os.makedirs(os.path.join(output_path, 'sub-%s'%(subnum)))
+                run_rows.to_csv(os.path.join(output_path, 'sub-%s'%(subnum),'sub-'+str(subnum)+'_task-machinegame_run-00'+str(i+1)+'_ev_rpe.csv'))
+                print('Done with sub-%s run-%s'%(subnum, str(i+1)))
+            except:
+                print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
