@@ -2,17 +2,19 @@ import glob
 import os
 import pandas as pd
 from string import digits
-import sys
+from argparse import ArgumentParser
 
-#python concat_model_fits.py
-#python concat_model_fits.py LearningParams_Fit_alpha-beta-exp_Fix_
+#python concat_rl_output.py -r preds
+#python concat_rl_output.py -r preds -m Fit_alpha-beta-exp_Fix_
 
-try:
-    model_name = sys.argv[1]
-except:
-    model_name = 'all'
+parser.add_argument("-m", "--model_name", default='all', help="model name")
+parser.add_argument("-r", "--rl_output", help="output type: preds/fits")
+args = parser.parse_args()
 
-data_dir = os.environ['SERVER_SCRIPTS']+"/fit_rl/.fits/"
+model_name = args.model_name
+rl_output = args.rl_output
+
+data_dir = os.environ['SERVER_SCRIPTS']+"/fit_rl/.%s/" %(rl_output)
 
 #helper function
 remove_digits = str.maketrans('', '', digits)
