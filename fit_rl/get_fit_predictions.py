@@ -136,4 +136,4 @@ for subject_data in machine_game_data:
                 except:
                     print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
         else:
-            print('No model parameters for sub-%s model:'%(subnum, model_name))
+            print('No model parameters for sub-%s model: %s'%(subnum, model_name))
