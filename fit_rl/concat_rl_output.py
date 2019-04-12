@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 #python concat_rl_output.py -r preds
 #python concat_rl_output.py -r preds -m Fit_alpha-beta-exp_Fix_
 
+parser = ArgumentParser()
 parser.add_argument("-m", "--model_name", default='all', help="model name")
 parser.add_argument("-r", "--rl_output", help="output type: preds/fits")
 args = parser.parse_args()
