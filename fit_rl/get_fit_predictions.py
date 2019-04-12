@@ -106,6 +106,7 @@ for subject_data in machine_game_data:
     print('Beginning model predictions for sub-%s'%(subnum))
 
     pars_row = model_pars_data.query("sub_id == %s"%(float(subnum)))
+
     if pars_row.shape[0]>0:
         pars_dict = pars_row.filter(regex='xopt').to_dict('records')[0]
         pars_dict = {x.replace('xopt_', ''): v for x, v in pars_dict.items()}
@@ -135,5 +136,5 @@ for subject_data in machine_game_data:
                     print('Done with sub-%s run-%s'%(subnum, str(i+1)))
                 except:
                     print('Data not saved for sub-%s run-%s'%(subnum, str(i+1)))
-        else:
-            print('No model parameters for sub-%s model: %s'%(subnum, model_name))
+    else:
+        print('No model parameters for sub-%s model: %s'%(subnum, model_name))
