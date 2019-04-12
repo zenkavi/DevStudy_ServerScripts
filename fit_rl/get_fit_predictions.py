@@ -6,8 +6,8 @@ import pandas as pd
 import re
 from argparse import ArgumentParser
 
-#Usage: python get_trial_ev.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
-#output: /oak/stanford/groups/russpold/data/ds000054/0.0.2/derivatives/level_1/sub-*/sub-*_task-machinegame_run-*_ev_rpe.csv
+#Usage: python get_fit_predictions.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
+#output: /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fit_rl/.preds/Preds_Fit_{MODEL_NAME}_{SUBNUM}.csv
 
 try:
     todo_path = os.environ['TODO_PATH']
@@ -22,15 +22,13 @@ except KeyError:
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_name", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
-parser.add_argument("-op", "--output_path", default=data_loc+'/derivatives/level_1/', help="output path")
-parser.add_argument("-p", "--probs", default=True, help="calculate choice probabilities in addition to PE and EV for each trial")
+parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.preds', help="output path")
 parser.add_argument("-sr", "--save_by_run", default=False, help="save predicted values broken down by each scanning run")
 args = parser.parse_args()
 
 model_name = args.model_name
 data_path = args.data_path
 output_path = args.output_path
-probs = args.probs
 save_by_run = args.save_by_run
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
@@ -50,6 +48,7 @@ def get_predicted_df(data, pars_dict):
     choiceprob = np.zeros((len(TrialNum)))
     data['EV'] = np.nan
     data['PE'] = np.nan
+    data['choiceprob'] = np.nan
     if 'alpha' in pars_dict.keys():
         alpha=pars_dict['alpha']
     else:
@@ -93,16 +92,18 @@ def get_predicted_df(data, pars_dict):
                 Prediction_Error = 0
             data.EV[i] = EV[int(TrialNum[i]-1)]
             data.PE[i] = Prediction_Error
+            data.choiceprob[i] = choiceprob[i]
             EV[int(TrialNum[i]-1)] += Prediction_Error
         elif Outcome[i] == 0:
             data.EV[i] = EV[int(TrialNum[i]-1)]
+            data.choiceprob[i] = choiceprob[i]
     return(data)
 
 for subject_data in machine_game_data:
 
     df = pd.read_csv(subject_data)
     subnum = re.findall('\d+', os.path.basename(subject_data))[0]
-    print('Beginning EV/PE calculation for sub-%s'%(subnum))
+    print('Beginning model predictions for sub-%s'%(subnum))
 
     pars_row = model_pars_data.query("sub_id == %s"%(float(subnum)))
     pars_dict = pars_row.filter(regex='xopt').to_dict('records')[0]
@@ -116,9 +117,10 @@ for subject_data in machine_game_data:
             pars_dict[k] = fix_dict[k]
 
     df = get_predicted_df(data=df, pars_dict=pars_dict)
-    #df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE']]
+    df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE', 'choiceprob']]
+    df['sub_id'] = subnum
 
-    df.to_csv()
+    df.to_csv('%s/Preds_%s_%s.csv'%(output_path,model_name, subnum))
 
     if(save_by_run):
         file_length = df.shape[0]

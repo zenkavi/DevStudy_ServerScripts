@@ -3,5 +3,6 @@
 .err
 .rl_task_lists
 .fits
+.preds
 license.txt
 l1_debug_jobs.sh
