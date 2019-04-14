@@ -212,21 +212,20 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         return(x0)
 
     bnds = []
-    if "alpha" in pars.keys():
+    if "alpha" in pars.keys() and np.isnan(pars['alpha']):
         bnds.append((0,1))
-    if "alpha_neg" in pars.keys():
+    if "alpha_neg" in pars.keys() and np.isnan(pars['alpha_neg']):
         bnds.append((0,1))
-    if "alpha_pos" in pars.keys():
+    if "alpha_pos" in pars.keys() and np.isnan(pars['alpha_pos']):
         bnds.append((0,1))
-    if "beta" in pars.keys():
+    if "beta" in pars.keys() and np.isnan(pars['beta']):
         bnds.append((0,7))
-    if "exp" in pars.keys():
+    if "exp" in pars.keys() and np.isnan(pars['exp']):
         bnds.append((0,1))
-    if "exp_neg" in pars.keys():
+    if "exp_neg" in pars.keys() and np.isnan(pars['exp_neg']):
         bnds.append((0,1))
-    if "exp_pos" in pars.keys():
+    if "exp_pos" in pars.keys() and np.isnan(pars['exp_pos']):
         bnds.append((0,1))
-
     bnds = tuple(bnds)
 
     for i in range(n_fits):

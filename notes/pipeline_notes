@@ -85,6 +85,8 @@ Input:
 Script: concat_rl_output.py -r fits
 Output: $SERVER_SCRIPTS/fit_rl/.preds/LearningParams_*_All.csv
 
+rsync -avzh --include='*_All.csv' --include='*/' --exclude='*' zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fit_rl/.fits/ ./rl_fits
+
 Input: get_fit_predictions.py, fit_predictions_task_list.sh
 Script: run_fit_predictions.batch
 Output: $SERVER_SCRIPTS/fit_rl/.preds/Preds_*_{sub_num}.csv
