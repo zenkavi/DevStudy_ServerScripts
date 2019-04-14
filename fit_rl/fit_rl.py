@@ -8,6 +8,9 @@ import random
 import scipy.optimize
 from argparse import ArgumentParser
 
+random.seed(1413312)
+np.random.seed(1413312)
+
 try:
     todo_path = os.environ['TODO_PATH']
     server_scripts = os.environ['SERVER_SCRIPTS']
@@ -36,15 +39,9 @@ try:
 except:
     pars = json.loads(pars[0].replace('nan', '"nan"').replace("'", "\""))
 
-#pars = {k: np.nan if "nan" else v for k, v in pars.items() }
-
 for (k,v) in pars.items():
     if v == "nan":
         pars[k] = np.nan
-
-#data_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_Developmental study/Task/Dev_Learning_Study/Output/fMRI/'
-
-#output_path = '/Users/zeynepenkavi/Dropbox/PoldrackLab/Sarah_DevStudy_Analyses/output/fits/'
 
 def extract_pars(pars):
     fixparams = []
@@ -168,7 +165,6 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id']
 
-
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
     fixparams = extract_pars(pars)['fixparams']
@@ -191,28 +187,50 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
                 #Priors
                 #UPDATING X0 FOR ALL PARS THAT WILL BE FITTED AFTER SAMPLING FROM PRIOR TO make sure x0 has the correct order and only values for parameters that will be fittd!
                 if key == 'alpha':
-                    pars_copy[key] = random.uniform(0,1)
+                    #pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'alpha_neg':
-                    pars_copy[key] = random.uniform(0,1)
+                    #pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'alpha_pos':
-                    pars_copy[key] = random.uniform(0,1)
+                    #pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'beta':
-                    pars_copy[key] = random.uniform(0,5)
+                    #pars_copy[key] = random.uniform(0,5)
+                    pars_copy[key] = np.random.gamma(2,1)
                     x0.append(pars_copy[key])
                 if key == 'exp':
-                    pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.uniform(0,1)
                     x0.append(pars_copy[key])
                 if key == 'exp_neg':
-                    pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.uniform(0,1)
                     x0.append(pars_copy[key])
                 if key == 'exp_pos':
-                    pars_copy[key] = random.uniform(0,1)
+                    pars_copy[key] = np.random.uniform(0,1)
                     x0.append(pars_copy[key])
 
         return(x0)
+
+    bnds = []
+    if "alpha" in pars.keys():
+        bnds.append((0,1))
+    if "alpha_neg" in pars.keys():
+        bnds.append((0,1))
+    if "alpha_pos" in pars.keys():
+        bnds.append((0,1))
+    if "beta" in pars.keys():
+        bnds.append((0,7))
+    if "exp" in pars.keys():
+        bnds.append((0,1))
+    if "exp_neg" in pars.keys():
+        bnds.append((0,1))
+    if "exp_pos" in pars.keys():
+        bnds.append((0,1))
+
+    bnds = tuple(bnds)
 
     for i in range(n_fits):
 
@@ -224,7 +242,9 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
             #Fit model
             try:
-                xopt = scipy.optimize.fmin(calculate_prediction_error,x0,args=(data,pars,),xtol=1e-6,ftol=1e-6)
+                #xopt = scipy.optimize.fmin(calculate_prediction_error,x0,args=(data,pars,),xtol=1e-6,ftol=1e-6)
+                #xopt = scipy.optimize.minimize(calculate_prediction_error,x0, method = "Nelder-Mead",args=(data,pars,),tol=1e-6).x
+                xopt = scipy.optimize.minimize(calculate_prediction_error,x0, method = "L-BFGS-B",args=(data,pars,),bounds=bnds,tol=1e-6).x
             except OverflowError:
                 xopt = [float('inf')]*len(x0)
 
@@ -252,9 +272,3 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
 
 select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars)
-
-# Based on http://zenkavi.github.io/DevStudy/output/reports/ExploratoryDVs.nb.html
-# the age difference in this task lies in learning from high variance negative feedback
-# Which parameter would this be captured in?
-# Well this machine has two properties that are different than the others: the magnitude of the loss and the frequency of loss (sensitivity to EV vs variance?). So either alpha_neg if the RPE from the machine is not weighed enough and/or the exponent on the loss if the loss doesn't feel as severe as it should
-# Can you fit the model per condition? Probably not since there would only be 45 trials and there should be a more elegant way of capturing this in a single model
