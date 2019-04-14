@@ -231,7 +231,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     for i in range(n_fits):
 
-        n = random.uniform(1000,99999999)
+        n = random.randint(1000,99999999)
         random.seed(n)
         np.random.seed(n)
 
