@@ -8,9 +8,6 @@ import random
 import scipy.optimize
 from argparse import ArgumentParser
 
-random.seed(1413312)
-np.random.seed(1413312)
-
 try:
     todo_path = os.environ['TODO_PATH']
     server_scripts = os.environ['SERVER_SCRIPTS']
@@ -163,7 +160,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
-    cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id']
+    cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
 
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
@@ -234,6 +231,10 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     for i in range(n_fits):
 
+        n = random.uniform(1000,99999999)
+        random.seed(n)
+        np.random.seed(n)
+
         x0=sample_x0(pars)
         x0_dict = dict(zip(fitparams,x0))
 
@@ -264,6 +265,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
             #add subject column
             Results.sub_id[i] = subject
+            Results.seed[i] = n
 
         except:
             print("fmin error")
