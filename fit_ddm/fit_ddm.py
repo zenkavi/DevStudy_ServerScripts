@@ -9,19 +9,22 @@ from argparse import ArgumentParser
 todo_path = os.environ['TODO_PATH']
 server_scripts = os.environ['SERVER_SCRIPTS']
 
-#python fit_ddm.py
+#python fit_ddm.py -c play1_pass0
+#python fit_ddm.py -c correct1_incorrect0
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subject", help="subject number", default='all')
+parser.add_argument("-c", "--ccol", help="correct_col")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_ddm/.fits/', help="output path")
 args = parser.parse_args()
 
 subject = args.subject
+ccol = args.ccol
 data_path = args.data_path
 output_path = args.output_path
 
-def EZ_diffusion(df, condition = "Trial_type", correct_col = "play1_pass0", rt_col = "Reaction_time"):
+def EZ_diffusion(df, condition = "Trial_type", correct_col = None, rt_col = "Reaction_time"):
     assert correct_col in df.columns, 'Did not find binary decision column for EZ DDM'
     assert rt_col in df.columns, 'Did not find rt column for EZ DDM'
     df = df.copy()
@@ -75,20 +78,25 @@ if subject=="all":
     for f in all_files:
         data = pd.read_csv(f)
         data = data.query("Response!=0")
-        data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
+        if ccol == "play1_pass0":
+            data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
+        if ccol == "correct1_incorrect0"
+            data['correct1_incorrect0'] = np.where((data['Trial_type']==1) & (data['Response']==2),1, np.where((data['Trial_type']==2) & (data['Response']==1),1, np.where((data['Trial_type']==3) & (data['Response']==1),1, np.where((data['Trial_type']==4) & (data['Response']==2),1,0)))).tolist()
         subnum= re.findall(r'\d+', os.path.basename(f))[0]
         print("Fitting EZ DDM for %s"%(os.path.basename(f)))
-        sub_results=EZ_diffusion(data)
+        sub_results=EZ_diffusion(data, correct_col = ccol)
         results[subnum] = sub_results
     del results['406989']
     results = pd.DataFrame.from_dict(results, orient="index")
-    results.to_csv(output_path+'EZ_ddm_fits_all.csv')
+    results.to_csv(output_path+'EZ_ddm_fits_%s_all.csv'%(ccol))
 else:
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
     data = data.query("Response!=0")
-    data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
-    print("Fitting EZ DDM for %s"%(subject))
-    sub_results = EZ_diffusion(data)
+    if ccol == "play1_pass0":
+        data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
+    if ccol == "correct1_incorrect0"
+        data['correct1_incorrect0'] = np.where((data['Trial_type']==1) & (data['Response']==2),1, np.where((data['Trial_type']==2) & (data['Response']==1),1, np.where((data['Trial_type']==3) & (data['Response']==1),1, np.where((data['Trial_type']==4) & (data['Response']==2),1,0)))).tolist()
+    sub_results = EZ_diffusion(data, correct_col = ccol)
     results[subject] = sub_results
     results = pd.DataFrame.from_dict(results, orient="index")
-    results.to_csv(output_path+'EZ_ddm_fits_%s.csv'%(subject))
+    results.to_csv(output_path+'EZ_ddm_fits_%s_%s.csv'%(ccol,subject))
