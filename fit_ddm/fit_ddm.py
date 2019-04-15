@@ -80,7 +80,7 @@ if subject=="all":
         data = data.query("Response!=0")
         if ccol == "play1_pass0":
             data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
-        if ccol == "correct1_incorrect0"
+        if ccol == "correct1_incorrect0":
             data['correct1_incorrect0'] = np.where((data['Trial_type']==1) & (data['Response']==2),1, np.where((data['Trial_type']==2) & (data['Response']==1),1, np.where((data['Trial_type']==3) & (data['Response']==1),1, np.where((data['Trial_type']==4) & (data['Response']==2),1,0)))).tolist()
         subnum= re.findall(r'\d+', os.path.basename(f))[0]
         print("Fitting EZ DDM for %s"%(os.path.basename(f)))
@@ -94,7 +94,7 @@ else:
     data = data.query("Response!=0")
     if ccol == "play1_pass0":
         data['play1_pass0'] = np.where(data['Response']==1,1,np.where(data['Response']==2,0,np.nan))
-    if ccol == "correct1_incorrect0"
+    if ccol == "correct1_incorrect0":
         data['correct1_incorrect0'] = np.where((data['Trial_type']==1) & (data['Response']==2),1, np.where((data['Trial_type']==2) & (data['Response']==1),1, np.where((data['Trial_type']==3) & (data['Response']==1),1, np.where((data['Trial_type']==4) & (data['Response']==2),1,0)))).tolist()
     sub_results = EZ_diffusion(data, correct_col = ccol)
     results[subject] = sub_results
