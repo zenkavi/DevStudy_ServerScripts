@@ -49,7 +49,7 @@ def EZ_diffusion(df, condition = "Trial_type", correct_col = "play1_pass0", rt_c
                 drift, thresh, non_dec = hddm.utils.EZ(pc, vrt, mrt)
                 EZ_dvs['EZ_drift_' + str(c)] = drift
                 EZ_dvs['EZ_thresh_' + str(c)] = thresh
-                EZ_dvs['EZ_non_decision_' + str(c)] = non_dec
+                EZ_dvs['EZ_non-decision_' + str(c)] = non_dec
             except ValueError:
                 continue
     else:
@@ -64,7 +64,7 @@ def EZ_diffusion(df, condition = "Trial_type", correct_col = "play1_pass0", rt_c
             drift, thresh, non_dec = hddm.utils.EZ(pc, vrt, mrt)
             EZ_dvs['EZ_drift'] = drift
             EZ_dvs['EZ_thresh'] = thresh
-            EZ_dvs['EZ_non_decision'] = non_dec
+            EZ_dvs['EZ_non-decision'] = non_dec
         except ValueError:
             return {}
     return EZ_dvs
