@@ -1,0 +1,15 @@
+randomise -i $MODEL_DIR/m1/all_l2_model1_m1.nii.gz -o $MODEL_DIR/m1/rand_baseline/group_diff -d $MODEL_DIR/m1/model1_m1.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m2/all_l2_model1_m2.nii.gz -o $MODEL_DIR/m2/rand_baseline/group_diff -d $MODEL_DIR/m2/model1_m2.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m3/all_l2_model1_m3.nii.gz -o $MODEL_DIR/m3/rand_baseline/group_diff -d $MODEL_DIR/m3/model1_m3.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m4/all_l2_model1_m4.nii.gz -o $MODEL_DIR/m4/rand_baseline/group_diff -d $MODEL_DIR/m4/model1_m4.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m1_rt/all_l2_model1_m1_rt.nii.gz -o $MODEL_DIR/m1_rt/rand_baseline/group_diff -d $MODEL_DIR/m1_rt/model1_m1_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m2_rt/all_l2_model1_m2_rt.nii.gz -o $MODEL_DIR/m2_rt/rand_baseline/group_diff -d $MODEL_DIR/m2_rt/model1_m2_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m3_rt/all_l2_model1_m3_rt.nii.gz -o $MODEL_DIR/m3_rt/rand_baseline/group_diff -d $MODEL_DIR/m3_rt/model1_m3_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/m4_rt/all_l2_model1_m4_rt.nii.gz -o $MODEL_DIR/m4_rt/rand_baseline/group_diff -d $MODEL_DIR/m4_rt/model1_m4_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/gain/all_l2_model1_gain.nii.gz -o $MODEL_DIR/gain/rand_baseline/group_diff -d $MODEL_DIR/gain/model1_gain.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/loss/all_l2_model1_loss.nii.gz -o $MODEL_DIR/loss/rand_baseline/group_diff -d $MODEL_DIR/loss/model1_loss.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/junk/all_l2_model1_junk.nii.gz -o $MODEL_DIR/junk/rand_baseline/group_diff -d $MODEL_DIR/junk/model1_junk.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/task_on/all_l2_model1_task_on.nii.gz -o $MODEL_DIR/task_on/rand_baseline/group_diff -d $MODEL_DIR/task_on/model1_task_on.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/rt/all_l2_model1_rt.nii.gz -o $MODEL_DIR/rt/rand_baseline/group_diff -d $MODEL_DIR/rt/model1_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/gain-loss/all_l2_model1_gain-loss.nii.gz -o $MODEL_DIR/gain-loss/rand_baseline/group_diff -d $MODEL_DIR/gain-loss/model1_gain-loss.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/loss-gain/all_l2_model1_loss-gain.nii.gz -o $MODEL_DIR/loss-gain/rand_baseline/group_diff -d $MODEL_DIR/loss-gain/model1_loss-gain.mat -t $MODEL_DIR/design.con -n 1000 -T
