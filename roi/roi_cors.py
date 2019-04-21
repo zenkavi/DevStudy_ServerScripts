@@ -15,6 +15,7 @@ sub_img_files.sort()
 roi_img_files = glob.glob(data_loc+'/derivatives/rois/*_bin.nii.gz')
 roi_img_files.sort()
 
+out = []
 for sub_img_file in sub_img_files:
     #each point in this image is the mean z-score for the regression coefficient between the convolved m1 regressor and BOLD activity across the 6 runs
     sub_num = re.findall('\d+', os.path.basename(sub_img_file))[0]
@@ -25,14 +26,14 @@ for sub_img_file in sub_img_files:
     sub_img_data = sub_img.get_data().astype('float32')
 
     for roi_img_file in roi_img_files:
-        #question: do the average (?) z-scores from ROIs (one per subject) correlate with drift rates differently for each age group?
-        roi_name = os.path.basename(roi_img_file)
+        #question: do the average (?) z-scores from ROIs (one per subject, per ROI) correlate with drift rates differently for each age group?
+        roi_name = os.path.basename(roi_img_file).split("_")[0]
         roi_img = nib.load(roi_img_file)
         roi_img_data = roi_img.get_data().astype('bool')
 
         n_vox = np.argwhere(roi_img_data==True).shape[0]
         print("***********************************************")
-        print("Extracting z-values for %s voxels"%(str(n_vox)))
+        print("Extracting z-values for %s voxels in %s"%(str(n_vox), roi_name))
         print("***********************************************")
 
         voxs = np.argwhere(roi_img_data==True)
@@ -46,3 +47,7 @@ for sub_img_file in sub_img_files:
 
         m_zvals = np.mean(sub_zvals)
         std_zvals = np.std(sub_zvals)
+
+        out.append({'sub_id':sub_num, 'roi_name': roi_name, 'm_zvals': m_zvals, 'std_zvals': std_zvals})
+
+pd.DataFrame(out).to_csv(data_loc+'/derivatives/rois/m1_roi_mzvals.csv')
