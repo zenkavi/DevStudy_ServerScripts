@@ -4,6 +4,7 @@ import pandas as pd
 from string import digits
 from argparse import ArgumentParser
 
+#python concat_rl_output.py -r fits
 #python concat_rl_output.py -r preds
 #python concat_rl_output.py -r preds -m Fit_alpha-beta-exp_Fix_
 

@@ -200,10 +200,10 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
                     pars_copy[key] = np.random.gamma(2,1)
                     x0.append(pars_copy[key])
                 if key == 'exp':
-                    pars_copy[key] = np.random.uniform(0,1)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'exp_neg':
-                    pars_copy[key] = nnp.random.beta(1.2,1.2)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'exp_pos':
                     pars_copy[key] = np.random.beta(1.2,1.2)
