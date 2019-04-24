@@ -203,29 +203,29 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
                     pars_copy[key] = np.random.uniform(0,1)
                     x0.append(pars_copy[key])
                 if key == 'exp_neg':
-                    pars_copy[key] = np.random.uniform(0,1)
+                    pars_copy[key] = nnp.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
                 if key == 'exp_pos':
-                    pars_copy[key] = np.random.uniform(0,1)
+                    pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
 
         return(x0)
 
     bnds = []
     if "alpha" in pars.keys() and np.isnan(pars['alpha']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     if "alpha_neg" in pars.keys() and np.isnan(pars['alpha_neg']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     if "alpha_pos" in pars.keys() and np.isnan(pars['alpha_pos']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     if "beta" in pars.keys() and np.isnan(pars['beta']):
-        bnds.append((0,7))
+        bnds.append((0,15))
     if "exp" in pars.keys() and np.isnan(pars['exp']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     if "exp_neg" in pars.keys() and np.isnan(pars['exp_neg']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     if "exp_pos" in pars.keys() and np.isnan(pars['exp_pos']):
-        bnds.append((0,1))
+        bnds.append((0.05,2))
     bnds = tuple(bnds)
 
     for i in range(n_fits):
