@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import random
 import scipy.optimize
+from scipy.stats import truncnorm
 from argparse import ArgumentParser
 
 try:
@@ -76,13 +77,13 @@ def calculate_prediction_error(x0,data, pars):
     #now we create a dictionary that will contain all the appropriate numbers for each parameter that will be used in the RPE and EV calculations below
     if 'alpha' in pars.keys():
         if 'exp' in pars.keys():
-            all_pars_dict = {'alpha':np.nan, 'beta':np.nan, 'exp':np.nan}
+            all_pars_dict = {'alpha':np.nan, 'beta':np.nan, 'exp':np.nan, 'lossave': np.nan}
         else:
-            all_pars_dict = {'alpha':np.nan, 'beta':np.nan, 'exp_neg':np.nan, 'exp_pos':np.nan}
+            all_pars_dict = {'alpha':np.nan, 'beta':np.nan, 'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}
     elif 'exp' in pars.keys():
-        all_pars_dict = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan, 'exp':np.nan}
+        all_pars_dict = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan, 'exp':np.nan, 'lossave': np.nan}
     else:
-        all_pars_dict = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan, 'exp_neg':np.nan, 'exp_pos':np.nan}
+        all_pars_dict = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan, 'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}
 
     #we populate each element in this dictionary of all to-be-used parameters by going through each key; checking if it is in fixparams. If so we extract is from the params argument in the function call, otherwise we extract the sampled value from x0
     for par in sorted(all_pars_dict.keys()):
@@ -103,6 +104,7 @@ def calculate_prediction_error(x0,data, pars):
     else:
         expneg=all_pars_dict['exp_neg']
         exppos=all_pars_dict['exp_pos']
+    lossave=all_pars_dict['lossave']
 
     for i in range(len(TrialNum)):
         #First update the choice probabilities for each trial
@@ -110,10 +112,16 @@ def calculate_prediction_error(x0,data, pars):
             choiceprob[i] = 1
 
         if Response[i] == 1:
-            choiceprob[i] = math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
+            if EV[int(TrialNum[i]-1)] < 0:
+                choiceprob[i] = math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)/(math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)+1)
+            else:
+                choiceprob[i] = math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
 
         if Response[i] == 2:
-            choiceprob[i] = 1-math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
+            if EV[int(TrialNum[i]-1)] < 0:
+                choiceprob[i] = 1-math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)/(math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)+1)
+            else:
+                choiceprob[i] = 1-math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
 
         #If a machine has been played update the RPE
         if Outcome[i] != 0:
@@ -156,7 +164,7 @@ def calculate_prediction_error(x0,data, pars):
     return(neglogprob)
 
 
-def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan}):
+def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}):
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
@@ -208,6 +216,10 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
                 if key == 'exp_pos':
                     pars_copy[key] = np.random.beta(1.2,1.2)
                     x0.append(pars_copy[key])
+                if key == 'lossave':
+                    # Based on: https://github.com/kieranrcampbell/blog-notebooks/blob/master/Fast%20vectorized%20sampling%20from%20truncated%20normal%20distributions%20in%20python.ipynb
+                    pars_copy[key] = truncnorm.rvs((0 - 2) / 2, (10 - 2) / 2, 2, 2)
+                    x0.append(pars_copy[key])
 
         return(x0)
 
@@ -226,6 +238,8 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         bnds.append((0.05,2))
     if "exp_pos" in pars.keys() and np.isnan(pars['exp_pos']):
         bnds.append((0.05,2))
+    if "lossave" in pars.keys() and np.isnan(pars['lossave']):
+        bnds.append((0,10))
     bnds = tuple(bnds)
 
     for i in range(n_fits):
