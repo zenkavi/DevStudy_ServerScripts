@@ -1,0 +1,24 @@
+Notes on code in: https://github.com/sjgershm/mfit/
+
+mfit_optimize_hierarchical steps:
+
+- initialization
+
+- iterate expectation maximixation steps
+  - construct prior: don't fully understand this step. seems to change the logpdf function for each parameter to the same thing, which is different than what is was initialized to be in the input arguments
+
+  - E-step: individual parameter estimate using mfit_optimize
+    - mfit_optimize steps
+      - initialize
+      - construct posterior function which evaluates the log probability of parameters under the posterior using the likelihood function argument fed into the optimization function and the logpdf attribute of the param argument
+      - if there are bounds use **uniform prior** within the lower and upper bounds to generate starting values for optimization
+      - use fmincon to estimate parameters which returns vector of estimates and minimized value of negative log probability
+      - organize output for the iteration (up to nstarts) for the estimates with highest log probability
+      - output includes log posterior, log likelihood, parameter estimates, Hessian, aic, bic
+
+  - transform estimated parameters to (-inf, +inf) using log or logit link function (not sure why; seems to be necessary for the Laplace approximation)
+
+  - M-step: update group level parameters
+    - Laplace approximation using the Hessian matrix of the second derivatives of the negative log posterior
+
+- output:
