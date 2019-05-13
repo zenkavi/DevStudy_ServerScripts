@@ -9,15 +9,9 @@ from argparse import ArgumentParser
 #Usage: python get_fit_predictions.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
 #output: /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fit_rl/.preds/Preds_Fit_{MODEL_NAME}_{SUBNUM}.csv
 
-try:
-    todo_path = os.environ['TODO_PATH']
-    server_scripts = os.environ['SERVER_SCRIPTS']
-    data_loc = os.environ['DATA_LOC']
-except KeyError:
-    os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
-    todo_path = os.environ['TODO_PATH']
-    server_scripts = os.environ['SERVER_SCRIPTS']
-    data_loc = os.environ['DATA_LOC']
+todo_path = os.environ['TODO_PATH']
+server_scripts = os.environ['SERVER_SCRIPTS']
+data_loc = os.environ['DATA_LOC']
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_name", help="model name")
@@ -60,13 +54,20 @@ def get_predicted_df(data, pars_dict):
     else:
         expneg=pars_dict['exp_neg']
         exppos=pars_dict['exp_pos']
+    lossave=pars_dict['lossave']
     for i in range(len(TrialNum)):
         if Response[i] == 0:
             choiceprob[i] = 1
         if Response[i] == 1:
-            choiceprob[i] = math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
+            if EV[int(TrialNum[i]-1)] < 0:
+                choiceprob[i] = math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)/(math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)+1)
+            else:
+                choiceprob[i] = math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
         if Response[i] == 2:
-            choiceprob[i] = 1-math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
+            if EV[int(TrialNum[i]-1)] < 0:
+                choiceprob[i] = 1-math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)/(math.exp(lossave*EV[int(TrialNum[i]-1)]*beta)+1)
+            else:
+                choiceprob[i] = 1-math.exp(EV[int(TrialNum[i]-1)]*beta)/(math.exp(EV[int(TrialNum[i]-1)]*beta)+1)
         if Outcome[i] != 0:
             if Outcome[i] > EV[int(TrialNum[i]-1)]:
                 if 'alpha' in vars() or 'alpha' in globals():
