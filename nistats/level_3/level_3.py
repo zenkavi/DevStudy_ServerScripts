@@ -21,6 +21,7 @@ reg = args.reg
 runstats = args.runstats
 
 data_loc = os.environ['DATA_LOC']
+server_scripts = os.environ['SERVER_SCRIPTS']
 in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
 
 out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
@@ -56,6 +57,9 @@ age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
 subs = [os.path.basename(x).split("_")[0] for x in level2_images]
 age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
 
+learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
+learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
+
 #model1: everyone vs. baseline
 if mnum == "model1":
     design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
@@ -74,7 +78,10 @@ if mnum == "model3":
 
 #model4: learners vs non-learners
 if mnum == "model4":
-
+    design_matrix = age_info[['learner', 'non_learner']]
+    design_matrix['intercept'] = [1] * len(level2_images)
+    if not os.path.exists("%s/rand_anova"%(out_path)):
+        os.mkdir("%s/rand_anova"%(out_path))
 
 replacements = {"NPTS": str(design_matrix.shape[0])}
 with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
@@ -126,6 +133,11 @@ if runstats:
     if mnum == "model3":
         z_map = model.compute_contrast('age',output_type='z_score')
         nib.save(z_map, '%s/%s_%s_age.nii.gz'%(contrasts_path, mnum, reg))
+
+    if mnum == "model4":
+        for c in ['learner', 'non_learner']:
+            z_map = model.compute_contrast(c,output_type='z_score')
+            nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
 
     print("***********************************************")
     print("Done saving contrast for %s contrast %s"%(mnum, reg))
