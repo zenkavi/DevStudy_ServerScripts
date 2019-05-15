@@ -55,19 +55,33 @@ def make_contrasts(design_matrix):
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
     if pe:
-        contrasts = {
-        'm1': contrasts['m1'],
-        'm2': contrasts['m2'],
-        'm3': contrasts['m3'],
-        'm4': contrasts['m4'],
-        'm1_rt': contrasts['m1_rt'],
-        'm2_rt': contrasts['m2_rt'],
-        'm3_rt': contrasts['m3_rt'],
-        'm4_rt': contrasts['m4_rt'],
-        'pe': contrasts['pe'],
-        'junk': contrasts['junk'],
-        'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-        'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
+        try:
+            contrasts = {
+            'm1': contrasts['m1'],
+            'm2': contrasts['m2'],
+            'm3': contrasts['m3'],
+            'm4': contrasts['m4'],
+            'm1_rt': contrasts['m1_rt'],
+            'm2_rt': contrasts['m2_rt'],
+            'm3_rt': contrasts['m3_rt'],
+            'm4_rt': contrasts['m4_rt'],
+            'pe': contrasts['pe'],
+            'junk': contrasts['junk'],
+            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
+        except KeyError:
+            contrasts = {
+            'm1': contrasts['m1'],
+            'm2': contrasts['m2'],
+            'm3': contrasts['m3'],
+            'm4': contrasts['m4'],
+            'm1_rt': contrasts['m1_rt'],
+            'm2_rt': contrasts['m2_rt'],
+            'm3_rt': contrasts['m3_rt'],
+            'm4_rt': contrasts['m4_rt'],
+            'pe': contrasts['pe'],
+            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
     else:
         try:
             contrasts = {
