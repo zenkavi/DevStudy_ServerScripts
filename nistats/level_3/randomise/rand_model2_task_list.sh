@@ -6,10 +6,7 @@ randomise -i $MODEL_DIR/m1_rt/all_l2_model2_m1_rt.nii.gz -o $MODEL_DIR/m1_rt/ran
 randomise -i $MODEL_DIR/m2_rt/all_l2_model2_m2_rt.nii.gz -o $MODEL_DIR/m2_rt/rand_anova/group_diff -d $MODEL_DIR/m2_rt/model2_m2_rt.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
 randomise -i $MODEL_DIR/m3_rt/all_l2_model2_m3_rt.nii.gz -o $MODEL_DIR/m3_rt/rand_anova/group_diff -d $MODEL_DIR/m3_rt/model2_m3_rt.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
 randomise -i $MODEL_DIR/m4_rt/all_l2_model2_m4_rt.nii.gz -o $MODEL_DIR/m4_rt/rand_anova/group_diff -d $MODEL_DIR/m4_rt/model2_m4_rt.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
-randomise -i $MODEL_DIR/gain/all_l2_model2_gain.nii.gz -o $MODEL_DIR/gain/rand_anova/group_diff -d $MODEL_DIR/gain/model2_gain.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
-randomise -i $MODEL_DIR/loss/all_l2_model2_loss.nii.gz -o $MODEL_DIR/loss/rand_anova/group_diff -d $MODEL_DIR/loss/model2_loss.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
+randomise -i $MODEL_DIR/pe/all_l2_model2_pe.nii.gz -o $MODEL_DIR/pe/rand_anova/group_diff -d $MODEL_DIR/pe/model2_pe.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
 randomise -i $MODEL_DIR/junk/all_l2_model2_junk.nii.gz -o $MODEL_DIR/junk/rand_anova/group_diff -d $MODEL_DIR/junk/model2_junk.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
 randomise -i $MODEL_DIR/task_on/all_l2_model2_task_on.nii.gz -o $MODEL_DIR/task_on/rand_anova/group_diff -d $MODEL_DIR/task_on/model2_task_on.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
 randomise -i $MODEL_DIR/rt/all_l2_model2_rt.nii.gz -o $MODEL_DIR/rt/rand_anova/group_diff -d $MODEL_DIR/rt/model2_rt.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
-randomise -i $MODEL_DIR/gain-loss/all_l2_model2_gain-loss.nii.gz -o $MODEL_DIR/gain-loss/rand_anova/group_diff -d $MODEL_DIR/gain-loss/model2_gain-loss.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T
-randomise -i $MODEL_DIR/loss-gain/all_l2_model2_loss-gain.nii.gz -o $MODEL_DIR/loss-gain/rand_anova/group_diff -d $MODEL_DIR/loss-gain/model2_loss-gain.mat -t $MODEL_DIR/design.con -f $MODEL_DIR/design.fts -n 1000 -T

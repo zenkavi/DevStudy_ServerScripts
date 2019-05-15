@@ -6,10 +6,7 @@ python level_3.py -m model1 -r m1_rt --runstats
 python level_3.py -m model1 -r m2_rt --runstats
 python level_3.py -m model1 -r m3_rt --runstats
 python level_3.py -m model1 -r m4_rt --runstats
-python level_3.py -m model1 -r gain --runstats
-python level_3.py -m model1 -r loss --runstats
+python level_3.py -m model1 -r pe --runstats
 python level_3.py -m model1 -r junk --runstats
 python level_3.py -m model1 -r task_on --runstats
 python level_3.py -m model1 -r rt --runstats
-python level_3.py -m model1 -r gain-loss --runstats
-python level_3.py -m model1 -r loss-gain --runstats

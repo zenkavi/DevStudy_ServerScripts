@@ -72,6 +72,10 @@ if mnum == "model3":
     design_matrix = age_info[['age']]
     design_matrix['intercept'] = [1] * len(level2_images)
 
+#model4: learners vs non-learners
+if mnum == "model4":
+
+
 replacements = {"NPTS": str(design_matrix.shape[0])}
 with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
   with open('%s/%s_%s.mat'%(out_path, mnum, reg), 'w') as outfile:
