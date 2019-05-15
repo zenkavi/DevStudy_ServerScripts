@@ -8,13 +8,16 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_1.py -s SUBNUM
+#Usage: python level_1.py -s SUBNUM -pe
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
+parser.add_argument("-pe", "--pred_err", help="use prediction error regressor", default= True)
 args = parser.parse_args()
 subnum = args.subnum
+pe = args.pred_err
 data_loc = os.environ['DATA_LOC']
+server_scripts = os.environ['SERVER_SCRIPTS']
 
 events_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_events.tsv'%(data_loc))
 events_files.sort()
@@ -40,6 +43,11 @@ mean_rt = all_events.response_time.mean()
 del all_events
 
 sub_events = [x for x in events_files if subnum in x]
+
+all_pes = pd.read_csv('%s/nistats/level_1/ave_pes.csv'%(server_scripts))
+sub_pes = all_pes.query('sub_id == @subnum')
+
+del all_pes
 
 def make_contrasts(design_matrix):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
@@ -135,6 +143,9 @@ for run_events in sub_events:
         #po = cur_events.points_earned
         #cur_events.points_earned = np.where(po == 5, 0.01, np.where(po == 495, 0.99, np.where(po == 10, 0.02, np.where(po == 100, 0.20, np.where(po == -5, -0.01, np.where(po == -495, -0.99, np.where(po == -10, -0.02, np.where(po == -100, -0.20, 0))))))))
 
+        max_X = int(runnum)*30
+        run_pes = sub_pes.query('X<@max_X')
+
         cond_m1 = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
         cond_m1['duration'] = mean_rt
         cond_m1['modulation'] = 1
@@ -177,11 +188,20 @@ for run_events in sub_events:
         cond_loss = cur_events.query('points_earned<0')[['onset', 'duration','points_earned']]
         cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
         cond_loss['trial_type'] =  "loss"
+        cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
+        cond_pe = cur_events.query('response == 1')
+        cond_pe = pd.concat([cond_pe.reset_index(drop=True), run_pes['ave_PE'].reset_index(drop=True)], axis=1)
+        cond_pe = cond_pe[['onset', 'duration', 'ave_PE']]
+        cond_pe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
+        cond_pe['trial_type'] = 'pe'
         cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
         cond_junk['modulation'] = 1
         cond_junk['trial_type'] = "junk"
 
-        formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
+        if pe:
+            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_pe, cond_junk], ignore_index=True)
+        else:
+            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
 
         formatted_events = formatted_events.sort_values(by='onset')
 
@@ -217,7 +237,10 @@ for run_events in sub_events:
         print("***********************************************")
         print("Saving GLM for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-        f = open('%s/sub-%s_run-%s_l1_glm.pkl' %(out_path,subnum, runnum), 'wb')
+        if pe:
+            f = open('%s/sub-%s_run-%s_l1_%s_glm.pkl' %(out_path,subnum, runnum, 'pe'), 'wb')
+        else:
+            f = open('%s/sub-%s_run-%s_l1_glm.pkl' %(out_path,subnum, runnum), 'wb')
         pickle.dump(fmri_glm, f)
         f.close()
 
@@ -226,7 +249,10 @@ for run_events in sub_events:
         print("***********************************************")
         print("Saving design matrix for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-        design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
+        if pe:
+            design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_%s_design_matrix.csv' %(subnum, runnum, 'pe')))
+        else:
+            design_matrix.to_csv(os.path.join(out_path, 'sub-%s_run-%s_level1_design_matrix.csv' %(subnum, runnum)))
 
         print("***********************************************")
         print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
