@@ -9,13 +9,8 @@ import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
 
-try:
-    todo_path = os.environ['TODO_PATH']
-    server_scripts = os.environ['SERVER_SCRIPTS']
-except KeyError:
-    os.system('source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh')
-    todo_path = os.environ['TODO_PATH']
-    server_scripts = os.environ['SERVER_SCRIPTS']
+todo_path = os.environ['TODO_PATH']
+server_scripts = os.environ['SERVER_SCRIPTS']
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subject", help="subject number")
