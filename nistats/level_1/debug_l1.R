@@ -1,14 +1,26 @@
 #!/usr/bin/Rscript
 library(tidyverse)
 
-tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | sort", intern=TRUE))
+pe = TRUE
+
+if(pe){
+  tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_pe_glm.pkl' | sort", intern=TRUE))
+} else{
+  tmp1 = data.frame(V1=system("find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | sort", intern=TRUE))
+}
+
 tmp2 = read.table("/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fsl/level_1/level1_task_list.sh")
 
 tmp1 = tmp1 %>%
   mutate(V1 = gsub("/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1/", "", V1)) %>%
   separate(V1, into = c("a", "b"), sep="/") %>%
-  select(b)%>%
-  mutate(b = gsub("_glm.pkl", "", b))
+  select(b)
+
+if(pe){
+  tmp1 = tmp1 %>% mutate(b = gsub("_pe_glm.pkl", "", b))
+} else {
+  tmp1 = tmp1 %>% mutate(b = gsub("_glm.pkl", "", b))
+}
 
 tmp2 = tmp2 %>%
   separate(V2, into=c("a", "b", "c", "d", "e", "f"), sep = '/') %>%
