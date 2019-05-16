@@ -31,7 +31,7 @@ if not os.path.exists(contrasts_path):
 sub_contrasts = os.listdir(in_path)
 
 if pe:
-    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'pe', 'junk', 'task_on', 'rt']
+    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'junk', 'task_on', 'rt']
 else:
     contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain']
 
