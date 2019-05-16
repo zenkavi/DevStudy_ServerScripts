@@ -226,11 +226,11 @@ for run_events in sub_events:
         cond_lpe = cond_pe.query('stimulus == 3 | stimulus == 4')
         cond_hpe['ave_PE'] = cond_hpe['ave_PE'].sub(cond_hpe['ave_PE'].mean())
         cond_lpe['ave_PE'] = cond_lpe['ave_PE'].sub(cond_lpe['ave_PE'].mean())
-        cond_hpe = cond_pe[['onset', 'duration', 'ave_PE']]
-        cond_hpe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
+        cond_hpe = cond_hpe[['onset', 'duration', 'ave_PE']]
+        cond_hpe = cond_hpe.rename(index=str, columns={"ave_PE": "modulation"})
         cond_hpe['trial_type'] = 'hpe'
-        cond_lpe = cond_pe[['onset', 'duration', 'ave_PE']]
-        cond_lpe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
+        cond_lpe = cond_lpe[['onset', 'duration', 'ave_PE']]
+        cond_lpe = cond_lpe.rename(index=str, columns={"ave_PE": "modulation"})
         cond_lpe['trial_type'] = 'lpe'
         cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
         cond_junk['modulation'] = 1
