@@ -63,6 +63,8 @@ learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=Tru
 #model1: everyone vs. baseline
 if mnum == "model1":
     design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
+    if not os.path.exists("%s/rand_baseline"%(out_path)):
+        os.mkdir("%s/rand_baseline"%(out_path))
 
 #model2: age group differences
 if mnum == "model2":
