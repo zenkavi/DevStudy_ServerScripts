@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J devstudy_level3_model1
-#SBATCH --array=1-12%12
+#SBATCH --array=1-13%13
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=03:00:00
 #SBATCH -n 1

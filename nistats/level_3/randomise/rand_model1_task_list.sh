@@ -6,7 +6,8 @@ randomise -i $MODEL_DIR/m1_rt/all_l2_model1_m1_rt.nii.gz -o $MODEL_DIR/m1_rt/ran
 randomise -i $MODEL_DIR/m2_rt/all_l2_model1_m2_rt.nii.gz -o $MODEL_DIR/m2_rt/rand_baseline/group_diff -d $MODEL_DIR/m2_rt/model1_m2_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
 randomise -i $MODEL_DIR/m3_rt/all_l2_model1_m3_rt.nii.gz -o $MODEL_DIR/m3_rt/rand_baseline/group_diff -d $MODEL_DIR/m3_rt/model1_m3_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
 randomise -i $MODEL_DIR/m4_rt/all_l2_model1_m4_rt.nii.gz -o $MODEL_DIR/m4_rt/rand_baseline/group_diff -d $MODEL_DIR/m4_rt/model1_m4_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
-randomise -i $MODEL_DIR/pe/all_l2_model1_pe.nii.gz -o $MODEL_DIR/pe/rand_baseline/group_diff -d $MODEL_DIR/pe/model1_pe.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/hpe/all_l2_model1_hpe.nii.gz -o $MODEL_DIR/hpe/rand_baseline/group_diff -d $MODEL_DIR/hpe/model1_hpe.mat -t $MODEL_DIR/design.con -n 1000 -T
+randomise -i $MODEL_DIR/lpe/all_l2_model1_lpe.nii.gz -o $MODEL_DIR/lpe/rand_baseline/group_diff -d $MODEL_DIR/lpe/model1_lpe.mat -t $MODEL_DIR/design.con -n 1000 -T
 randomise -i $MODEL_DIR/junk/all_l2_model1_junk.nii.gz -o $MODEL_DIR/junk/rand_baseline/group_diff -d $MODEL_DIR/junk/model1_junk.mat -t $MODEL_DIR/design.con -n 1000 -T
 randomise -i $MODEL_DIR/task_on/all_l2_model1_task_on.nii.gz -o $MODEL_DIR/task_on/rand_baseline/group_diff -d $MODEL_DIR/task_on/model1_task_on.mat -t $MODEL_DIR/design.con -n 1000 -T
 randomise -i $MODEL_DIR/rt/all_l2_model1_rt.nii.gz -o $MODEL_DIR/rt/rand_baseline/group_diff -d $MODEL_DIR/rt/model1_rt.mat -t $MODEL_DIR/design.con -n 1000 -T
