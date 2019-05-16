@@ -41,5 +41,9 @@ for(i in 1:length(failed_subs)){
 
 print("Saving debug jobs...")
 write.table(debug_jobs, file = "/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/nistats/level_1/l1_debug_jobs.sh", quote=FALSE, row.names=FALSE, col.names=FALSE)
+num_jobs = nrow(debug_jobs)
+tx  = readLines("/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1/run_l1_debug_jobs.batch")
+tx2  = gsub(pattern = "NUMJOBS", replace = num_jobs, x = tx)
+writeLines(tx2, con="/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1/run_l1_debug_jobs.batch")
 print("Submitting debug jobs...")
 system("sbatch run_l1_debug_jobs.batch")

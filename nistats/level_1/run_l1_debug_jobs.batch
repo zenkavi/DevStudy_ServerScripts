@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J debug_level1
-#SBATCH --array=1-61%61
+#SBATCH --array=1-NUMJOBS%NUMJOBS
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=03:00:00
 #SBATCH -n 1
