@@ -65,7 +65,8 @@ def make_contrasts(design_matrix):
             'm2_rt': contrasts['m2_rt'],
             'm3_rt': contrasts['m3_rt'],
             'm4_rt': contrasts['m4_rt'],
-            'pe': contrasts['pe'],
+            'hpe': contrasts['hpe'],
+            'lpe': contrasts['lpe'],
             'junk': contrasts['junk'],
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
             'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
@@ -79,7 +80,8 @@ def make_contrasts(design_matrix):
             'm2_rt': contrasts['m2_rt'],
             'm3_rt': contrasts['m3_rt'],
             'm4_rt': contrasts['m4_rt'],
-            'pe': contrasts['pe'],
+            'hpe': contrasts['hpe'],
+            'lpe': contrasts['lpe'],
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
             'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
     else:
@@ -220,15 +222,22 @@ for run_events in sub_events:
         cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
         cond_pe = cur_events.query('response == 1')
         cond_pe = pd.concat([cond_pe.reset_index(drop=True), run_pes['ave_PE'].reset_index(drop=True)], axis=1)
-        cond_pe = cond_pe[['onset', 'duration', 'ave_PE']]
-        cond_pe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
-        cond_pe['trial_type'] = 'pe'
+        cond_hpe = cond_pe.query('stimulus == 1 | stimulus == 2')
+        cond_lpe = cond_pe.query('stimulus == 3 | stimulus == 4')
+        cond_hpe['ave_PE'] = cond_hpe['ave_PE'].sub(cond_hpe['ave_PE'].mean())
+        cond_lpe['ave_PE'] = cond_lpe['ave_PE'].sub(cond_lpe['ave_PE'].mean())
+        cond_hpe = cond_pe[['onset', 'duration', 'ave_PE']]
+        cond_hpe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
+        cond_hpe['trial_type'] = 'hpe'
+        cond_lpe = cond_pe[['onset', 'duration', 'ave_PE']]
+        cond_lpe = cond_pe.rename(index=str, columns={"ave_PE": "modulation"})
+        cond_lpe['trial_type'] = 'lpe'
         cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
         cond_junk['modulation'] = 1
         cond_junk['trial_type'] = "junk"
 
         if pe:
-            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_pe, cond_junk], ignore_index=True)
+            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_hpe, cond_lpe, cond_junk], ignore_index=True)
         else:
             formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
 
