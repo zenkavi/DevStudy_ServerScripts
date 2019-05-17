@@ -31,9 +31,9 @@ if not os.path.exists(contrasts_path):
 sub_contrasts = os.listdir(in_path)
 
 if pe:
-    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'junk', 'task_on', 'rt']
+    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'junk', 'task_on', 'rt', 'var_sen', 'ev_sen']
 else:
-    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain']
+    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain', 'var_sen', 'ev_sen']
 
 for c in contrasts:
     second_level_input = [os.path.join(in_path,x) for x in sub_contrasts if c in x]
