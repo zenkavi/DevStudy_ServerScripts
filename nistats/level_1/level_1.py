@@ -69,7 +69,9 @@ def make_contrasts(design_matrix):
             'lpe': contrasts['lpe'],
             'junk': contrasts['junk'],
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
+            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
+            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
         except KeyError:
             contrasts = {
             'm1': contrasts['m1'],
@@ -83,7 +85,9 @@ def make_contrasts(design_matrix):
             'hpe': contrasts['hpe'],
             'lpe': contrasts['lpe'],
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])}
+            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
+            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
     else:
         try:
             contrasts = {
@@ -101,7 +105,9 @@ def make_contrasts(design_matrix):
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
             'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
             'gain-loss' : contrasts['gain'] - contrasts['loss'],
-            'loss-gain' : contrasts['loss'] - contrasts['gain']}
+            'loss-gain' : contrasts['loss'] - contrasts['gain'],
+            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
         except KeyError:
             contrasts = {
             'm1': contrasts['m1'],
@@ -117,7 +123,9 @@ def make_contrasts(design_matrix):
             'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
             'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
             'gain-loss' : contrasts['gain'] - contrasts['loss'],
-            'loss-gain' : contrasts['loss'] - contrasts['gain']}
+            'loss-gain' : contrasts['loss'] - contrasts['gain'],
+            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
     return contrasts
 
 def add_transform(dataframe, columns=None, type=None):
