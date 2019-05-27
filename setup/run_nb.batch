@@ -5,7 +5,6 @@
 #SBATCH --time 1-0:00:00
 #SBATCH --job-name jupyter-notebook
 #SBATCH -o ../.out/jupyter-notebook-%J.out
-#SBATCH -e ../.err/jupyter-notebook-%J.err
 
 # get tunneling info
 XDG_RUNTIME_DIR=""
