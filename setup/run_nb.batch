@@ -16,15 +16,17 @@ cluster=$(hostname -f | awk -F"." '{print $2}')
 
 # print tunneling instructions jupyter-log
 echo -e "
-MacOS or linux terminal command to create your ssh tunnel:
-ssh -N -L ${port}:${node}:${port} ${user}@login.sherlock.stanford.edu
-
 Forwarded port:same as remote port
 Remote server: ${node}
 Remote port: ${port}
 SSH server: login.sherlock.stanford.edu
 SSH login: $user
 SSH port: 22
+
+To run notebooks on browser follow the steps below:
+
+Use this command create your ssh tunnel through terminal:
+ssh -N -L ${port}:${node}:${port} ${user}@login.sherlock.stanford.edu
 
 Use a Browser on your local machine to go to:
 localhost:${port}  (prefix w/ https:// if using password)
@@ -34,6 +36,8 @@ Enter string following '?token=' in the URL below when prompted for password
 To log out of the session but keep the job running use 'Logout'
 
 To shut down Jupyter and end the batch job use 'Quit'
+
+Don't forget to close your ssh tunnel on Terminal when done.
 "
 
 # load modules or conda environments here
