@@ -5,3 +5,4 @@
 .preds
 license.txt
 l1_debug_jobs.sh
+*.ipynb
