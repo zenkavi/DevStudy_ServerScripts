@@ -4,8 +4,8 @@
 #SBATCH --ntasks-per-node 1
 #SBATCH --time 1-0:00:00
 #SBATCH --job-name jupyter-notebook
-#SBATCH --output ../.out/jupyter-notebook-%J.out
-#SBATCH --output ../.err/jupyter-notebook-%J.err
+#SBATCH -o ../.out/jupyter-notebook-%J.out
+#SBATCH -e ../.err/jupyter-notebook-%J.err
 
 # get tunneling info
 XDG_RUNTIME_DIR=""
