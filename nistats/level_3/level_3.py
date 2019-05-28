@@ -63,22 +63,22 @@ learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=Tru
 #model1: everyone vs. baseline
 if mnum == "model1":
     design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
-    if not os.path.exists("%s/rand_baseline"%(out_path)):
-        os.mkdir("%s/rand_baseline"%(out_path))
+    if not os.path.exists("%s/rand"%(out_path)):
+        os.mkdir("%s/rand"%(out_path))
 
 #model2: age group differences
 if mnum == "model2":
     design_matrix = age_info[['kid', 'teen', 'adult']]
     design_matrix['intercept'] = [1] * len(level2_images)
-    if not os.path.exists("%s/rand_anova"%(out_path)):
-        os.mkdir("%s/rand_anova"%(out_path))
+    if not os.path.exists("%s/rand"%(out_path)):
+        os.mkdir("%s/rand"%(out_path))
 
 #model3: learners vs non-learners
 if mnum == "model3":
     design_matrix = learner_info[['learner', 'non_learner']]
     design_matrix['intercept'] = [1] * len(level2_images)
-    if not os.path.exists("%s/rand_anova"%(out_path)):
-        os.mkdir("%s/rand_anova"%(out_path))
+    if not os.path.exists("%s/rand"%(out_path)):
+        os.mkdir("%s/rand"%(out_path))
 
 replacements = {"NPTS": str(design_matrix.shape[0])}
 with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
