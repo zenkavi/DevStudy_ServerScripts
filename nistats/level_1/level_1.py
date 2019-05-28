@@ -54,80 +54,19 @@ def make_contrasts(design_matrix):
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
+                      
+    dictfilt = lambda x, y: dict([ (i,x[i]) for i in x if i in set(y) ])
+    wanted_keys = ['m1', 'm2', 'm3', 'm4','m1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
+    contrasts = dictfilt(contrasts, wanted_keys)
+
+    contrasts.update({'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+    'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
+    'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+    'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))})
+
     if pe:
-        try:
-            contrasts = {
-            'm1': contrasts['m1'],
-            'm2': contrasts['m2'],
-            'm3': contrasts['m3'],
-            'm4': contrasts['m4'],
-            'm1_rt': contrasts['m1_rt'],
-            'm2_rt': contrasts['m2_rt'],
-            'm3_rt': contrasts['m3_rt'],
-            'm4_rt': contrasts['m4_rt'],
-            'hpe': contrasts['hpe'],
-            'lpe': contrasts['lpe'],
-            'pe': contrasts['hpe'] +  contrasts['lpe'],
-            'junk': contrasts['junk'],
-            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
-            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
-        except KeyError:
-            contrasts = {
-            'm1': contrasts['m1'],
-            'm2': contrasts['m2'],
-            'm3': contrasts['m3'],
-            'm4': contrasts['m4'],
-            'm1_rt': contrasts['m1_rt'],
-            'm2_rt': contrasts['m2_rt'],
-            'm3_rt': contrasts['m3_rt'],
-            'm4_rt': contrasts['m4_rt'],
-            'hpe': contrasts['hpe'],
-            'lpe': contrasts['lpe'],
-            'pe': contrasts['hpe'] +  contrasts['lpe'],
-            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
-            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
-    else:
-        try:
-            contrasts = {
-            'm1': contrasts['m1'],
-            'm2': contrasts['m2'],
-            'm3': contrasts['m3'],
-            'm4': contrasts['m4'],
-            'm1_rt': contrasts['m1_rt'],
-            'm2_rt': contrasts['m2_rt'],
-            'm3_rt': contrasts['m3_rt'],
-            'm4_rt': contrasts['m4_rt'],
-            'gain': contrasts['gain'],
-            'loss': contrasts['loss'],
-            'junk': contrasts['junk'],
-            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
-            'gain-loss' : contrasts['gain'] - contrasts['loss'],
-            'loss-gain' : contrasts['loss'] - contrasts['gain'],
-            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
-        except KeyError:
-            contrasts = {
-            'm1': contrasts['m1'],
-            'm2': contrasts['m2'],
-            'm3': contrasts['m3'],
-            'm4': contrasts['m4'],
-            'm1_rt': contrasts['m1_rt'],
-            'm2_rt': contrasts['m2_rt'],
-            'm3_rt': contrasts['m3_rt'],
-            'm4_rt': contrasts['m4_rt'],
-            'gain': contrasts['gain'],
-            'loss': contrasts['loss'],
-            'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-            'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
-            'gain-loss' : contrasts['gain'] - contrasts['loss'],
-            'loss-gain' : contrasts['loss'] - contrasts['gain'],
-            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))}
+        if 'hpe' in contrasts.keys() and 'lpe' in contrasts.keys():
+            contrasts.update({'pe': contrasts['hpe'] +  contrasts['lpe']})
     return contrasts
 
 def add_transform(dataframe, columns=None, type=None):
