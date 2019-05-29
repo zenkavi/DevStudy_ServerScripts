@@ -8,16 +8,14 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_2.py -s SUBNUM -pe -halves
+#Usage: python level_2.py -s SUBNUM -pe
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
 parser.add_argument("-pe", "--pred_err", help="use prediction error regressor", default= True)
-parser.add_argument("-halves", "--halves", help="split task in two halves", default= False)
 args = parser.parse_args()
 subnum = args.subnum
 pe = args.pred_err
-halves = args.halves
 data_loc = os.environ['DATA_LOC']
 
 in_path = "%s/derivatives/nistats/level_1/sub-%s/contrasts"%(data_loc,subnum)
@@ -39,11 +37,7 @@ else:
 
 for c in contrasts:
     second_level_input = [os.path.join(in_path,x) for x in sub_contrasts if c in x]
-
-
     design_matrix = pd.DataFrame([1] * len(second_level_input), columns=['intercept'])
-
-
     model = SecondLevelModel(smoothing_fwhm=5.0)
 
     c = re.sub("\.","",c)
