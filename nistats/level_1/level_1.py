@@ -70,17 +70,12 @@ for run_events in sub_events:
         formatted_events = get_conditions(cur_events, mean_rt, sub_pes)
 
         #process confounds
+
         #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
         cur_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t')
 
-        formatted_confounds = cur_confounds[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
-        add_transform(formatted_confounds, type="sq")
-        add_transform(formatted_confounds, type="td")
-        formatted_confounds[['std_dvars', 'framewise_displacement']] = cur_confounds[['std_dvars', 'framewise_displacement']]
-        formatted_confounds['std_dvars'].iloc[0] = 0
-        formatted_confounds['framewise_displacement'].iloc[0] = 0
-        formatted_confounds['scrub'] = np.where(formatted_confounds.framewise_displacement>0.5,1,0)
-
+        formatted_confounds = get_confounds(cur_confounds)
+        
         #define GLM parmeters
         fmri_glm = FirstLevelModel(t_r=cur_img_tr,
                                noise_model='ar1',

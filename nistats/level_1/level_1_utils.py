@@ -131,4 +131,12 @@ def get_conditions(cur_events, mean_rt, sub_pes):
 
     return formatted_events
 
-def get_confounds
+def get_confounds():
+    formatted_confounds = cur_confounds[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
+    add_transform(formatted_confounds, type="sq")
+    add_transform(formatted_confounds, type="td")
+    formatted_confounds[['std_dvars', 'framewise_displacement']] = cur_confounds[['std_dvars', 'framewise_displacement']]
+    formatted_confounds['std_dvars'].iloc[0] = 0
+    formatted_confounds['framewise_displacement'].iloc[0] = 0
+    formatted_confounds['scrub'] = np.where(formatted_confounds.framewise_displacement>0.5,1,0)
+    return formatted_confounds
