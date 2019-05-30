@@ -66,16 +66,13 @@ for run_events in sub_events:
 
         #read in events.tsv for that run
         cur_events = pd.read_csv(run_events, sep = '\t')
-
         formatted_events = get_conditions(cur_events, mean_rt, sub_pes)
 
         #process confounds
-
         #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
         cur_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t')
-
         formatted_confounds = get_confounds(cur_confounds)
-        
+
         #define GLM parmeters
         fmri_glm = FirstLevelModel(t_r=cur_img_tr,
                                noise_model='ar1',
@@ -126,7 +123,3 @@ for run_events in sub_events:
         print("***********************************************")
         print("No pre-processed BOLD found for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-
-    #OUTPUTs:
-    #Whatever randomise needs: group level nifti, design matrix, contrast file
-    #group level nifti: filtered_func_data for one sample test

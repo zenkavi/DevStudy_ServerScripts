@@ -40,7 +40,7 @@ def add_transform(dataframe, columns=None, type=None):
 def stdize(X):
     return (X - np.nanmean(X, axis=0))/np.nanstd(X, axis=0)
 
-def get_conditions(cur_events, mean_rt, sub_pes):
+def get_conditions(cur_events, runnum, mean_rt, sub_pes):
     #process events for GLM
     #events: 4 col events file for WHOLE RUN with onset, duration, trial_type, modulation
     #trial_type column:
