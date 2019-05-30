@@ -66,7 +66,7 @@ for run_events in sub_events:
 
         #read in events.tsv for that run
         cur_events = pd.read_csv(run_events, sep = '\t')
-        formatted_events = get_conditions(cur_events, mean_rt, sub_pes)
+        formatted_events = get_conditions(cur_events, runnum, mean_rt, sub_pes)
 
         #process confounds
         #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
