@@ -1,5 +1,5 @@
 import numpy as np
-import panads as pd
+import pandas as pd
 
 def make_contrasts(design_matrix):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
