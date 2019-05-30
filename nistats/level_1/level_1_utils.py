@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def make_contrasts(design_matrix):
+def make_contrasts(design_matrix, pe):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])

@@ -111,7 +111,7 @@ for run_events in sub_events:
         print("***********************************************")
         print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-        contrasts = make_contrasts(design_matrix)
+        contrasts = make_contrasts(design_matrix, pe)
         for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
             z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
             nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
