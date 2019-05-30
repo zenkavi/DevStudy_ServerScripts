@@ -131,7 +131,7 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
 
     return formatted_events
 
-def get_confounds():
+def get_confounds(cur_confounds):
     formatted_confounds = cur_confounds[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     add_transform(formatted_confounds, type="sq")
     add_transform(formatted_confounds, type="td")
