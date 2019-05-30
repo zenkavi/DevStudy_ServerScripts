@@ -40,7 +40,7 @@ Don't forget to close your ssh tunnel on Terminal when done.
 "
 
 # load modules or conda environments here
-source dev_study_env.sh
+source setup/dev_study_env.sh
 source activate fmri
 
 # DON'T USE ADDRESS BELOW.
