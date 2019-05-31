@@ -3,7 +3,7 @@ import glob
 import nibabel as nib
 from nilearn.image import mean_img, math_img
 
-#Usage: python make_group_mask.py 
+#Usage: python make_group_mask.py
 
 data_loc = os.environ['DATA_LOC']
 
@@ -19,7 +19,7 @@ for mnum in mnums:
     for reg in regs:
         copes_concat = nib.load("all_l2_%s_%s.nii.gz"%(mnum, reg))
         group_mask = nilearn.image.resample_to_img(group_mask, copes_concat, interpolation='nearest')
-        group_mask.to_filename("%s/derivatives/nistats/level_3/model1/group_mask_%s_%s.nii.gz"%(data_loc, mnum,reg))
+        group_mask.to_filename("%s/derivatives/nistats/level_3/%s/group_mask_%s_%s.nii.gz"%(data_loc, mnum, mnum,reg))
         rint("***********************************************")
         print("Group mask saved for: %s"%(mnum, reg))
         print("***********************************************")
