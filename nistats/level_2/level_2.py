@@ -8,14 +8,16 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_2.py -s SUBNUM -pe
+#Usage: python level_2.py -s SUBNUM -pe -h
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
 parser.add_argument("-pe", "--pred_err", help="use prediction error regressor", default= True)
+parser.add_argument("-h", "--halves", help="compute means for separate halves", default= True)
 args = parser.parse_args()
 subnum = args.subnum
 pe = args.pred_err
+halves = args.halves
 data_loc = os.environ['DATA_LOC']
 
 in_path = "%s/derivatives/nistats/level_1/sub-%s/contrasts"%(data_loc,subnum)
@@ -76,3 +78,6 @@ for c in contrasts:
         print("***********************************************")
         print("No level 1 image found for sub-%s contrast %s"%(subnum, c))
         print("***********************************************")
+
+if halves:
+    
