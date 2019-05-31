@@ -21,5 +21,5 @@ for mnum in mnums:
         group_mask = resample_to_img(group_mask, copes_concat, interpolation='nearest')
         group_mask.to_filename("%s/derivatives/nistats/level_3/%s/%s/group_mask_%s_%s.nii.gz"%(data_loc, mnum, reg,mnum,reg))
         print("***********************************************")
-        print("Group mask saved for: %s"%(mnum, reg))
+        print("Group mask saved for: %s %s"%(mnum, reg))
         print("***********************************************")
