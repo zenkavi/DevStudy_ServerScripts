@@ -43,7 +43,11 @@ if reg=="rt":
 print("***********************************************")
 print("Concatenating level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
-all_l2_images = concat_imgs(level2_images)
+smooth_l2s = []
+for l in level2_images:
+    smooth_l2 = nilearn.image.smooth_img(l, 5)
+    smooth_l2s.append(smooth_cope)
+all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
 print("***********************************************")
 print("Saving level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
