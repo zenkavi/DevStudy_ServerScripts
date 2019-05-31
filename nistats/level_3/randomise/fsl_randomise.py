@@ -30,3 +30,5 @@ randomise_results = randomise(in_file=glob.glob('all*', in_path),
                               tfce=tfce,
                               vox_p_values=True,
                               num_perm=num_perm)
+
+#-V OPTION??'

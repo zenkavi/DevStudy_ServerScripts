@@ -3,6 +3,8 @@ import glob
 import nibabel as nib
 from nilearn.image import mean_img, math_img
 
+#Usage: python make_group_mask.py 
+
 data_loc = os.environ['DATA_LOC']
 
 brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
