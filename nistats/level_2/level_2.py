@@ -9,12 +9,12 @@ import pickle
 import re
 from argparse import ArgumentParser
 
-#Usage: python level_2.py -s SUBNUM -pe -h
+#Usage: python level_2.py -s SUBNUM -pe -hv
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
 parser.add_argument("-pe", "--pred_err", help="use prediction error regressor", default= True)
-parser.add_argument("-h", "--halves", help="compute means for separate halves", default= True)
+parser.add_argument("-hv", "--halves", help="compute means for separate halves", default= True)
 args = parser.parse_args()
 subnum = args.subnum
 pe = args.pred_err
