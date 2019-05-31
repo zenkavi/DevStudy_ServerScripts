@@ -20,6 +20,6 @@ for mnum in mnums:
         copes_concat = nib.load("%s/derivatives/nistats/level_3/%s/%s/all_l2_%s_%s.nii.gz"%(data_loc,mnum,reg, mnum, reg))
         group_mask = resample_to_img(group_mask, copes_concat, interpolation='nearest')
         group_mask.to_filename("%s/derivatives/nistats/level_3/%s/%s/group_mask_%s_%s.nii.gz"%(data_loc, mnum, reg,mnum,reg))
-        rint("***********************************************")
+        print("***********************************************")
         print("Group mask saved for: %s"%(mnum, reg))
         print("***********************************************")
