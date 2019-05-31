@@ -46,7 +46,7 @@ print("***********************************************")
 smooth_l2s = []
 for l in level2_images:
     smooth_l2 = smooth_img(l, 5)
-    smooth_l2s.append(smooth_cope)
+    smooth_l2s.append(smooth_l2)
 all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
 print("***********************************************")
 print("Saving level 2 images for %s contrast %s"%(mnum, reg))
