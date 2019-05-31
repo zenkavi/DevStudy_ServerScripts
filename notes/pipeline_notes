@@ -165,6 +165,10 @@ returns 434 + 5 = 439 because
 
 =============================level_1==============================
 
+Input: ave_pes.csv, level_1_utils.py, level1_task_list.sh, level_1.py
+Script: run_level1.batch
+Output: $DATA_LOC/derivatives/nistats/level_1/sub-*/
+
 Should be 389:
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_1 -name 'sub-*_run-*_l1_glm.pkl' | wc
 If not run:
@@ -172,8 +176,21 @@ Rscript --vanilla debug_l1.R
 
 =============================level_2==============================
 
+Input: level2_task_list.sh, level_2.py
+Script: run_level2.batch
+Output: $DATA_LOC/derivatives/nistats/level_2/sub-*/
+
 Should be 15*74 = 1110 - 5 = 1105 (due to no junk trials for sub-100062, sub-402997, sub-408952, sub-409381, sub-409850)
 find /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_2 -name 'sub-*.nii.gz' | wc
 
-
 =============================level_3==============================
+
+Input: level2_model*_task_list.sh, level_3.py, $DATA_LOC/derivatives/nistats/level_2/sub-*/contrasts/*
+Script: run_level3_model*.batch
+Output: $DATA_LOC/derivatives/nistats/level_3/model*/{REG}
+
+Input: $DATA_LOC/derivatives/nistats/level_3/{REG}/all_l2_images*, $DATA_LOC/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask
+Script: make_group_mask.py
+Output: $DATA_LOC/derivatives/nistats/level_3/model*/{REG}/group_mask_{MODELNUM}_{REG}.nii.gz
+
+run_rand_model*.batch
