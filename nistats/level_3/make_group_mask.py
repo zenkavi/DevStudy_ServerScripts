@@ -17,9 +17,9 @@ regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'ev_sen', '
 
 for mnum in mnums:
     for reg in regs:
-        copes_concat = nib.load("all_l2_%s_%s.nii.gz"%(mnum, reg))
+        copes_concat = nib.load("%s/derivatives/nistats/level_3/%s/%s/all_l2_%s_%s.nii.gz"%(data_loc,mnum,reg, mnum, reg))
         group_mask = nilearn.image.resample_to_img(group_mask, copes_concat, interpolation='nearest')
-        group_mask.to_filename("%s/derivatives/nistats/level_3/%s/group_mask_%s_%s.nii.gz"%(data_loc, mnum, mnum,reg))
+        group_mask.to_filename("%s/derivatives/nistats/level_3/%s/%s/group_mask_%s_%s.nii.gz"%(data_loc, mnum, reg,mnum,reg))
         rint("***********************************************")
         print("Group mask saved for: %s"%(mnum, reg))
         print("***********************************************")
