@@ -1,6 +1,6 @@
 import glob
 import nibabel as nib
-from nilearn.image import concat_imgs
+from nilearn.image import concat_imgs, smooth_img
 from nistats.second_level_model import SecondLevelModel
 import numpy as np
 import os
@@ -45,7 +45,7 @@ print("Concatenating level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
 smooth_l2s = []
 for l in level2_images:
-    smooth_l2 = nilearn.image.smooth_img(l, 5)
+    smooth_l2 = smooth_img(l, 5)
     smooth_l2s.append(smooth_cope)
 all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
 print("***********************************************")

@@ -25,7 +25,7 @@ in_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc, mnum, reg)
 
 randomise = mem.cache(fsl.Randomise)
 randomise_results = randomise(in_file=glob.glob('all*', in_path),
-                              mask=os.path.join(datadir, "derivatives", "custom_modelling", "group_mask.nii.gz"),
+                              mask=os.path.join(datadir, "derivatives", "custom_modelling", "group_mask%s.nii.gz"%(reg)),
                               one_sample_group_mean=one,
                               tfce=tfce,
                               vox_p_values=True,
