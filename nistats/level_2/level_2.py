@@ -1,4 +1,5 @@
 import glob
+import math
 import nibabel as nib
 from nistats.second_level_model import SecondLevelModel
 import numpy as np
@@ -80,4 +81,50 @@ for c in contrasts:
         print("***********************************************")
 
 if halves:
-    
+    for c in contrasts:
+        second_level_input = [os.path.join(in_path,x) for x in sub_contrasts if c in x]
+        a = [1]*math.floor(len(second_level_input)/2)
+        a.extend([0]*(len(second_level_input)-len(a)))
+        design_matrix = pd.DataFrame({'first_half': a, 'second_half': [1-x for x in a]})
+        print("***********************************************")
+        print("First half has %s runs; second half has %s runs"%(str(sum(design_matrix.first_half)), str(sum(design_matrix.second_half))))
+        print("***********************************************")
+        model = SecondLevelModel(smoothing_fwhm=5.0)
+
+        c = re.sub("\.","",c)
+
+        if len(second_level_input)>1:
+            print("***********************************************")
+            print("Running GLM for sub-%s contrast %s"%(subnum, c))
+            print("***********************************************")
+            model = model.fit(second_level_input, design_matrix=design_matrix)
+
+            print("***********************************************")
+            print("Saving GLM for sub-%s contrast %s"%(subnum, c))
+            print("***********************************************")
+            f = open('%s/sub-%s_%s_l2_glm_halves.pkl' %(out_path,subnum, c), 'wb')
+            pickle.dump(model, f)
+            f.close()
+
+            print("***********************************************")
+            print("Running contrasts for sub-%s contrast %s"%(subnum, c))
+            print("***********************************************")
+            for h in ['first_half', 'second_half']:
+                z_map = model.compute_contrast(h,output_type='z_score')
+                nib.save(z_map, '%s/sub-%s_%s_%s.nii.gz'%(contrasts_path, subnum, c, h))
+
+            print("***********************************************")
+            print("Done saving contrasts for sub-%s contrast %s"%(subnum, c))
+            print("***********************************************")
+        elif len(second_level_input) == 1:
+            print("***********************************************")
+            print("1 level 1 image found for sub-%s contrast %s"%(subnum, c))
+            print("Skipping level 2 for sub-%s contrast %s"%(subnum, c))
+            print("Saving level 1 for level 2 for sub-%s contrast %s"%(subnum, c))
+            z_map = nib.load(second_level_input[0])
+            nib.save(z_map, '%s/sub-%s_%s.nii.gz'%(contrasts_path, subnum, c))
+            print("***********************************************")
+        else:
+            print("***********************************************")
+            print("No level 1 image found for sub-%s contrast %s"%(subnum, c))
+            print("***********************************************")
