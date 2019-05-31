@@ -49,6 +49,7 @@ print("Saving level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
 nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
+# Read in group info for models 2 and 3
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
 age_info['kid'] = np.where(age_info['age']<13,1,0)
 age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
@@ -79,26 +80,6 @@ if mnum == "model3":
     design_matrix['intercept'] = [1] * len(level2_images)
     if not os.path.exists("%s/rand"%(out_path)):
         os.mkdir("%s/rand"%(out_path))
-
-replacements = {"NPTS": str(design_matrix.shape[0])}
-with open("%s/derivatives/nistats/level_3/%s/design_mat_header.mat"%(data_loc, mnum)) as infile:
-  with open('%s/%s_%s.mat'%(out_path, mnum, reg), 'w') as outfile:
-      for line in infile:
-        for src, target in replacements.items():
-          line = line.replace(src, target)
-        outfile.write(line)
-f=open('%s/%s_%s.mat'%(out_path, mnum, reg),'ab')
-np.savetxt(f,design_matrix.values, fmt='%1.3f')
-f.close()
-with open("%s/derivatives/nistats/level_3/%s/design_grp_header.grp"%(data_loc, mnum)) as infile:
-  with open('%s/%s_%s.grp'%(out_path, mnum, reg), 'w') as outfile:
-      for line in infile:
-        for src, target in replacements.items():
-          line = line.replace(src, target)
-        outfile.write(line)
-f=open('%s/%s_%s.grp'%(out_path, mnum, reg),'ab')
-np.savetxt(f,[1] * len(level2_images),fmt='%1.0f')
-f.close()
 
 model = SecondLevelModel(smoothing_fwhm=5.0)
 
