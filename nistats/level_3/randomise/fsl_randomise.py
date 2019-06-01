@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 #Usage = python fsl_randomise.py --mnum model1 --reg hpe -tf -np -vs
 
-arser = ArgumentParser()
+parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
 parser.add_argument("-tf", "--tfce", help="tfce", default=True)
