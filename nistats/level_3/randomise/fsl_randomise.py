@@ -18,6 +18,7 @@ if mnum == "model1":
     one = True
 tfce = args.tfce
 num_perm = args.num_perm
+var_smooth = args.var_smooth
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
@@ -77,7 +78,7 @@ if mnum == "model2":
                               mask= "%s/group_mask_%s_%s.nii.gz"%(in_path, mnum, reg),
                               design_mat = "%s/%s_%s_design.mat"%(in_path, mnum, reg),
                               tcon="%s/%s_design.con"%(in_path, mnum),
-                              fcon="%s/%s_design.fts"%(in_path, mnum),,
+                              fcon="%s/%s_design.fts"%(in_path, mnum),
                               tfce=tfce,
                               vox_p_values=True,
                               num_perm=num_perm,
@@ -94,4 +95,44 @@ if mnum == "model3":
                               var_smooth = var_smooth)
 
 #save outputs
-randomise_results.outputs
+if len(randomise_results.outputs.tstat_files)>0:
+    for i in 1:len(randomise_results.outputs.tstat_files):
+        randomise_results.outputs.tstat_files[i].to_filename("%s/rand/rand_%s_%s_tstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved tstat_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
+
+if len(randomise_results.outputs.fstat_files)>0:
+    for i in 1:len(randomise_results.outputs.fstat_files):
+        randomise_results.outputs.fstat_files[i].to_filename("%s/rand/rand_%s_%s_fstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved fstat_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
+
+if len(randomise_results.outputs.t_p_files)>0:
+    for i in 1:len(randomise_results.outputs.t_p_files):
+        randomise_results.outputs.t_p_files[i].to_filename("%s/rand/rand_%s_%s_t_p%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved t_p_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
+
+if len(randomise_results.outputs.f_p_files)>0:
+    for i in 1:len(randomise_results.outputs.f_p_files):
+        randomise_results.outputs.f_p_files[i].to_filename("%s/rand/rand_%s_%s_f_p%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved f_p_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
+
+if len(randomise_results.outputs.t_corrected_p_files_files)>0:
+    for i in 1:len(randomise_results.outputs.t_corrected_p_files_files):
+        randomise_results.outputs.t_corrected_p_files_files[i].to_filename("%s/rand/rand_%s_%s_tfce_corrp_tstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
+
+if len(randomise_results.outputs.f_corrected_p_files_files)>0:
+    for i in 1:len(randomise_results.outputs.f_corrected_p_files_files):
+        randomise_results.outputs.f_corrected_p_files_files[i].to_filename("%s/rand/rand_%s_%s_tfce_corrp_fstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i)))
+        print("***********************************************")
+        print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
+        print("***********************************************")
