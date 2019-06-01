@@ -33,9 +33,10 @@ age_info['kid'] = np.where(age_info['age']<13,1,0)
 age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
 age_info['adult'] = np.where(age_info['age']>18,1,0)
 age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
+level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
+level2_images.sort()
 subs = [os.path.basename(x).split("_")[0] for x in level2_images]
 age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
-
 learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
 learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
 
