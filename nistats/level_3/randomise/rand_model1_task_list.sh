@@ -1,10 +1,10 @@
-python fsl_randomise.py --mnum model1 --reg m1 -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg m2 -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg m3 -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg m4 -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg hpe -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg lpe -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg pe -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg task_on -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg var_sen -tf -np -vs
-python fsl_randomise.py --mnum model1 --reg ev_sen -tf -np -vs
+python fsl_randomise.py --mnum model1 --reg m1
+python fsl_randomise.py --mnum model1 --reg m2
+python fsl_randomise.py --mnum model1 --reg m3
+python fsl_randomise.py --mnum model1 --reg m4
+python fsl_randomise.py --mnum model1 --reg hpe
+python fsl_randomise.py --mnum model1 --reg lpe
+python fsl_randomise.py --mnum model1 --reg pe
+python fsl_randomise.py --mnum model1 --reg task_on
+python fsl_randomise.py --mnum model1 --reg var_sen
+python fsl_randomise.py --mnum model1 --reg ev_sen
