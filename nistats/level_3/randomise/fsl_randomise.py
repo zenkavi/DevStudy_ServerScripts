@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import glob
 from  nipype.interfaces import fsl
 from nipype.caching import Memory
 mem = Memory(base_dir='.')
