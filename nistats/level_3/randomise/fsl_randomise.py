@@ -128,14 +128,14 @@ if len(randomise_results.outputs.f_p_files)>0:
         print("Saved f_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
-if len(randomise_results.outputs.t_corrected_p_files_files)>0:
+if len(randomise_results.outputs.t_corrected_p_files)>0:
     for i in range(0,len(randomise_results.outputs.t_corrected_p_files_files)):
         os.rename(randomise_results.outputs.t_corrected_p_files_files[i],"%s/rand/rand_%s_%s_tfce_corrp_tstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
-if len(randomise_results.outputs.f_corrected_p_files_files)>0:
+if len(randomise_results.outputs.f_corrected_p_files)>0:
     for i in range(0,len(randomise_results.outputs.f_corrected_p_files_files)):
         os.rename(randomise_results.outputs.f_corrected_p_files_files[i],"%s/rand/rand_%s_%s_tfce_corrp_fstat%s.nii.gz.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
