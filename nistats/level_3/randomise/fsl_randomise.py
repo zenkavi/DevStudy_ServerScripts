@@ -21,8 +21,8 @@ reg = args.reg
 if mnum == "model1":
     one = True
 tfce = args.tfce
-num_perm = args.num_perm
-var_smooth = args.var_smooth
+num_perm = int(args.num_perm)
+var_smooth = int(args.var_smooth)
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
