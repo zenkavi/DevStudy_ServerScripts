@@ -1,6 +1,5 @@
-python fsl_randomise.py --mnum model1 --reg m2
 python fsl_randomise.py --mnum model2 --reg m1
-python fsl_randomise.py --mnum model1 --reg m2
+python fsl_randomise.py --mnum model2 --reg m2
 python fsl_randomise.py --mnum model2 --reg m3
 python fsl_randomise.py --mnum model2 --reg m4
 python fsl_randomise.py --mnum model2 --reg hpe
