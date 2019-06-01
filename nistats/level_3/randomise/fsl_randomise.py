@@ -64,7 +64,8 @@ if mnum == "model2":
 if mnum == "model3":
     design_matrix = learner_info[['learner', 'non_learner']]
 
-np.savetxt('%s/%s_%s_design.mat'%(in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
+if mnum != "model1":
+    np.savetxt('%s/%s_%s_design.mat'%(in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
 randomise = mem.cache(fsl.Randomise)
 
@@ -72,7 +73,6 @@ if mnum == "model1":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(in_path, mnum, reg),
                               mask= "%s/group_mask_%s_%s.nii.gz"%(in_path, mnum, reg),
                               one_sample_group_mean=one,
-                              design_mat = "%s/%s_%s_design.mat"%(in_path, mnum, reg),
                               tfce=tfce,
                               vox_p_values=True,
                               num_perm=num_perm,
