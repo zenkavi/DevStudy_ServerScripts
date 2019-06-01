@@ -1,7 +1,10 @@
+from argparse import ArgumentParser
 from  nipype.interfaces import fsl
 from nipype.caching import Memory
 mem = Memory(base_dir='.')
-from argparse import ArgumentParser
+import os
+import pandas as pd
+import numpy as np
 
 #Usage = python fsl_randomise.py --mnum model1 --reg hpe -tf -np -vs
 
