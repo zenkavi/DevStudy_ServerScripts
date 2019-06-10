@@ -13,6 +13,7 @@ parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
 parser.add_argument("-tf", "--tfce", help="tfce", default=True)
+parser.add_argument("-c", "--c_thresh", help="cluster_threshold", default=3)
 parser.add_argument("-np", "--num_perm", help="number of permutations", default=1000)
 parser.add_argument("-vs", "--var_smooth", help="variance smoothing", default=5)
 args = parser.parse_args()
@@ -20,7 +21,10 @@ mnum = args.mnum
 reg = args.reg
 if mnum == "model1":
     one = True
+if args.tfce == "False":
+    args.tfce = False
 tfce = args.tfce
+c_thresh = args.c_thresh
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
 
@@ -74,6 +78,7 @@ if mnum == "model1":
                               mask= "%s/group_mask_%s_%s.nii.gz"%(in_path, mnum, reg),
                               one_sample_group_mean=one,
                               tfce=tfce,
+                              c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
@@ -85,6 +90,7 @@ if mnum == "model2":
                               tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
                               fcon="%s/derivatives/nistats/level_3/%s/%s_design.fts"%(data_loc, mnum, mnum),
                               tfce=tfce,
+                              c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
@@ -95,6 +101,7 @@ if mnum == "model3":
                               design_mat = "%s/%s_%s_design.mat"%(in_path, mnum, reg),
                               tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
                               tfce=tfce,
+                              c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
@@ -102,42 +109,60 @@ if mnum == "model3":
 #save outputs
 if len(randomise_results.outputs.tstat_files)>0:
     for i in range(0,len(randomise_results.outputs.tstat_files)):
-        os.rename(randomise_results.outputs.tstat_files[i], "%s/rand/rand_%s_%s_tstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.tstat_files[i], "%s/rand/rand_%s_%s_tstat%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.tstat_files[i], "%s/rand/rand_%s_%s_tstat%s_cluster.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved tstat_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
 if len(randomise_results.outputs.fstat_files)>0:
     for i in range(0,len(randomise_results.outputs.fstat_files)):
-        os.rename(randomise_results.outputs.fstat_files[i],"%s/rand/rand_%s_%s_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.fstat_files[i],"%s/rand/rand_%s_%s_fstat%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.fstat_files[i],"%s/rand/rand_%s_%s_fstat%s_cluster.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved fstat_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
 if len(randomise_results.outputs.t_p_files)>0:
     for i in range(0,len(randomise_results.outputs.t_p_files)):
-        os.rename(randomise_results.outputs.t_p_files[i], "%s/rand/rand_%s_%s_t_p%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.t_p_files[i], "%s/rand/rand_%s_%s_t_p%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.t_p_files[i], "%s/rand/rand_%s_%s_t_p%s_cluster.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved t_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
 if len(randomise_results.outputs.f_p_files)>0:
     for i in range(0,len(randomise_results.outputs.f_p_files)):
-        os.rename(randomise_results.outputs.f_p_files[i],"%s/rand/rand_%s_%s_f_p%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.f_p_files[i],"%s/rand/rand_%s_%s_f_p%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.f_p_files[i],"%s/rand/rand_%s_%s_f_p%s_cluster.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved f_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
 if len(randomise_results.outputs.t_corrected_p_files)>0:
     for i in range(0,len(randomise_results.outputs.t_corrected_p_files)):
-        os.rename(randomise_results.outputs.t_corrected_p_files[i],"%s/rand/rand_%s_%s_tfce_corrp_tstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.t_corrected_p_files[i],"%s/rand/rand_%s_%s_tfce_corrp_tstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.t_corrected_p_files[i],"%s/rand/rand_%s_%s_cluster_corrp_tstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
 
 if len(randomise_results.outputs.f_corrected_p_files)>0:
     for i in range(0,len(randomise_results.outputs.f_corrected_p_files)):
-        os.rename(randomise_results.outputs.f_corrected_p_files[i],"%s/rand/rand_%s_%s_tfce_corrp_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        if tfce:
+            os.rename(randomise_results.outputs.f_corrected_p_files[i],"%s/rand/rand_%s_%s_tfce_corrp_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
+        else:
+            os.rename(randomise_results.outputs.f_corrected_p_files[i],"%s/rand/rand_%s_%s_cluster_corrp_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
         print("***********************************************")
         print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
         print("***********************************************")
