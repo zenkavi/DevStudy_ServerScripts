@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 import glob
 import nibabel as nib
-from nilearn.image import concat_imgs, smooth_img
+from nilearn.image import concat_imgs, smooth_img, mean_img, math_img, resample_to_img
 from  nipype.interfaces import fsl
 from nipype.caching import Memory
 mem = Memory(base_dir='.')
@@ -80,7 +80,6 @@ if mnum == "model1":
                 operation = "mul",
                 operand_value = -1,
                 out_file = '%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
-
 
 print("***********************************************")
 print("Making group_mask")
