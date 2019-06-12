@@ -14,7 +14,7 @@ import re
 import save_randomise
 randomise = mem.cache(fsl.Randomise)
 
-#Usage: python level_3.py -m MNUM -r REG --runstats
+#Usage: python level_3.py -m MNUM -r REG
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
@@ -41,9 +41,6 @@ out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-if not os.path.exists("%s/rand"%(out_path)):
-    os.mkdir("%s/rand"%(out_path))
-
 if mnum != "model4":
     level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(l2_in_path, reg))
     level2_images.sort()
@@ -62,7 +59,7 @@ if reg=="rt":
     level2_images = [x for x in level2_images if filter_func(x)]
 
 print("***********************************************")
-print("Concatenating level 2 images for %s contrast %s"%(mnum, reg))
+print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
 print("***********************************************")
 smooth_l2s = []
 for l in level2_images:
@@ -70,20 +67,36 @@ for l in level2_images:
     smooth_l2s.append(smooth_l2)
 all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
 print("***********************************************")
-print("Saving level 2 images for %s contrast %s"%(mnum, reg))
+print("Saving level 2 images for %s regressor %s"%(mnum, reg))
 print("***********************************************")
 nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
 if mnum == "model1":
     binaryMaths = mem.cache(fsl.BinaryMaths)
     print("***********************************************")
-    print("Saving negative level 2 images for %s contrast %s"%(mnum, reg))
+    print("Saving negative level 2 images for %s regressor %s"%(mnum, reg))
     print("***********************************************")
     binaryMaths(in_file='%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg),
                 operation = "mul",
                 operand_value = -1,
                 out_file = '%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
+
+print("***********************************************")
+print("Making group_mask")
+print("***********************************************")
+brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
+mean_mask = mean_img(brainmasks)
+group_mask = math_img("a>=0.95", a=mean_mask)
+group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
+group_mask.to_filename("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg))
+print("***********************************************")
+print("Group mask saved for: %s %s"%(mnum, reg))
+print("***********************************************")
+
+print("***********************************************")
+print("Making design matrix")
+print("***********************************************")
 # Read in group info for models 2 and 3
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
 age_info['kid'] = np.where(age_info['age']<13,1,0)
@@ -95,10 +108,6 @@ age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
 
 learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
 learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
-
-#model1: everyone vs. baseline
-if mnum == "model1":
-    design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
 
 #model2: age group differences
 if mnum == "model2":
@@ -123,9 +132,15 @@ if mnum == "model3":
 /Matrix
     """
 
+print("***********************************************")
+print("Saving design matrix")
+print("***********************************************")
 if mnum != "model1":
     np.savetxt('%s/%s_%s_design.mat'%(l3_in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
+print("***********************************************")
+print("Beginning randomise")
+print("***********************************************")
 if mnum == "model1":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
                               mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
