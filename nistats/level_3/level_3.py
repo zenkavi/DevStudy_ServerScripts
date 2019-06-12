@@ -42,7 +42,7 @@ else:
     level2_first_half_images.sort()
     level2_second_half_images = glob.glob('%s/sub-*_%s_second_half.nii.gz'%(in_path, reg))
     level2_second_half_images.sort()
-    level2_first_half_images.append(level2_second_half_images)
+    level2_first_half_images.extend(level2_second_half_images)
     level2_images = level2_first_half_images
     del level2_first_half_images, level2_second_half_images
 
