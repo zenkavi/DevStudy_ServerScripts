@@ -28,6 +28,7 @@ mnum = args.mnum
 reg = args.reg
 if mnum == "model1":
     one = True
+tfce = int(args.tfce)
 c_thresh = int(args.c_thresh)
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
@@ -149,7 +150,7 @@ if mnum == "model1":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg)
+    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
 
     randomise_results = randomise(in_file="%s/neg_all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
                               mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
@@ -159,7 +160,7 @@ if mnum == "model1":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum+'_neg', reg)
+    save_randomise(randomise_results, l3_in_path, mnum+'_neg', reg, tfce)
 
 if mnum == "model2":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
@@ -172,7 +173,7 @@ if mnum == "model2":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg)
+    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
 
 if mnum == "model3":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
@@ -184,7 +185,7 @@ if mnum == "model3":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg)
+    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
 
 if mnum == "model4":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
@@ -196,4 +197,4 @@ if mnum == "model4":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg)
+    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
