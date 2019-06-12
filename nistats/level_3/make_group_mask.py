@@ -12,7 +12,7 @@ brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain
 mean_mask = mean_img(brainmasks)
 group_mask = math_img("a>=0.95", a=mean_mask)
 
-mnums = ['model1', 'model2', 'model3']
+mnums = ['model1', 'model2', 'model3', 'model4']
 regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'ev_sen', 'var_sen']
 
 for mnum in mnums:

@@ -1,29 +1,40 @@
 #!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
+from argparse import ArgumentParser
 import glob
 import nibabel as nib
 from nilearn.image import concat_imgs, smooth_img
-from nistats.second_level_model import SecondLevelModel
+from  nipype.interfaces import fsl
+from nipype.caching import Memory
+mem = Memory(base_dir='.')
 import numpy as np
 import os
 import pandas as pd
 import pickle
 import re
-from argparse import ArgumentParser
+import save_randomise
 
 #Usage: python level_3.py -m MNUM -r REG --runstats
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
-parser.add_argument("--runstats", help="run GLM and save contrasts", action='store_true')
+parser.add_argument("-tf", "--tfce", help="tfce", default='store_true')
+parser.add_argument("-c", "--c_thresh", help="cluster_threshold", default=3)
+parser.add_argument("-np", "--num_perm", help="number of permutations", default=1000)
+parser.add_argument("-vs", "--var_smooth", help="variance smoothing", default=5)
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
-runstats = args.runstats
+if mnum == "model1":
+    one = True
+c_thresh = int(args.c_thresh)
+num_perm = int(args.num_perm)
+var_smooth = int(args.var_smooth)
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
-in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
+l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
+l3_in_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc, mnum, reg)
 
 out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
 if not os.path.exists(out_path):
@@ -34,12 +45,12 @@ if not os.path.exists(contrasts_path):
     os.mkdir(contrasts_path)
 
 if mnum != "model4":
-    level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
+    level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(l2_in_path, reg))
     level2_images.sort()
 else:
-    level2_first_half_images = glob.glob('%s/sub-*_%s_first_half.nii.gz'%(in_path, reg))
+    level2_first_half_images = glob.glob('%s/sub-*_%s_first_half.nii.gz'%(l2_in_path, reg))
     level2_first_half_images.sort()
-    level2_second_half_images = glob.glob('%s/sub-*_%s_second_half.nii.gz'%(in_path, reg))
+    level2_second_half_images = glob.glob('%s/sub-*_%s_second_half.nii.gz'%(l2_in_path, reg))
     level2_second_half_images.sort()
     level2_first_half_images.extend(level2_second_half_images)
     level2_images = level2_first_half_images
@@ -62,6 +73,10 @@ print("***********************************************")
 print("Saving level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
 nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
+
+if mnum == "model1n":
+    #fslmaths input_data.nii.gz -mul -1 neg_input_data.nii.gz
+    ADDDDDD NEG IMAGES!!!!!
 
 # Read in group info for models 2 and 3
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
@@ -95,38 +110,89 @@ if mnum == "model3":
     if not os.path.exists("%s/rand"%(out_path)):
         os.mkdir("%s/rand"%(out_path))
 
-model = SecondLevelModel(smoothing_fwhm=5.0)
+if mnum == 'model2':
+    deshdr="""/NumWaves	3
+/NumPoints	74
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00
 
-if runstats:
-    print("***********************************************")
-    print("Running GLM for %s contrast %s"%(mnum, reg))
-    print("***********************************************")
-    model = model.fit(level2_images, design_matrix=design_matrix)
+/Matrix
+    """
 
-    print("***********************************************")
-    print("Saving GLM for %s contrast %s"%(mnum, reg))
-    print("***********************************************")
-    f = open('%s/%s_%s_glm.pkl' %(out_path,mnum,reg), 'wb')
-    pickle.dump(model, f)
-    f.close()
+if mnum == 'model3':
+    deshdr="""/NumWaves	2
+/NumPoints	74
+/PPheights		1.000000e+00	1.000000e+00
 
-    print("***********************************************")
-    print("Running contrasts for %s contrast %s"%(mnum, reg))
-    print("***********************************************")
-    if mnum == "model1":
-        z_map = model.compute_contrast(output_type='z_score')
-        nib.save(z_map, '%s/%s_%s.nii.gz'%(contrasts_path, mnum, reg))
+/Matrix
+    """
+#model2: age group differences
+if mnum == "model2":
+    design_matrix = age_info[['kid', 'teen', 'adult']]
 
-    if mnum == "model2":
-        for c in ['kid', 'teen', 'adult']:
-            z_map = model.compute_contrast(c,output_type='z_score')
-            nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
+#model3: learners vs non-learners
+#Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#Two-Group_Difference_.28Two-Sample_Unpaired_T-Test.29
+if mnum == "model3":
+    design_matrix = learner_info[['learner', 'non_learner']]
 
-    if mnum == "model3":
-        for c in ['learner', 'non_learner']:
-            z_map = model.compute_contrast(c,output_type='z_score')
-            nib.save(z_map, '%s/%s_%s_%s.nii.gz'%(contrasts_path, mnum, reg, c))
+if mnum != "model1":
+    np.savetxt('%s/%s_%s_design.mat'%(l3_in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
-    print("***********************************************")
-    print("Done saving contrast for %s contrast %s"%(mnum, reg))
-    print("***********************************************")
+randomise = mem.cache(fsl.Randomise)
+
+if mnum == "model1":
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              one_sample_group_mean=one,
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+    save_randomise(randomise_results, l3_in_path, mnum, reg)
+
+    randomise_results = randomise(in_file="%s/neg_all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              one_sample_group_mean=one,
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+    save_randomise(randomise_results, l3_in_path, mnum+'_neg', reg)
+
+if mnum == "model2":
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+                              tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
+                              fcon="%s/derivatives/nistats/level_3/%s/%s_design.fts"%(data_loc, mnum, mnum),
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+    save_randomise(randomise_results, l3_in_path, mnum, reg)
+
+if mnum == "model3":
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+                              tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+    save_randomise(randomise_results, l3_in_path, mnum, reg)
+
+if mnum == "model4":
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+                              tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+    save_randomise(randomise_results, l3_in_path, mnum, reg)
