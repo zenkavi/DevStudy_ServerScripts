@@ -1,3 +1,4 @@
+#!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 import glob
 import nibabel as nib
 from nilearn.image import concat_imgs, smooth_img
