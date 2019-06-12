@@ -12,7 +12,7 @@ import numpy as np
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
-parser.add_argument("-tf", "--tfce", help="tfce", default=True)
+parser.add_argument("-tf", "--tfce", help="tfce", default='store_true')
 parser.add_argument("-c", "--c_thresh", help="cluster_threshold", default=3)
 parser.add_argument("-np", "--num_perm", help="number of permutations", default=1000)
 parser.add_argument("-vs", "--var_smooth", help="variance smoothing", default=5)
@@ -21,10 +21,6 @@ mnum = args.mnum
 reg = args.reg
 if mnum == "model1":
     one = True
-if args.tfce == "False":
-    tfce = False
-else:
-    tfce = args.tfce
 c_thresh = int(args.c_thresh)
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
