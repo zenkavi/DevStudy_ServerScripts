@@ -1,11 +1,11 @@
-python level_3.py -m model4 -r m1 --runstats False
-python level_3.py -m model4 -r m2 --runstats False
-python level_3.py -m model4 -r m3 --runstats False
-python level_3.py -m model4 -r m4 --runstats False
-python level_3.py -m model4 -r hpe --runstats False
-python level_3.py -m model4 -r lpe --runstats False
-python level_3.py -m model4 -r pe --runstats False
-python level_3.py -m model4 -r task_on --runstats False
-python level_3.py -m model4 -r rt --runstats False
-python level_3.py -m model4 -r var_sen --runstats False
-python level_3.py -m model4 -r ev_sen --runstats False
+./level_3.py -m model4 -r m1 --runstats
+./level_3.py -m model4 -r m2 --runstats
+./level_3.py -m model4 -r m3 --runstats
+./level_3.py -m model4 -r m4 --runstats
+./level_3.py -m model4 -r hpe --runstats
+./level_3.py -m model4 -r lpe --runstats
+./level_3.py -m model4 -r pe --runstats
+./level_3.py -m model4 -r task_on --runstats
+./level_3.py -m model4 -r rt --runstats
+./level_3.py -m model4 -r var_sen --runstats
+./level_3.py -m model4 -r ev_sen --runstats

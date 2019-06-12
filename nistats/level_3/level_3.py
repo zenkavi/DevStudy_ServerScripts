@@ -15,13 +15,11 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-m", "--mnum", help="model number")
 parser.add_argument("-r", "--reg", help="regressor name")
-parser.add_argument("--runstats", help="run GLM and save contrasts", action='store_true')
+parser.add_argument("--runstats", help="run GLM and save contrasts", action='store_false')
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
 runstats = args.runstats
-if runstats == "False":
-    runstats = False
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
