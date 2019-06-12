@@ -19,6 +19,8 @@ args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
 runstats = args.runstats
+if runstats == "False":
+    runstats = False
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
@@ -32,8 +34,17 @@ contrasts_path = "%s/contrasts"%(out_path)
 if not os.path.exists(contrasts_path):
     os.mkdir(contrasts_path)
 
-level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
-level2_images.sort()
+if mnum != "model4":
+    level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(in_path, reg))
+    level2_images.sort()
+else:
+    level2_first_half_images = glob.glob('%s/sub-*_%s_first_half.nii.gz'%(in_path, reg))
+    level2_first_half_images.sort()
+    level2_second_half_images = glob.glob('%s/sub-*_%s_second_half.nii.gz'%(in_path, reg))
+    level2_second_half_images.sort()
+    level2_first_half_images.append(level2_second_half_images)
+    level2_images = level2_first_half_images
+    del level2_first_half_images, level2_second_half_images
 
 if reg=="rt":
     exclude = ['m1', 'm2', 'm3', 'm4']

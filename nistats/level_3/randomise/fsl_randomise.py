@@ -107,6 +107,17 @@ if mnum == "model3":
                               num_perm=num_perm,
                               var_smooth = var_smooth)
 
+if mnum == "model4":
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(in_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(in_path, mnum, reg),
+                              design_mat = "%s/%s_%s_design.mat"%(in_path, mnum, reg),
+                              tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+
 #save outputs
 if len(randomise_results.outputs.tstat_files)>0:
     for i in range(0,len(randomise_results.outputs.tstat_files)):
