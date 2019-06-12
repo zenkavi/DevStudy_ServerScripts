@@ -36,9 +36,8 @@ var_smooth = int(args.var_smooth)
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
 l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
-l3_in_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc, mnum, reg)
-
-out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
+mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc,mnum)
+out_path = "%s/%s"%(mnum_path,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
@@ -136,36 +135,36 @@ if mnum != "model1":
     print("***********************************************")
     print("Saving design matrix")
     print("***********************************************")
-    np.savetxt('%s/%s_%s_design.mat'%(l3_in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
+    np.savetxt('%s/%s_design.mat'%(out_path, mnum),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
 print("***********************************************")
 print("Beginning randomise")
 print("***********************************************")
 if mnum == "model1":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               one_sample_group_mean=one,
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
+    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
-    randomise_results = randomise(in_file="%s/neg_all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
+    randomise_results = randomise(in_file="%s/neg_all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               one_sample_group_mean=one,
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum+'_neg', reg, tfce)
+    save_randomise(randomise_results, out_path, mnum+'_neg', reg, tfce)
 
 if mnum == "model2":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
                               fcon="%s/derivatives/nistats/level_3/%s/%s_design.fts"%(data_loc, mnum, mnum),
                               tfce=tfce,
@@ -173,28 +172,28 @@ if mnum == "model2":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
+    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model3":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
+    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model4":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
-                              design_mat = "%s/%s_%s_design.mat"%(l3_in_path, mnum, reg),
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/derivatives/nistats/level_3/%s/%s_design.con"%(data_loc, mnum, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, l3_in_path, mnum, reg, tfce)
+    save_randomise(randomise_results, out_path, mnum, reg, tfce)
