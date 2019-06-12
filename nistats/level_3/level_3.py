@@ -12,6 +12,7 @@ import pandas as pd
 import pickle
 import re
 import save_randomise
+randomise = mem.cache(fsl.Randomise)
 
 #Usage: python level_3.py -m MNUM -r REG --runstats
 
@@ -40,9 +41,8 @@ out_path = "%s/derivatives/nistats/level_3/%s/%s"%(data_loc,mnum,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-contrasts_path = "%s/contrasts"%(out_path)
-if not os.path.exists(contrasts_path):
-    os.mkdir(contrasts_path)
+if not os.path.exists("%s/rand"%(out_path)):
+    os.mkdir("%s/rand"%(out_path))
 
 if mnum != "model4":
     level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(l2_in_path, reg))
@@ -74,9 +74,15 @@ print("Saving level 2 images for %s contrast %s"%(mnum, reg))
 print("***********************************************")
 nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
-if mnum == "model1n":
-    #fslmaths input_data.nii.gz -mul -1 neg_input_data.nii.gz
-    ADDDDDD NEG IMAGES!!!!!
+if mnum == "model1":
+    binaryMaths = mem.cache(fsl.BinaryMaths)
+    print("***********************************************")
+    print("Saving negative level 2 images for %s contrast %s"%(mnum, reg))
+    print("***********************************************")
+    binaryMaths(in_file='%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg),
+                operation = "mul",
+                operand_value = -1,
+                out_file = '%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
 # Read in group info for models 2 and 3
 age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
@@ -93,24 +99,11 @@ learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=Tru
 #model1: everyone vs. baseline
 if mnum == "model1":
     design_matrix = pd.DataFrame([1] * len(level2_images),columns=['intercept'])
-    if not os.path.exists("%s/rand"%(out_path)):
-        os.mkdir("%s/rand"%(out_path))
 
 #model2: age group differences
 if mnum == "model2":
     design_matrix = age_info[['kid', 'teen', 'adult']]
-    design_matrix['intercept'] = [1] * len(level2_images)
-    if not os.path.exists("%s/rand"%(out_path)):
-        os.mkdir("%s/rand"%(out_path))
-
-#model3: learners vs non-learners
-if mnum == "model3":
-    design_matrix = learner_info[['learner', 'non_learner']]
-    design_matrix['intercept'] = [1] * len(level2_images)
-    if not os.path.exists("%s/rand"%(out_path)):
-        os.mkdir("%s/rand"%(out_path))
-
-if mnum == 'model2':
+    #design_matrix['intercept'] = [1] * len(level2_images)
     deshdr="""/NumWaves	3
 /NumPoints	74
 /PPheights		1.000000e+00	1.000000e+00	1.000000e+00
@@ -118,26 +111,20 @@ if mnum == 'model2':
 /Matrix
     """
 
-if mnum == 'model3':
+#model3: learners vs non-learners
+#Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#Two-Group_Difference_.28Two-Sample_Unpaired_T-Test.29
+if mnum == "model3":
+    design_matrix = learner_info[['learner', 'non_learner']]
+    #design_matrix['intercept'] = [1] * len(level2_images)
     deshdr="""/NumWaves	2
 /NumPoints	74
 /PPheights		1.000000e+00	1.000000e+00
 
 /Matrix
     """
-#model2: age group differences
-if mnum == "model2":
-    design_matrix = age_info[['kid', 'teen', 'adult']]
-
-#model3: learners vs non-learners
-#Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#Two-Group_Difference_.28Two-Sample_Unpaired_T-Test.29
-if mnum == "model3":
-    design_matrix = learner_info[['learner', 'non_learner']]
 
 if mnum != "model1":
     np.savetxt('%s/%s_%s_design.mat'%(l3_in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
-
-randomise = mem.cache(fsl.Randomise)
 
 if mnum == "model1":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(l3_in_path, mnum, reg),
