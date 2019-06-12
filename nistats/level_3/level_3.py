@@ -11,7 +11,7 @@ import os
 import pandas as pd
 import pickle
 import re
-import save_randomise
+from save_randomise import save_randomise
 randomise = mem.cache(fsl.Randomise)
 
 #Usage: python level_3.py -m MNUM -r REG
@@ -132,10 +132,10 @@ if mnum == "model3":
 /Matrix
     """
 
-print("***********************************************")
-print("Saving design matrix")
-print("***********************************************")
 if mnum != "model1":
+    print("***********************************************")
+    print("Saving design matrix")
+    print("***********************************************")
     np.savetxt('%s/%s_%s_design.mat'%(l3_in_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
 print("***********************************************")
