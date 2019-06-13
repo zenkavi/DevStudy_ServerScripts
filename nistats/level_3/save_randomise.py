@@ -59,5 +59,5 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             else:
                 os.rename(randomise_results.outputs.f_corrected_p_files[i],"%s/rand_%s_%s_cluster_corrp_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
             print("***********************************************")
-            print("Saved t_corrected_p_file for: %s %s"%(mnum, reg))
+            print("Saved f_corrected_p_file for: %s %s"%(mnum, reg))
             print("***********************************************")
