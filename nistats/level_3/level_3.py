@@ -28,7 +28,7 @@ mnum = args.mnum
 reg = args.reg
 if mnum == "model1":
     one = True
-tfce = int(args.tfce)
+tfce = args.tfce
 c_thresh = int(args.c_thresh)
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
