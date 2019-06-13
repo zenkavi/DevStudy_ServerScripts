@@ -77,6 +77,7 @@ def make_design_files(mnum):
         contrast_matrix = np.array([[1,-1],[-1,1]])
 
     #model4: learners vs non-learners and first vs. second half
+    #Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#ANOVA:_2-factors_2-levels_.282-way_between-subjects_ANOVA.29
     if mnum == "model4":
         learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
         learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
@@ -114,7 +115,7 @@ def make_design_files(mnum):
         design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
 
     print("***********************************************")
-    print("Saving design matrix for %s"(mnum))
+    print("Saving design matrix for %s"%(mnum))
     print("***********************************************")
     np.savetxt('%s/%s_design.mat'%(mnum_path, mnum),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
@@ -129,6 +130,6 @@ def make_design_files(mnum):
             print("***********************************************")
             np.savetxt('%s/%s_design.fts'%(mnum_path, mnum),design_fts,fmt='%1.0f',header=desfhdr,comments='')
 
-mnums = ["model1", "model2", "model3", "model4"]
+mnums = ["model2", "model3", "model4"]
 for mnum in mnums:
     make_design_files(mnum)
