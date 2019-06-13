@@ -117,10 +117,9 @@ def make_design_files(mnum):
         conhdr = """/ContrastName1	main_half
 /ContrastName2	main_learner
 /ContrastName3	interaction
-/NumWaves	3
+/NumWaves	4
 /NumContrasts	3
-/PPheights		1.000000e+00	1.000000e+00	1.000000e+00
-/RequiredEffect		0.767	0.948	0.739
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
 
 /Matrix
         """
