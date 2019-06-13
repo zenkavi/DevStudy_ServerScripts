@@ -102,11 +102,11 @@ def make_design_files(mnum):
             design_matrix = design_matrix.drop(columns=['learner', 'second_half'])
 
             deshdr="""/NumWaves	4
-    /NumPoints	148
-    /PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
+/NumPoints	%s
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
 
-    /Matrix
-            """
+/Matrix
+            """%(str(design_matrix.shape[0]))
 
             print("***********************************************")
             print("Saving design matrix for %s reg %s"%(mnum, reg))
