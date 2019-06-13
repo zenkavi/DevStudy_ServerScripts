@@ -29,20 +29,20 @@ def make_design_files(mnum):
         design_matrix = age_info[['kid', 'teen', 'adult']]
         #design_matrix['intercept'] = [1] * len(level2_images)
         deshdr="""/NumWaves	3
-    /NumPoints	74
-    /PPheights		1.000000e+00	1.000000e+00	1.000000e+00
+/NumPoints	74
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00
 
-    /Matrix
+/Matrix
         """
         conhdr = """/ContrastName1	kids
-    /ContrastName2	teens
-    /ContrastName3	adults
-    /NumWaves	3
-    /NumContrasts	3
-    /PPheights		1.000000e+00	1.000000e+00	1.000000e+00
-    /RequiredEffect		0.767	0.948	0.739
+/ContrastName2	teens
+/ContrastName3	adults
+/NumWaves	3
+/NumContrasts	3
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00
+/RequiredEffect		0.767	0.948	0.739
 
-    /Matrix
+/Matrix
         """
         contrast_matrix = np.array([[1,0,0],[0,1,0],[0,0,1]])
 
@@ -61,18 +61,18 @@ def make_design_files(mnum):
         design_matrix = learner_info[['learner', 'non_learner']]
         #design_matrix['intercept'] = [1] * len(level2_images)
         deshdr="""/NumWaves	2
-    /NumPoints	74
-    /PPheights		1.000000e+00	1.000000e+00
+/NumPoints	74
+/PPheights		1.000000e+00	1.000000e+00
 
-    /Matrix
+/Matrix
         """
         conhdr = """/ContrastName1	learner>non_learner
-    /ContrastName2	learner<non_learner
-    /NumWaves	2
-    /NumContrasts	2
-    /PPheights		1.000000e+00	1.000000e+00
+/ContrastName2	learner<non_learner
+/NumWaves	2
+/NumContrasts	2
+/PPheights		1.000000e+00	1.000000e+00
 
-    /Matrix
+/Matrix
         """
         contrast_matrix = np.array([[1,-1],[-1,1]])
 
@@ -90,27 +90,27 @@ def make_design_files(mnum):
         design_matrix = design_matrix.drop(columns=['learner', 'second_half'])
 
         deshdr="""/NumWaves	4
-    /NumPoints	148
-    /PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
+/NumPoints	148
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
 
-    /Matrix
+/Matrix
         """
         conhdr = """/ContrastName1	main_half
-    /ContrastName2	main_learner
-    /ContrastName3	interaction
-    /NumWaves	3
-    /NumContrasts	3
-    /PPheights		1.000000e+00	1.000000e+00	1.000000e+00
-    /RequiredEffect		0.767	0.948	0.739
+/ContrastName2	main_learner
+/ContrastName3	interaction
+/NumWaves	3
+/NumContrasts	3
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00
+/RequiredEffect		0.767	0.948	0.739
 
-    /Matrix
+/Matrix
         """
         contrast_matrix = np.array([[1,1,-1,-1], [1,-1,1,-1], [1,-1,-1,1]])
 
         desfhdr = """/NumWaves	4
-    /NumContrasts	3
+/NumContrasts	3
 
-    /Matrix
+/Matrix
         """
         design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
 
