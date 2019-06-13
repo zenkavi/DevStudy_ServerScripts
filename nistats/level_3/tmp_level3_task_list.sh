@@ -1,0 +1,11 @@
+./level_3.py -m model4 -r m1
+./level_3.py -m model4 -r m2
+./level_3.py -m model4 -r m3
+./level_3.py -m model4 -r m4
+./level_3.py -m model4 -r hpe
+./level_3.py -m model4 -r lpe
+./level_3.py -m model4 -r pe
+./level_3.py -m model4 -r task_on
+./level_3.py -m model4 -r rt
+./level_3.py -m model4 -r var_sen
+./level_3.py -m model4 -r ev_sen

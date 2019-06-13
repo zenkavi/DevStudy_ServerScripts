@@ -147,6 +147,7 @@ if mnum == "model4":
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
+                              fcon="%s/%s_design.fts"%(mnum_path, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
