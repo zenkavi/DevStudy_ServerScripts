@@ -145,7 +145,7 @@ if mnum == "model3":
 if mnum == "model4":
     randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
-                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
+                              design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
