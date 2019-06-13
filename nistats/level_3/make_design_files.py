@@ -126,7 +126,7 @@ def make_design_files(mnum):
 
     if mnum != "model3":
             print("***********************************************")
-            print("Saving design.fts for %s"(mnum))
+            print("Saving design.fts for %s"%(mnum))
             print("***********************************************")
             np.savetxt('%s/%s_design.fts'%(mnum_path, mnum),design_fts,fmt='%1.0f',header=desfhdr,comments='')
 
