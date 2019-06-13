@@ -125,7 +125,7 @@ def make_design_files(mnum):
         """
         contrast_matrix = np.array([[1,1,-1,-1], [1,-1,1,-1], [1,-1,-1,1]])
 
-        desfhdr = """/NumWaves	4
+        desfhdr = """/NumWaves	3
 /NumContrasts	3
 
 /Matrix
