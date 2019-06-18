@@ -4,5 +4,6 @@ import numpy as np
 
 def mni2vox(mni, T):
     mni.extend([1])
-    coordinate = np.round(np.matmul(mni,np.transpose(np.linalg.inv(T)))[:-1])
+    T = np.transpose(np.linalg.inv(T))
+    coordinate = np.round(np.matmul(mni,T)[:-1])
     return coordinate
