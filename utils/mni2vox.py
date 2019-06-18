@@ -1,7 +1,8 @@
 import numpy as np
-
+from copy import copy
 def mni2vox(mni, T):
-    mni.extend([1])
+    mni_copy = copy(mni)
+    mni_copy.extend([1])
     T = np.transpose(np.linalg.inv(T))
     vox = np.round(np.matmul(mni,T)[:-1])
     vox = [int(x) for x in vox]
