@@ -1,5 +1,3 @@
-#Translated from http://www.alivelearn.net/?p=1434
-
 import numpy as np
 
 def mni2vox(mni, T):
@@ -10,3 +8,6 @@ def mni2vox(mni, T):
     print(T)
     #coordinate = np.round(np.matmul(mni,T)[:-1])
     #return coordinate
+
+
+#Translated from http://www.alivelearn.net/?p=1434
