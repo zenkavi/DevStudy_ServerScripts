@@ -60,7 +60,6 @@ if reg=="rt":
     filter_func = lambda s: not any(x in s for x in exclude)
     level2_images = [x for x in level2_images if filter_func(x)]
 
-
 if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
     print("***********************************************")
     print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
@@ -167,6 +166,17 @@ if mnum == "model4":
                               design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
                               fcon="%s/%s_design.fts"%(mnum_path, mnum),
+                              tfce=tfce,
+                              c_thresh = c_thresh,
+                              vox_p_values=True,
+                              num_perm=num_perm,
+                              var_smooth = var_smooth)
+
+if mnum == "model4_h":
+    randomise_results = randomise(in_file=in_file_name,
+                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
+                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
+                              tcon="%s/%s_design.con"%(mnum_path, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
                               vox_p_values=True,
