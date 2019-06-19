@@ -1,1 +1,1 @@
-./level_3.py -m model3 -r var_sen
+./level_3.py -m model3_g -r var_sen
