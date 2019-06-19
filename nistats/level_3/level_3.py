@@ -143,7 +143,7 @@ if mnum == "model3":
     save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model3_g":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, "model3", reg),
+    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3"%(data_loc), "model3", reg),
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
