@@ -43,7 +43,7 @@ out_path = "%s/%s"%(mnum_path,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-if mnum != "model4":
+if mnum not in ["model4","model4_h"]:
     level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(l2_in_path, reg))
     level2_images.sort()
 else:
@@ -107,12 +107,8 @@ if os.path.exists("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg)) == False:
 
 if sign == "pos":
     in_file_name = "%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg)
-    if mnum == "model3_g":
-        in_file_name = "%s/all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3/%s"%(data_loc, reg), "model3", reg)
 if sign == "neg":
     in_file_name = "%s/neg_all_l2_%s_%s.nii.gz"%(out_path, mnum, reg)
-    if mnum == "model3_g":
-        in_file_name = "%s/neg_all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3/%s"%(data_loc, reg), "model3", reg)
 
 print("***********************************************")
 print("Beginning randomise")
