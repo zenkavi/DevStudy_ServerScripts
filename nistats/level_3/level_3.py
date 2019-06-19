@@ -173,4 +173,7 @@ if mnum == "model4":
                               num_perm=num_perm,
                               var_smooth = var_smooth)
 
-save_randomise(randomise_results, out_path, mnum, reg, tfce)
+if sign == "neg":
+    save_randomise(randomise_results, out_path, mnum+'_neg', reg, tfce)
+else:
+    save_randomise(randomise_results, out_path, mnum, reg, tfce)
