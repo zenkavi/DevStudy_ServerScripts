@@ -23,6 +23,7 @@ parser.add_argument("-tf", "--tfce", help="tfce", action='store_true')
 parser.add_argument("-c", "--c_thresh", help="cluster_threshold", default=3)
 parser.add_argument("-np", "--num_perm", help="number of permutations", default=1000)
 parser.add_argument("-vs", "--var_smooth", help="variance smoothing", default=5)
+parser.add_argument("-s", "--sign", help="calculate p values for positive t's")
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
@@ -32,6 +33,7 @@ tfce = args.tfce
 c_thresh = int(args.c_thresh)
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
+sign = args.sign
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
@@ -58,20 +60,30 @@ if reg=="rt":
     filter_func = lambda s: not any(x in s for x in exclude)
     level2_images = [x for x in level2_images if filter_func(x)]
 
-print("***********************************************")
-print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
-print("***********************************************")
-smooth_l2s = []
-for l in level2_images:
-    smooth_l2 = smooth_img(l, 5)
-    smooth_l2s.append(smooth_l2)
-all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
-print("***********************************************")
-print("Saving level 2 images for %s regressor %s"%(mnum, reg))
-print("***********************************************")
-nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
-if mnum == "model1":
+if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
+    print("***********************************************")
+    print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
+    print("***********************************************")
+    smooth_l2s = []
+    for l in level2_images:
+        smooth_l2 = smooth_img(l, 5)
+        smooth_l2s.append(smooth_l2)
+    all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
+    print("***********************************************")
+    print("Saving level 2 images for %s regressor %s"%(mnum, reg))
+    print("***********************************************")
+    nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
+
+if os.path.exists('%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
+    print("***********************************************")
+    print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
+    print("***********************************************")
+    smooth_l2s = []
+    for l in level2_images:
+        smooth_l2 = smooth_img(l, 5)
+        smooth_l2s.append(smooth_l2)
+    all_l2_images = concat_imgs(smooth_l2s, auto_resample=True)
     binaryMaths = mem.cache(fsl.BinaryMaths)
     print("***********************************************")
     print("Saving negative level 2 images for %s regressor %s"%(mnum, reg))
@@ -81,23 +93,33 @@ if mnum == "model1":
                 operand_value = -1,
                 out_file = '%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
 
-print("***********************************************")
-print("Making group_mask")
-print("***********************************************")
-brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
-mean_mask = mean_img(brainmasks)
-group_mask = math_img("a>=0.95", a=mean_mask)
-group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
-group_mask.to_filename("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg))
-print("***********************************************")
-print("Group mask saved for: %s %s"%(mnum, reg))
-print("***********************************************")
+if os.path.exists("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg)) == False:
+    print("***********************************************")
+    print("Making group_mask")
+    print("***********************************************")
+    brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
+    mean_mask = mean_img(brainmasks)
+    group_mask = math_img("a>=0.95", a=mean_mask)
+    group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
+    group_mask.to_filename("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg))
+    print("***********************************************")
+    print("Group mask saved for: %s %s"%(mnum, reg))
+    print("***********************************************")
+
+if sign == "pos":
+    in_file_name = "%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg)
+    if mnum == "model3_g":
+        in_file_name = "%s/all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3/%s"%(data_loc, reg), "model3", reg)
+if sign == "neg":
+    in_file_name = "%s/neg_all_l2_%s_%s.nii.gz"%(out_path, mnum, reg)
+    if mnum == "model3_g":
+        in_file_name = "%s/neg_all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3/%s"%(data_loc, reg), "model3", reg)
 
 print("***********************************************")
 print("Beginning randomise")
 print("***********************************************")
 if mnum == "model1":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+    randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               one_sample_group_mean=one,
                               tfce=tfce,
@@ -105,20 +127,8 @@ if mnum == "model1":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum, reg, tfce)
-
-    randomise_results = randomise(in_file="%s/neg_all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
-                              one_sample_group_mean=one,
-                              tfce=tfce,
-                              c_thresh = c_thresh,
-                              vox_p_values=True,
-                              num_perm=num_perm,
-                              var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum+'_neg', reg, tfce)
-
 if mnum == "model2":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+    randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
@@ -128,10 +138,9 @@ if mnum == "model2":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model3":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+    randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
@@ -140,10 +149,9 @@ if mnum == "model3":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model3_g":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%("%s/derivatives/nistats/level_3/model3/%s"%(data_loc, reg), "model3", reg),
+    randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
@@ -152,10 +160,9 @@ if mnum == "model3_g":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum, reg, tfce)
 
 if mnum == "model4":
-    randomise_results = randomise(in_file="%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg),
+    randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
@@ -165,4 +172,5 @@ if mnum == "model4":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-    save_randomise(randomise_results, out_path, mnum, reg, tfce)
+
+save_randomise(randomise_results, out_path, mnum, reg, tfce)
