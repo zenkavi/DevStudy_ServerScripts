@@ -151,7 +151,7 @@ def make_design_files(mnum):
 
 /Matrix
             """
-                    design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
+            design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
 
         elif mnum == "model4_c":
             conhdr = """/ContrastName1	first_half_learner
