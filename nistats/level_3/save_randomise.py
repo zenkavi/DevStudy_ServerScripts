@@ -3,6 +3,7 @@ import os
 def save_randomise(randomise_results, in_path, mnum, reg, tfce):
 
     if len(randomise_results.outputs.tstat_files)>0:
+        randomise_results.outputs.tstat_files.sort()
         for i in range(0,len(randomise_results.outputs.tstat_files)):
             if tfce:
                 os.rename(randomise_results.outputs.tstat_files[i], "%s/rand_%s_%s_tstat%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
@@ -13,6 +14,7 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             print("***********************************************")
 
     if len(randomise_results.outputs.fstat_files)>0:
+        randomise_results.outputs.fstat_files.sort()
         for i in range(0,len(randomise_results.outputs.fstat_files)):
             if tfce:
                 os.rename(randomise_results.outputs.fstat_files[i],"%s/rand_%s_%s_fstat%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
@@ -23,6 +25,7 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             print("***********************************************")
 
     if len(randomise_results.outputs.t_p_files)>0:
+        randomise_results.outputs.t_p_files.sort()
         for i in range(0,len(randomise_results.outputs.t_p_files)):
             if tfce:
                 os.rename(randomise_results.outputs.t_p_files[i], "%s/rand_%s_%s_t_p%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
@@ -33,6 +36,7 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             print("***********************************************")
 
     if len(randomise_results.outputs.f_p_files)>0:
+        randomise_results.outputs.f_p_files.sort()
         for i in range(0,len(randomise_results.outputs.f_p_files)):
             if tfce:
                 os.rename(randomise_results.outputs.f_p_files[i],"%s/rand_%s_%s_f_p%s_tfce.nii.gz"%(in_path,mnum, reg, str(i+1)))
@@ -43,6 +47,7 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             print("***********************************************")
 
     if len(randomise_results.outputs.t_corrected_p_files)>0:
+        randomise_results.outputs.t_corrected_p_files.sort()
         for i in range(0,len(randomise_results.outputs.t_corrected_p_files)):
             if tfce:
                 os.rename(randomise_results.outputs.t_corrected_p_files[i],"%s/rand_%s_%s_tfce_corrp_tstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
@@ -53,6 +58,7 @@ def save_randomise(randomise_results, in_path, mnum, reg, tfce):
             print("***********************************************")
 
     if len(randomise_results.outputs.f_corrected_p_files)>0:
+        randomise_results.outputs.f_corrected_p_files.sort()
         for i in range(0,len(randomise_results.outputs.f_corrected_p_files)):
             if tfce:
                 os.rename(randomise_results.outputs.f_corrected_p_files[i],"%s/rand_%s_%s_tfce_corrp_fstat%s.nii.gz"%(in_path,mnum, reg, str(i+1)))
