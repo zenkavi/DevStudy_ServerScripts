@@ -60,7 +60,7 @@ if reg=="rt":
     filter_func = lambda s: not any(x in s for x in exclude)
     level2_images = [x for x in level2_images if filter_func(x)]
 
-if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
+if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False or os.path.exists("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg)) == False:
     print("***********************************************")
     print("Concatenating level 2 images for %s regressor %s"%(mnum, reg))
     print("***********************************************")
@@ -73,6 +73,17 @@ if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
     print("Saving level 2 images for %s regressor %s"%(mnum, reg))
     print("***********************************************")
     nib.save(all_l2_images, '%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
+    print("***********************************************")
+    print("Making group_mask")
+    print("***********************************************")
+    brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
+    mean_mask = mean_img(brainmasks)
+    group_mask = math_img("a>=0.95", a=mean_mask)
+    group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
+    group_mask.to_filename("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg))
+    print("***********************************************")
+    print("Group mask saved for: %s %s"%(mnum, reg))
+    print("***********************************************")
 
 if os.path.exists('%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
     print("***********************************************")
@@ -91,19 +102,6 @@ if os.path.exists('%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False:
                 operation = "mul",
                 operand_value = -1,
                 out_file = '%s/neg_all_l2_%s_%s.nii.gz'%(out_path, mnum, reg))
-
-if os.path.exists("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg)) == False:
-    print("***********************************************")
-    print("Making group_mask")
-    print("***********************************************")
-    brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
-    mean_mask = mean_img(brainmasks)
-    group_mask = math_img("a>=0.95", a=mean_mask)
-    group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
-    group_mask.to_filename("%s/group_mask_%s_%s.nii.gz"%(out_path,mnum,reg))
-    print("***********************************************")
-    print("Group mask saved for: %s %s"%(mnum, reg))
-    print("***********************************************")
 
 if sign == "pos":
     in_file_name = "%s/all_l2_%s_%s.nii.gz"%(out_path, mnum, reg)
@@ -171,7 +169,7 @@ if mnum == "model4":
 if mnum == "model4_h":
     randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
-                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
+                              design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
                               tcon="%s/%s_design.con"%(mnum_path, mnum),
                               tfce=tfce,
                               c_thresh = c_thresh,
