@@ -99,7 +99,7 @@ def make_design_files(mnum):
 
     #model4: learners vs non-learners and first vs. second half
     #Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#ANOVA:_2-factors_2-levels_.282-way_between-subjects_ANOVA.29
-    if mnum == "model4":
+    if mnum in ["model4", "model4_c"]:
         regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
         for reg in regs:
             reg_path = "%s/%s"%(mnum_path, reg)
@@ -134,8 +134,8 @@ def make_design_files(mnum):
             print("***********************************************")
             np.savetxt('%s/%s_%s_design.mat'%(reg_path, mnum, reg),design_matrix.values,fmt='%1.0f',header=deshdr,comments='')
 
-
-        conhdr = """/ContrastName1	main_half
+        if mnum == "model4":
+            conhdr = """/ContrastName1	main_half
 /ContrastName2	main_learner
 /ContrastName3	interaction
 /NumWaves	4
@@ -143,15 +143,36 @@ def make_design_files(mnum):
 /PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
 
 /Matrix
-        """
-        contrast_matrix = np.array([[1,1,-1,-1], [1,-1,1,-1], [1,-1,-1,1]])
+            """
+            contrast_matrix = np.array([[1,1,-1,-1], [1,-1,1,-1], [1,-1,-1,1]])
 
-        desfhdr = """/NumWaves	3
+            desfhdr = """/NumWaves	3
 /NumContrasts	3
 
 /Matrix
-        """
-        design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
+            """
+                    design_fts = np.array([[1,0,0],[0,1,0],[0,0,1]])
+
+        elif mnum == "model4_c":
+            conhdr = """/ContrastName1	first_half_learner
+/ContrastName2	first_half_non_learner
+/ContrastName3	second_half_learner
+/ContrastName4	second_half_non_learner
+/NumWaves	4
+/NumContrasts	4
+/PPheights		1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
+
+/Matrix
+            """
+            contrast_matrix = np.array([[1,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]])
+
+
+            desfhdr = """/NumWaves	4
+/NumContrasts	4
+
+/Matrix
+            """
+            design_fts = np.array([[1,1,1,1]])
 
     #model3_g: learners vs non-learners group maps
     if mnum == "model4_h":
@@ -194,7 +215,7 @@ def make_design_files(mnum):
         contrast_matrix = np.array([[1,0],[0,1]])
 
 
-    if mnum not in ["model4", "model4_h"]:
+    if mnum not in ["model4", "model4_h", "model4_c"]:
         print("***********************************************")
         print("Saving design matrix for %s"%(mnum))
         print("***********************************************")
@@ -215,6 +236,6 @@ def make_design_files(mnum):
         print("No design.fts for %s!"%(mnum))
         print("***********************************************")
 
-mnums = ["model2", "model3", "model3_g", "model4", "model4_h"]
+mnums = ["model2", "model3", "model3_g", "model4", "model4_h", "model4_c"]
 for mnum in mnums:
     make_design_files(mnum)
