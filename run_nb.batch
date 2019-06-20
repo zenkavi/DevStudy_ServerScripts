@@ -44,7 +44,7 @@ source setup/dev_study_env.sh
 source activate fmri
 jupyter nbextension enable codefolding/main
 jupyter nbextension enable toc2/main
-jupyter nbextension enable hide_input/main
+jupyter nbextension enable hide_input_all/main
 
 # DON'T USE ADDRESS BELOW.
 # DO USE TOKEN BELOW
