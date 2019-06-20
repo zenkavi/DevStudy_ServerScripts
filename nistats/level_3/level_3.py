@@ -43,7 +43,7 @@ out_path = "%s/%s"%(mnum_path,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-if mnum not in ["model4","model4_h"]:
+if mnum not in ["model4","model4_h", "model4_c"]:
     level2_images = glob.glob('%s/sub-*_%s.nii.gz'%(l2_in_path, reg))
     level2_images.sort()
 else:
@@ -142,7 +142,7 @@ if mnum in ["model3", "model3_g"]:
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-                              
+
 if mnum == "model4":
     randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
