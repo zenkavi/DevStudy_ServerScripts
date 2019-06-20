@@ -132,7 +132,7 @@ if mnum == "model2":
                               num_perm=num_perm,
                               var_smooth = var_smooth)
 
-if mnum == "model3":
+if mnum in ["model3", "model3_g"]:
     randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
@@ -142,18 +142,7 @@ if mnum == "model3":
                               vox_p_values=True,
                               num_perm=num_perm,
                               var_smooth = var_smooth)
-
-if mnum == "model3_g":
-    randomise_results = randomise(in_file=in_file_name,
-                              mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
-                              design_mat = "%s/%s_design.mat"%(mnum_path, mnum),
-                              tcon="%s/%s_design.con"%(mnum_path, mnum),
-                              tfce=tfce,
-                              c_thresh = c_thresh,
-                              vox_p_values=True,
-                              num_perm=num_perm,
-                              var_smooth = var_smooth)
-
+                              
 if mnum == "model4":
     randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
@@ -166,7 +155,7 @@ if mnum == "model4":
                               num_perm=num_perm,
                               var_smooth = var_smooth)
 
-if mnum == "model4_h":
+if mnum in ["model4_h", "model4_c"]:
     randomise_results = randomise(in_file=in_file_name,
                               mask= "%s/group_mask_%s_%s.nii.gz"%(out_path, mnum, reg),
                               design_mat = "%s/%s/%s_%s_design.mat"%(mnum_path, reg, mnum, reg),
