@@ -18,4 +18,4 @@
 
 source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
 source activate fmri
-eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" level3_task_list.sh )
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" tmp_level3_task_list.sh )
