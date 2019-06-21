@@ -1,55 +1,26 @@
 #!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
-from argparse import ArgumentParser
-import glob
 from nipype.caching import Memory
 mem = Memory(base_dir='.')
-import numpy as np
+from nipype.interfaces.fsl import ExtractROI
 import os
 import pandas as pd
 
-#Usage: ./make_roi_mask.py -x -y -z --name --template -o
+data_loc = os.environ[DATA_LOC]
+server_scripts = os.environ[SERVER_SCRIPTS]
+out_path = os.path.join(data_loc, 'derivatives', 'rois')
+anatfile = '~/datalad/templateflow/tpl-MNI152NLin2009cAsym/tpl-MNI152NLin2009cAsym_res-01_desc-brain_T1w.nii.gz'
+centers = pd.read_csv(os.path.join(server_scripts, 'roi', 'sv_roi_centers.csv'))
 
-parser = ArgumentParser()
-parser.add_argument("-x", "--x")
-parser.add_argument("-y", "--y",)
-parser.add_argument("-z", "--z",)
-parser.add_argument("-s", "--sphere",)
-parser.add_argument("--name", default=np.nan)
-parser.add_argument("--template", default="MNI152_T1_1mm_brain.nii.gz")
-parser.add_argument("-o", "--out_dir", default=np.nan)
-args = parser.parse_args()
-coords = [int(args.x), int(args.y), int(args.z)]
-sphere = args.sphere
-name = args.name
-template = args.template
-out_dir = args.out_dir
+for i in range(0, center.shape[0]):
 
-def make_roi_mask(coords):
-
-    print("***********************************************")
-    print("Extracting point %s from template %s" %(coords, template))
-    print("***********************************************")
-
-    print("***********************************************")
-    print("Saving point from template %s to %s" %(template, out_dir))
-    print("***********************************************")
-
-    print("***********************************************")
-    print("Making %s mm sphere around %s" %(sphere, coords))
-    print("***********************************************")
-
-    print("***********************************************")
-    print("Saving spherical mask to %s" %(out_dir))
-    print("***********************************************")
-
-    print("***********************************************")
-    print("Binarizing spherical mask")
-    print("***********************************************")
-
-    print("***********************************************")
-    print("Saving binarized spherical mask to %s"(out_dir))
-    print("***********************************************")
-
-    return
-
-make_roi_mask(coords)
+    out_file = ...
+    ctr = ...
+    
+    fslroi = ExtractROI(in_file=anatfile,
+                        roi_file = out_file,
+                        x_min=ctr[0],
+                        x_size=5,
+                        y_min=ctr[1],
+                        y_size=5,
+                        z_min=ctr[2],
+                        z_size=5)
