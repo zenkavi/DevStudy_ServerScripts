@@ -8,7 +8,7 @@ import pandas as pd
 data_loc = os.environ["DATA_LOC"]
 server_scripts = os.environ["SERVER_SCRIPTS"]
 out_path = os.path.join(data_loc, 'derivatives', 'rois')
-anatfile = '/home/users/zenkavi/datalad/templateflow/tpl-MNI152NLin2009cAsym/tpl-MNI152NLin2009cAsym_res-01_desc-brain_T1w.nii.gz'
+anatfile = os.path.join(out_path, 'tpl-MNI152NLin2009cAsym_res-01_desc-brain_T1w','tpl-MNI152NLin2009cAsym_res-01_desc-brain_T1w.nii.gz')
 space = os.path.basename(anatfile)
 space = os.path.splitext(os.path.splitext(space)[0])[0]
 centers = pd.read_csv(os.path.join(server_scripts, 'roi', 'sv_roi_centers.csv'))
