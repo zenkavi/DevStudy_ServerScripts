@@ -22,8 +22,8 @@ def make_design_files(mnum):
     if mnum == "model2":
         age_info = pd.read_csv('%s/participants.tsv'%(data_loc), sep='\t')
         age_info['kid'] = np.where(age_info['age']<13,1,0)
-        age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<19),1,0)
-        age_info['adult'] = np.where(age_info['age']>18,1,0)
+        age_info['teen'] = np.where((age_info['age']>12) & (age_info['age']<20),1,0)
+        age_info['adult'] = np.where(age_info['age']>20,1,0)
         age_info = age_info.sort_values(by=['participant_id']).reset_index(drop=True)
         age_info = age_info[age_info.participant_id.isin(subs)].reset_index(drop=True)
         design_matrix = age_info[['kid', 'teen', 'adult']]

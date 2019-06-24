@@ -56,8 +56,8 @@ sub-100188 run 4
 sub-100241 run 4
 sub-100051 run 1
 sub-200025 run 6
-sub-408511 run 6
 sub-306065 run 1
+sub-408511 run 6
 sub-408988 run 5
 
 Excluded runs for scrub volumes:
