@@ -30,7 +30,7 @@ data_amt = float(data_amt)
 if(data_amt == 1):
     output_path = args.output_path
 else:
-    output_path = args.output_path + '_'+ data_amt_path
+    output_path = os.path.join(args.output_path, '_'+ data_amt_path)
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
