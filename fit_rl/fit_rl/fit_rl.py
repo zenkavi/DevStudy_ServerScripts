@@ -30,8 +30,8 @@ data_amt = float(data_amt)
 if(data_amt == 1):
     output_path = args.output_path + '/'
 else:
-    output_path = args.output_path, '_'+ data_amt_path
-print("Output will be save in %s"%(output_path))
+    output_path = args.output_path+ '_'+ data_amt_path
+print("Output will be saved in %s"%(output_path))
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
