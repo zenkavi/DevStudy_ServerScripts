@@ -25,10 +25,12 @@ subject = args.subject
 n_fits = args.n_fits
 data_path = args.data_path
 data_amt = args.data_amt
-if(data_amt ==1):
+data_amt_path = data_amt.replace(".", "_")
+data_amt = float(data_amt)
+if(data_amt == 1):
     output_path = args.output_path
 else:
-    output_path = args.output_path + '_'+ data_amt
+    output_path = args.output_path + '_'+ data_amt_path
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
@@ -170,7 +172,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
-    nrows = round(data.shape[0] * float(data_amt))
+    nrows = round(data.shape[0] * data_amt)
 
     data = data[:nrows]
     print("Estimating parameters for %s of trials"%(data_amt))
@@ -294,7 +296,11 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
             print("fmin error")
 
     #write out sorted data
-    Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
-    print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
+    if data_amt == 1:
+        Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
+        print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
+    else:
+        Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+data_amt_path+'_'+str(subject)+'.csv')
+        print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+data_amt_path+'_'+str(subject)+'.csv'))
 
 select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars, data_amt = data_amt)
