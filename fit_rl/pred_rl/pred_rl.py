@@ -18,11 +18,19 @@ parser.add_argument("-m", "--model_name", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.preds', help="output path")
 parser.add_argument("-sr", "--save_by_run", default=False, help="save predicted values broken down by each scanning run")
+parser.add_argument("-op", "--data_amt", default=1, help="amount of data to be predicted")
 args = parser.parse_args()
 
 model_name = args.model_name
 data_path = args.data_path
-output_path = args.output_path
+data_amt = args.data_amt
+data_amt_path = data_amt.replace(".", "_")
+data_amt = float(data_amt)
+if(data_amt == 1):
+    output_path = args.output_path
+else:
+    output_path = args.output_path+ '_'+ data_amt_path
+print("Output will be saved in %s"%(output_path))
 save_by_run = args.save_by_run
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
@@ -104,6 +112,10 @@ def get_predicted_df(data, pars_dict):
 for subject_data in machine_game_data:
 
     df = pd.read_csv(subject_data)
+    nrows = (-1)*round(df.shape[0] * data_amt)
+    df = df[nrows:]
+    print("Estimating parameters for %s of trials"%(data_amt))
+
     subnum = re.findall('\d+', os.path.basename(subject_data))[0]
     print('Beginning model predictions for sub-%s'%(subnum))
 
