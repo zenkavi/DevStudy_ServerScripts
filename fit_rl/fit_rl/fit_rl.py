@@ -17,13 +17,20 @@ parser.add_argument("-s", "--subject", help="subject number")
 parser.add_argument("-n", "--n_fits", default=50, help="Number of iterations for model")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.fits/', help="output path")
+parser.add_argument("-da", "--data_amt", default=1, help="proportion of data the model will be fit to")
 parser.add_argument("-p", "--pars", help="parameters dictionary")
 args = parser.parse_args()
 
 subject = args.subject
 n_fits = args.n_fits
 data_path = args.data_path
-output_path = args.output_path
+data_amt = args.data_amt
+if(data_amt ==1):
+    output_path = args.output_path
+else:
+    output_path = args.output_path + '_'+ data_amt
+if not os.path.exists(output_path):
+    os.makedirs(output_path)
 pars = args.pars
 
 #text wrangling to turn the pars string to dictionary
@@ -159,9 +166,13 @@ def calculate_prediction_error(x0,data, pars):
     return(neglogprob)
 
 
-def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}):
+def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, data_amt=1):
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
+
+    nrows = round(data.shape[0] * float(data_amt))
+
+    data = data[:nrows]
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
 
@@ -281,4 +292,4 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     #write out sorted data
     Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
 
-select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars)
+select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars, data_amt = data_amt)

@@ -6,7 +6,7 @@ import pandas as pd
 import re
 from argparse import ArgumentParser
 
-#Usage: python get_fit_predictions.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
+#Usage: python pred_rl.py --model_name Fit_alpha-beta-exp_neg-exp_pos_Fix
 #output: /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fit_rl/.preds/Preds_Fit_{MODEL_NAME}_{SUBNUM}.csv
 
 todo_path = os.environ['TODO_PATH']
@@ -30,6 +30,7 @@ machine_game_data.sort()
 
 model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits/LearningParams_'+model_name+'_All.csv')
 
+#Get best parameters (those with lowest neglogprob) for all subjects
 model_pars_data = model_pars_data[model_pars_data['neglogprob'] == model_pars_data.groupby('sub_id')['neglogprob'].transform('min')]
 model_pars_data = model_pars_data.sort_values('neglogprob').drop_duplicates('sub_id')
 
