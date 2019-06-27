@@ -16,7 +16,7 @@ parser = ArgumentParser()
 parser.add_argument("-s", "--subject", help="subject number")
 parser.add_argument("-n", "--n_fits", default=50, help="Number of iterations for model")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
-parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.fits/', help="output path")
+parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.fits', help="output path")
 parser.add_argument("-da", "--data_amt", default=1, help="proportion of data the model will be fit to")
 parser.add_argument("-p", "--pars", help="parameters dictionary")
 args = parser.parse_args()
@@ -28,9 +28,10 @@ data_amt = args.data_amt
 data_amt_path = data_amt.replace(".", "_")
 data_amt = float(data_amt)
 if(data_amt == 1):
-    output_path = args.output_path
+    output_path = args.output_path + '/'
 else:
-    output_path = os.path.join(args.output_path, '_'+ data_amt_path)
+    output_path = args.output_path, '_'+ data_amt_path
+print("Output will be save in %s"%(output_path))
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
