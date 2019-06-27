@@ -173,6 +173,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     nrows = round(data.shape[0] * float(data_amt))
 
     data = data[:nrows]
+    print("Estimating parameters for %s of trials"%(data_amt))
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
 
@@ -258,6 +259,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         x0_dict = dict(zip(fitparams,x0))
 
         try:
+            print("Sampled starting parameters are:")
             print(x0_dict)
 
             #Fit model
@@ -270,6 +272,8 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
             #convert xopt to dictionary for easier update of Results df
             xopt_dict = dict(zip(fitparams,list(xopt)))
+            print("Estimated optimal parameters are:")
+            print(xopt_dict)
 
             #fill in Results df with x0 and xopt for the fitted params
             for key in fitparams:
@@ -291,5 +295,6 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     #write out sorted data
     Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
+    print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
 
 select_optimal_parameters(subject=int(subject), inpath=data_path, outpath=output_path, n_fits=int(n_fits), pars = pars, data_amt = data_amt)
