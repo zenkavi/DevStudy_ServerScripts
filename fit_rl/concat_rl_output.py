@@ -35,6 +35,6 @@ for model in all_models:
     all_fits['model'] = model
     all_fits.reset_index()
     if len(rl_output.split('_'))>1:
-        all_fits.to_csv(data_dir+model+'All'+'_'.join(rl_output.split('_')[1:])+'.csv')
+        all_fits.to_csv(data_dir+model+'All_'+'_'.join(rl_output.split('_')[1:])+'.csv')
     else:
         all_fits.to_csv(data_dir+model+'All.csv')
