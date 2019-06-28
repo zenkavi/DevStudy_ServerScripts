@@ -25,6 +25,7 @@ remove_digits = str.maketrans('', '', digits)
 if model_name == 'all':
     #remove .csv and numbers and get unique
     all_models = list(set([s.strip('.csv').translate(remove_digits) for s in os.listdir(data_dir)]))
+    all_models = [x.replace('__', '') for x in all_models]
 else:
     all_models = [model_name]
 
