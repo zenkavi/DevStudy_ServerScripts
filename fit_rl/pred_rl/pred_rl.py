@@ -31,6 +31,8 @@ if(data_amt == 1):
 else:
     output_path = args.output_path+ '_'+ data_amt_path
 print("Output will be saved in %s"%(output_path))
+if not os.path.exists(output_path):
+    os.makedirs(output_path)
 save_by_run = args.save_by_run
 
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
@@ -141,7 +143,10 @@ for subject_data in machine_game_data:
         df = df[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE', 'choiceprob']]
         df['sub_id'] = subnum
 
-        df.to_csv('%s/Preds_%s_%s.csv'%(output_path,model_name, subnum))
+        if float(data_amt) == 1:
+            df.to_csv('%s/Preds_%s_%s.csv'%(output_path,model_name, subnum))
+        else:
+            df.to_csv('%s/Preds_%s_%s_%s.csv'%(output_path,model_name, subnum, data_amt_path))
 
         if(save_by_run):
             file_length = df.shape[0]
