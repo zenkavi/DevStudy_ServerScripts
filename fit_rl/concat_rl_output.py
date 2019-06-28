@@ -34,7 +34,7 @@ for model in all_models:
     all_fits = pd.concat( [ pd.read_csv(f) for f in filenames ] , sort=True)
     all_fits['model'] = model
     all_fits.reset_index()
-    if len(model_name.split('_'))>1:
-        all_fits.to_csv(data_dir+model+'All'+'_'.join(model_name.split('_')[1:])+'.csv')
+    if len(rl_output.split('_'))>1:
+        all_fits.to_csv(data_dir+model+'All'+'_'.join(rl_output.split('_')[1:])+'.csv')
     else:
         all_fits.to_csv(data_dir+model+'All.csv')
