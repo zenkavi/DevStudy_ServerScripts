@@ -41,7 +41,7 @@ machine_game_data.sort()
 if data_amt == 1:
     model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits/LearningParams_'+model_name+'_All.csv')
 else:
-    fit_data_amt = 1-float(data_amt)
+    fit_data_amt = 1-data_amt
     fit_data_amt = '_'+str(fit_data_amt).replace('.', '_')
     model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits%s/LearningParams_'%(fit_data_amt)+model_name+'_All%s.csv'%(fit_data_amt))
 
@@ -50,6 +50,7 @@ model_pars_data = model_pars_data[model_pars_data['neglogprob'] == model_pars_da
 model_pars_data = model_pars_data.sort_values('neglogprob').drop_duplicates('sub_id')
 
 def get_predicted_df(data, pars_dict):
+    data = data.reset_index()
     TrialNum = data.Trial_type
     Response = data.Response
     Outcome = data.Points_earned
