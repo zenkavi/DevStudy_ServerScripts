@@ -122,7 +122,7 @@ for subject_data in machine_game_data:
     df = pd.read_csv(subject_data)
     nrows = (-1)*round(df.shape[0] * data_amt)
     df = df[nrows:]
-    print("Estimating parameters for %s of trials"%(data_amt))
+    print("Making predictions for %s of trials"%(data_amt))
 
     subnum = re.findall('\d+', os.path.basename(subject_data))[0]
     print('Beginning model predictions for sub-%s'%(subnum))
