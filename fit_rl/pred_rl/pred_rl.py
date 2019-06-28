@@ -36,7 +36,12 @@ save_by_run = args.save_by_run
 machine_game_data = glob.glob('%s/ProbLearn*'%(data_path))
 machine_game_data.sort()
 
-model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits/LearningParams_'+model_name+'_All.csv')
+if data_amt == 1:
+    model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits/LearningParams_'+model_name+'_All.csv')
+else:
+    fit_data_amt = 1-float(data_amt)
+    fit_data_amt = '_'+str(fit_data_amt).replace('.', '_')
+    model_pars_data = pd.read_csv(server_scripts+'/fit_rl/.fits%s/LearningParams_'%(fit_data_amt)+model_name+'_All%s.csv'%(fit_data_amt))
 
 #Get best parameters (those with lowest neglogprob) for all subjects
 model_pars_data = model_pars_data[model_pars_data['neglogprob'] == model_pars_data.groupby('sub_id')['neglogprob'].transform('min')]
