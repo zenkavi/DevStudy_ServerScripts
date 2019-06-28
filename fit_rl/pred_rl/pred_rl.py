@@ -18,7 +18,7 @@ parser.add_argument("-m", "--model_name", help="model name")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
 parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.preds', help="output path")
 parser.add_argument("-sr", "--save_by_run", default=False, help="save predicted values broken down by each scanning run")
-parser.add_argument("-op", "--data_amt", default=1, help="amount of data to be predicted")
+parser.add_argument("-da", "--data_amt", default=1, help="amount of data to be predicted")
 args = parser.parse_args()
 
 model_name = args.model_name
