@@ -28,7 +28,7 @@ for i in range(0, centers.shape[0]):
     maths1.inputs.in_file = anatfile
     maths1.inputs.op_string = '-mul 0 -add 1 -roi %s 1 %s 1 %s 1 0 1'(cur_row.x, cur_row.y, cur_row.z)
     maths1.inputs.out_data_type = 'float'
-    maths2.inputs.out_file = os.path.join(out_path, space, cur_row['Name']+'_point.nii.gz')
+    maths1.inputs.out_file = os.path.join(out_path, space, cur_row['Name']+'_point.nii.gz')
     maths1.cmdline
     maths1.run()
 
