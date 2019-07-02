@@ -83,7 +83,7 @@ Output: $SERVER_SCRIPTS/fit_rl/.fits/LearningParams_Fit_*_Fix_*_{sub_num}.csv
 
 Input:
 Script: concat_rl_output.py -r fits
-Output: $SERVER_SCRIPTS/fit_rl/.preds/LearningParams_*_All.csv
+Output: $SERVER_SCRIPTS/fit_rl/.fits/LearningParams_*_All.csv
 
 rsync -avzh --include='*_All.csv' --include='*/' --exclude='*' zenkavi@dtn.sherlock.stanford.edu:/oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/fit_rl/.fits/ ./rl_fits
 
