@@ -7,10 +7,8 @@ from level_1_utils import make_contrasts, add_transform, stdize, get_conditions,
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
-parser.add_argument("-o", "--out_path")
 args = parser.parse_args()
 subnum = args.subnum
-out_path = args.out_path
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
 
@@ -20,4 +18,5 @@ for cur_pes in pred_rpes:
     print("***********************************************")
     print("Running level 1 for sub-%s model %s"%(subnum, os.path.basename(cur_pes)))
     print("***********************************************")
+    out_path = os.path.join(data_loc,'derivatives/rpe_cors/%s/sub-%s'%(os.path.basename(cur_pes), subnum))
     run_level1(subnum = subnum, out_path = out_path, pe = True, pe_path = cur_pes, beta = True)
