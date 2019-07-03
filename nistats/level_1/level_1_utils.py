@@ -105,16 +105,16 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
     cond_loss['trial_type'] =  "loss"
     cond_loss = cond_loss.rename(index=str, columns={"points_earned": "modulation"})
     cond_pe = cur_events.query('response == 1')
-    cond_pe = pd.concat([cond_pe.reset_index(drop=True), run_pes['ave_PE'].reset_index(drop=True)], axis=1)
+    cond_pe = pd.concat([cond_pe.reset_index(drop=True), run_pes['PE'].reset_index(drop=True)], axis=1)
     cond_hpe = cond_pe.query('stimulus == 1 | stimulus == 2')
     cond_lpe = cond_pe.query('stimulus == 3 | stimulus == 4')
-    cond_hpe['ave_PE'] = cond_hpe['ave_PE'].sub(cond_hpe['ave_PE'].mean())
-    cond_lpe['ave_PE'] = cond_lpe['ave_PE'].sub(cond_lpe['ave_PE'].mean())
-    cond_hpe = cond_hpe[['onset', 'duration', 'ave_PE']]
-    cond_hpe = cond_hpe.rename(index=str, columns={"ave_PE": "modulation"})
+    cond_hpe['PE'] = cond_hpe['PE'].sub(cond_hpe['PE'].mean())
+    cond_lpe['PE'] = cond_lpe['PE'].sub(cond_lpe['PE'].mean())
+    cond_hpe = cond_hpe[['onset', 'duration', 'PE']]
+    cond_hpe = cond_hpe.rename(index=str, columns={"PE": "modulation"})
     cond_hpe['trial_type'] = 'hpe'
-    cond_lpe = cond_lpe[['onset', 'duration', 'ave_PE']]
-    cond_lpe = cond_lpe.rename(index=str, columns={"ave_PE": "modulation"})
+    cond_lpe = cond_lpe[['onset', 'duration', 'PE']]
+    cond_lpe = cond_lpe.rename(index=str, columns={"PE": "modulation"})
     cond_lpe['trial_type'] = 'lpe'
     cond_junk = cur_events.query('response == 0')[['onset', 'duration']]
     cond_junk['modulation'] = 1
