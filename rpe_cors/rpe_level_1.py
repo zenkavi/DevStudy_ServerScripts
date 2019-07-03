@@ -1,3 +1,4 @@
+#!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 from argparse import ArgumentParser
 import os
 import sys
