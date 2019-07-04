@@ -163,6 +163,8 @@ returns 434 + 5 = 439 because
 200025 missing run 6 (no sbref's) - first volume corrupt
 408511 missing run 6 - <216 volumes and last volume corrupt
 
+=============================nistats==============================
+
 =============================level_1==============================
 
 Input: ave_pes.csv, level_1_utils.py, level1_task_list.sh, level_1.py
@@ -198,3 +200,23 @@ run_rand_model*.batch
 Significance checking of randomise output:
 echo fslstats model1/lpe/rand_baseline/group_diff_tfce_corrp_tstat1.nii.gz -l 0.95 -V
 fslstats /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_3/model1/lpe/rand_baseline/group_diff_tfce_corrp_tstat1.nii.gz -l 0.95 -V
+
+=============================roi==============================
+
+Input: sv_roi_centers.csv
+Script: ./make_roi_mask.py
+Output: {DATA_LOC}/derivatives/rois/{SPACE}/*_point.nii.gz, *_sphere.nii.gz, *.bin.nii.gz
+
+=============================rpe_cors==============================
+
+Input: DevStudAnalyses/input/rl_preds,
+Script: save_fmri_rpes.R
+Output: rpe_cors/pred_rpes/*
+
+Input: level_1_utils.py, rpe_cors/pred_rpes, rpe_level_1.py, rpe_level1_task_list.sh
+Script: run_rpe_level1.batch
+Output: {DATA_LOC}/derivatives/rpe_cors/{MODEL}/{SUBNUM}/
+
+Input: {DATA_LOC}/derivatives/rpe_cors/{MODEL}/{SUBNUM}/contrasts/*, {DATA_LOC}/derivatives/rois/l_vstr_bin.nii.gz, {DATA_LOC}/derivatives/rois/r_vstr_bin.nii.gz, rpe_cors/pred_rpes/*.csv
+Script: get_vStr_betas.py
+Output: {DATA_LOC}/derivatives/rpe_cors/all_vstr_pe_betas.csv
