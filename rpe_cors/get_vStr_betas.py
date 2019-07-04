@@ -1,4 +1,5 @@
 #!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
+from argparse import ArgumentParser
 import glob
 import numpy as np
 import nibabel as nib
@@ -10,12 +11,16 @@ import re
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
 
-#contrasts = hpe, lpe, pe
+parser = ArgumentParser()
+parser.add_argument("-m", "--models")
+args = parser.parse_args()
+models = args.models
+
+if models is None:
+    models = glob.glob(os.path.join(server_scripts, 'rpe_cors/pred_rpes/*.csv'))
+    models = [os.path.splitext(os.path.basename(x))[0] for x in models]
 
 regions = ['l_vstr', 'r_vstr']
-
-models = glob.glob(os.path.join(server_scripts, 'rpe_cors/pred_rpes/*.csv'))
-models = [os.path.splitext(os.path.basename(x))[0] for x in models]
 
 all_betas = pd.DataFrame()
 
@@ -54,4 +59,7 @@ for model in models:
                 cur_betas["model"] = model
                 all_betas = all_betas.append(cur_betas, ignore_index= True)
 
-all_betas.to_csv('%s/derivatives/rpe_cors/all_vstr_pe_betas.csv'%(data_loc))
+if len(models)==12:
+    all_betas.to_csv('%s/derivatives/rpe_cors/all_vstr_pe_betas.csv'%(data_loc))
+else:
+    all_betas.to_csv('%s/derivatives/rpe_cors/%s_vstr_pe_betas.csv'%(data_loc, models))
