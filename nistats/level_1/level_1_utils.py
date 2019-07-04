@@ -148,6 +148,8 @@ def get_confounds(cur_confounds):
     return formatted_confounds
 
 def run_level1(subnum, out_path, pe, pe_path, beta):
+
+    data_loc = os.environ['DATA_LOC']
     events_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_events.tsv'%(data_loc))
     events_files.sort()
 
