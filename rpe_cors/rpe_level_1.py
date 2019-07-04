@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 import os
 import sys
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
-from level_1_utils import make_contrasts, add_transform, stdize, get_conditions, get_confounds, run_level1
+import level_1_utils
 #Usage: python rpe_level_1.py -s SUBNUM
 
 parser = ArgumentParser()
