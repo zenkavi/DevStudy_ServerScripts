@@ -1,3 +1,4 @@
+#!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 import glob
 import numpy as np
 import nibabel as nib

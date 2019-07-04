@@ -1,6 +1,6 @@
 #!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 from argparse import ArgumentParser
-import level_1_utils
+from level_1_utils import run_level1
 #Usage: python level_1.py -s SUBNUM -pe
 
 parser = ArgumentParser()
