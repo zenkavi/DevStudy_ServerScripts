@@ -39,6 +39,8 @@ for model in models:
             mask_data = np.where(mask_data >0.1,1,0)
             mask = nilearn.image.new_img_like(tmp_img, mask_data)
 
+            print("Getting betas for %s from %s"%(model, region))
+
             for cur_beta_img in beta_img_paths:
                 img_data = nib.load(cur_beta_img).get_fdata()
                 roi_data = np.where(mask_data == 1,img_data,0)
