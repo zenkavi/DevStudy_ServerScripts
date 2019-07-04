@@ -154,11 +154,11 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
     events_files.sort()
 
     if not os.path.exists(out_path):
-        os.mkdir(out_path)
+        os.makedirs(out_path)
 
     contrasts_path = "%s/contrasts"%(out_path)
     if not os.path.exists(contrasts_path):
-        os.mkdir(contrasts_path)
+        os.makedirs(contrasts_path)
 
     all_events = pd.DataFrame()
 
