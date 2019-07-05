@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J debug_fmriprep
-#SBATCH --array=1-1%1
+#SBATCH --array=1-3%3
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=48:00:00
 #SBATCH -n 1
