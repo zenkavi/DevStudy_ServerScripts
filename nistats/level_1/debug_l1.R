@@ -36,7 +36,7 @@ failed_subs = gsub("sub-", "", failed_subs)
 
 debug_jobs = data.frame(job = rep(NA, length(failed_subs)))
 for(i in 1:length(failed_subs)){
-  debug_jobs$job[i] = paste0("python level_1.py -s ", failed_subs[i])
+  debug_jobs$job[i] = paste0("./level_1.py -s ", failed_subs[i])
 }
 
 print("Saving debug jobs...")
