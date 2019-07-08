@@ -145,6 +145,8 @@ def get_confounds(cur_confounds):
     else:
         motion_cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         formatted_confounds = cur_confounds[[s for s in cur_confounds.columns if any(xs in s for xs in motion_cols)]]
+        where_are_NaNs = isnan(formatted_confounds)
+        formatted_confounds[where_are_NaNs] = 0
     formatted_confounds[['std_dvars', 'framewise_displacement']] = cur_confounds[['std_dvars', 'framewise_displacement']]
     formatted_confounds['std_dvars'].iloc[0] = 0
     formatted_confounds['framewise_displacement'].iloc[0] = 0
@@ -163,8 +165,6 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
     contrasts_path = "%s/contrasts"%(out_path)
     if not os.path.exists(contrasts_path):
         os.makedirs(contrasts_path)
-
-    all_events = pd.DataFrame()
 
     #all_events = pd.DataFrame()
     #for cur_ef in events_files:
