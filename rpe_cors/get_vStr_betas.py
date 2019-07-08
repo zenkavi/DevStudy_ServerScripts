@@ -14,7 +14,7 @@ server_scripts = os.environ['SERVER_SCRIPTS']
 parser = ArgumentParser()
 parser.add_argument("-m", "--models")
 args = parser.parse_args()
-models = args.models
+models = [args.models]
 
 if models is None:
     models = glob.glob(os.path.join(server_scripts, 'rpe_cors/pred_rpes/*.csv'))
