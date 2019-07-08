@@ -76,7 +76,7 @@ if os.path.exists('%s/all_l2_%s_%s.nii.gz'%(out_path, mnum, reg)) == False or os
     print("***********************************************")
     print("Making group_mask")
     print("***********************************************")
-    brainmasks = glob.glob("%s/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
+    brainmasks = glob.glob("%s/derivatives/fmriprep_1.4.0/fmriprep/sub-*/func/*brain_mask.nii*"%(data_loc))
     mean_mask = mean_img(brainmasks)
     group_mask = math_img("a>=0.95", a=mean_mask)
     group_mask = resample_to_img(group_mask, all_l2_images, interpolation='nearest')
