@@ -49,8 +49,7 @@ for model in models:
         print("Getting betas for %s from %s"%(model, region))
 
         for cur_beta_img in beta_img_paths:
-            sub_num = re.findall('\d+', os.path.basename(cur_beta_img))[0]
-            print("Getting betas for sub-%s"%(sub_num))
+            print("Getting betas for sub-%s"%(re.findall('\d+', os.path.basename(cur_beta_img))[0]))
             img_data = nib.load(cur_beta_img).get_fdata()
             roi_data = np.where(mask_data == 1,img_data,0)
             roi_data = roi_data[roi_data != 0]
