@@ -19,6 +19,7 @@ models = [args.models]
 if models is None:
     models = glob.glob(os.path.join(server_scripts, 'rpe_cors/pred_rpes/*.csv'))
     models = [os.path.splitext(os.path.basename(x))[0] for x in models]
+    models.sort()
 
 regions = ['l_vstr', 'r_vstr']
 
@@ -27,6 +28,7 @@ all_betas = pd.DataFrame()
 for model in models:
     #contrast images with betas
     beta_img_paths = glob.glob('%s/derivatives/rpe_cors/%s/sub-*/contrasts/sub-*_run-*_*pe_betas.nii.gz'%(data_loc, model))
+    beta_img_paths.sort()
 
     for region in regions:
         #check for matching dimensions
@@ -44,20 +46,22 @@ for model in models:
             mask_data = np.where(mask_data >0.1,1,0)
             mask = nilearn.image.new_img_like(tmp_img, mask_data)
 
-            print("Getting betas for %s from %s"%(model, region))
+        print("Getting betas for %s from %s"%(model, region))
 
-            for cur_beta_img in beta_img_paths:
-                img_data = nib.load(cur_beta_img).get_fdata()
-                roi_data = np.where(mask_data == 1,img_data,0)
-                roi_data = roi_data[roi_data != 0]
-                cur_betas = pd.DataFrame()
-                cur_betas["beta"] = roi_data
-                cur_betas["sub_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[0] #take from cur_beta_img
-                cur_betas["run_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[1] #take from cur_beta_img
-                cur_betas["pe_type"] = os.path.basename(cur_beta_img).split("_")[2] #take from cur_beta_img
-                cur_betas["roi"] = region
-                cur_betas["model"] = model
-                all_betas = all_betas.append(cur_betas, ignore_index= True)
+        for cur_beta_img in beta_img_paths:
+            sub_num = re.findall('\d+', os.path.basename(cur_beta_img))[0]
+            print("Getting betas for sub-%s"%(sub_num))
+            img_data = nib.load(cur_beta_img).get_fdata()
+            roi_data = np.where(mask_data == 1,img_data,0)
+            roi_data = roi_data[roi_data != 0]
+            cur_betas = pd.DataFrame()
+            cur_betas["beta"] = roi_data
+            cur_betas["sub_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[0] #take from cur_beta_img
+            cur_betas["run_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[1] #take from cur_beta_img
+            cur_betas["pe_type"] = os.path.basename(cur_beta_img).split("_")[2] #take from cur_beta_img
+            cur_betas["roi"] = region
+            cur_betas["model"] = model
+            all_betas = all_betas.append(cur_betas, ignore_index= True)
 
 if len(models)==12:
     all_betas.to_csv('%s/derivatives/rpe_cors/all_vstr_pe_betas.csv'%(data_loc))
