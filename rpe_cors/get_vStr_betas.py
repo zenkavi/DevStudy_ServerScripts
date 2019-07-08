@@ -35,7 +35,7 @@ for model in models:
         #resample mask if they don't match
         tmp_img_file_name = beta_img_paths[0]
         tmp_img = nib.load(tmp_img_file_name)
-        mask_file_name = '/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/rois/tpl-MNI152NLin2009cAsym_res-01_desc-brain_T1w/%s_bin.nii.gz'%(region)
+        mask_file_name = '/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/rois/tpl-MNI152NLin2009cAsym_res-02_desc-brain_T1w/%s_bin.nii.gz'%(region)
         mask = nib.load(mask_file_name)
         tmp_img_data = tmp_img.get_fdata()
         mask_data = mask.get_fdata()

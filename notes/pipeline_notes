@@ -191,16 +191,6 @@ Input: level2_model*_task_list.sh, level_3.py, $DATA_LOC/derivatives/nistats/lev
 Script: run_level3_model*.batch
 Output: $DATA_LOC/derivatives/nistats/level_3/model*/{REG}
 
-Input: $DATA_LOC/derivatives/nistats/level_3/{REG}/all_l2_images*, $DATA_LOC/derivatives/fmriprep_1.3.0/fmriprep/sub-*/func/*brain_mask
-Script: make_group_mask.py
-Output: $DATA_LOC/derivatives/nistats/level_3/model*/{REG}/group_mask_{MODELNUM}_{REG}.nii.gz
-
-run_rand_model*.batch
-
-Significance checking of randomise output:
-echo fslstats model1/lpe/rand_baseline/group_diff_tfce_corrp_tstat1.nii.gz -l 0.95 -V
-fslstats /oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/nistats/level_3/model1/lpe/rand_baseline/group_diff_tfce_corrp_tstat1.nii.gz -l 0.95 -V
-
 =============================roi==============================
 
 Input: sv_roi_centers.csv
