@@ -183,12 +183,12 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
 
         runnum = re.findall('\d+', os.path.basename(run_events))[1]
 
-        exists = os.path.isfile(os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(subnum, subnum, runnum)))
+        exists = os.path.isfile(os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(subnum, subnum, runnum)))
 
         if exists:
 
             #fmri_img: path to preproc_bold that the model will be fit on
-            fmri_img = os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(subnum, subnum, runnum))
+            fmri_img = os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"%(subnum, subnum, runnum))
 
             #read in preproc_bold for that run
             cur_img = nib.load(fmri_img)
@@ -200,7 +200,7 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
 
             #process confounds
             #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
-            cur_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t')
+            cur_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t')
             formatted_confounds = get_confounds(cur_confounds)
 
             #define GLM parmeters
@@ -210,7 +210,7 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
                                    hrf_model='spm + derivative',
                                    drift_model='cosine',
                                    smoothing_fwhm=5,
-                                   mask='%s/derivatives/fmriprep_1.3.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
+                                   mask='%s/derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
 
             #fit glm to run image using run events
             print("***********************************************")
