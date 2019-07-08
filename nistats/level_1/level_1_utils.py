@@ -145,7 +145,7 @@ def get_confounds(cur_confounds):
     else:
         motion_cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         formatted_confounds = cur_confounds[[s for s in cur_confounds.columns if any(xs in s for xs in motion_cols)]]
-        where_are_NaNs = isnan(formatted_confounds)
+        where_are_NaNs = np.isnan(formatted_confounds)
         formatted_confounds[where_are_NaNs] = 0
     formatted_confounds[['std_dvars', 'framewise_displacement']] = cur_confounds[['std_dvars', 'framewise_displacement']]
     formatted_confounds['std_dvars'].iloc[0] = 0
