@@ -65,4 +65,4 @@ for model in models:
 if len(models)==12:
     all_betas.to_csv('%s/derivatives/rpe_cors/all_vstr_pe_betas.csv'%(data_loc))
 else:
-    all_betas.to_csv('%s/derivatives/rpe_cors/%s_vstr_pe_betas.csv'%(data_loc, models))
+    all_betas.to_csv('%s/derivatives/rpe_cors/%s_vstr_pe_betas.csv'%(data_loc, models[0]))
