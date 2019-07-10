@@ -3,7 +3,6 @@ from argparse import ArgumentParser
 import glob
 import numpy as np
 import nibabel as nib
-import nilearn.plotting
 import os
 import pandas as pd
 import re

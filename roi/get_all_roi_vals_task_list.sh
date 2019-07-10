@@ -1,0 +1,16 @@
+./get_all_roi_vals -l l_vstr -r hpe -v beta
+./get_all_roi_vals -l r_vstr -r hpe -v beta
+./get_all_roi_vals -l acc -r hpe -v beta
+./get_all_roi_vals -l l_ains -r hpe -v beta
+./get_all_roi_vals -l pcc -r hpe -v beta
+./get_all_roi_vals -l pre_sma -r hpe -v beta
+./get_all_roi_vals -l r_ains -r hpe -v beta
+./get_all_roi_vals -l vmpfc -r hpe -v beta
+./get_all_roi_vals -l l_vstr -r lpe -v beta
+./get_all_roi_vals -l r_vstr -r lpe -v beta
+./get_all_roi_vals -l acc -r lpe -v beta
+./get_all_roi_vals -l l_ains -r lpe -v beta
+./get_all_roi_vals -l pcc -r lpe -v beta
+./get_all_roi_vals -l pre_sma -r lpe -v beta
+./get_all_roi_vals -l r_ains -r lpe -v beta
+./get_all_roi_vals -l vmpfc -r lpe -v beta
