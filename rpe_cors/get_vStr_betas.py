@@ -7,6 +7,9 @@ import nilearn.plotting
 import os
 import pandas as pd
 import re
+import sys
+sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'roi'))
+import get_roi_vals
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
@@ -31,30 +34,14 @@ for model in models:
     beta_img_paths.sort()
 
     for region in regions:
-        #check for matching dimensions
-        #resample mask if they don't match
-        tmp_img_file_name = beta_img_paths[0]
-        tmp_img = nib.load(tmp_img_file_name)
         mask_file_name = '/oak/stanford/groups/russpold/data/ds000054/0.0.4/derivatives/rois/tpl-MNI152NLin2009cAsym_res-02_desc-brain_T1w/%s_bin.nii.gz'%(region)
-        mask = nib.load(mask_file_name)
-        tmp_img_data = tmp_img.get_fdata()
-        mask_data = mask.get_fdata()
-        if tmp_img_data.shape != mask_data.shape:
-            mask = nilearn.image.resample_to_img(mask, tmp_img)
-            mask_data = mask.get_fdata()
-            #binarize resampled mask data
-            mask_data = np.where(mask_data >0.1,1,0)
-            mask = nilearn.image.new_img_like(tmp_img, mask_data)
 
         print("Getting betas for %s from %s"%(model, region))
 
         for cur_beta_img in beta_img_paths:
             print("Getting betas for sub-%s"%(re.findall('\d+', os.path.basename(cur_beta_img))[0]))
-            img_data = nib.load(cur_beta_img).get_fdata()
-            roi_data = np.where(mask_data == 1,img_data,0)
-            roi_data = roi_data[roi_data != 0]
             cur_betas = pd.DataFrame()
-            cur_betas["beta"] = roi_data
+            cur_betas["beta"] = get_roi_vals(cur_beta_img, mask_file_name)
             cur_betas["sub_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[0] #take from cur_beta_img
             cur_betas["run_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[1] #take from cur_beta_img
             cur_betas["pe_type"] = os.path.basename(cur_beta_img).split("_")[2] #take from cur_beta_img
