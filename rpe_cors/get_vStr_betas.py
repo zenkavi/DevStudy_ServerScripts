@@ -41,7 +41,7 @@ for model in models:
         for cur_beta_img in beta_img_paths:
             print("Getting betas for sub-%s"%(re.findall('\d+', os.path.basename(cur_beta_img))[0]))
             cur_betas = pd.DataFrame()
-            cur_betas["beta"] = get_roi_vals(cur_beta_img, mask_file_name)
+            cur_betas["beta"] = get_roi_vals(mask_file_name, cur_beta_img)
             cur_betas["sub_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[0] #take from cur_beta_img
             cur_betas["run_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[1] #take from cur_beta_img
             cur_betas["pe_type"] = os.path.basename(cur_beta_img).split("_")[2] #take from cur_beta_img
