@@ -43,8 +43,8 @@ for cur_img in img_paths:
     cur_vals = pd.DataFrame()
     cur_vals["value"] = get_roi_vals(mask_file_name, cur_img)
     cur_vals["value_type"] = value
-    cur_vals["sub_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[0] #take from cur_beta_img
-    cur_vals["run_num"] = re.findall('\d+', os.path.basename(cur_beta_img))[1] #take from cur_beta_img
+    cur_vals["sub_num"] = re.findall('\d+', os.path.basename(cur_img))[0] #take from cur_beta_img
+    cur_vals["run_num"] = re.findall('\d+', os.path.basename(cur_img))[1] #take from cur_beta_img
     cur_vals["regressor"] = regressor#take from cur_beta_img
     cur_vals["roi"] = location
     all_vals = all_vals.append(cur_vals, ignore_index= True)
