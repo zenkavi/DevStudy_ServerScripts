@@ -57,6 +57,7 @@ def make_design_files(mnum):
     #Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#Two-Group_Difference_.28Two-Sample_Unpaired_T-Test.29
     if mnum == "model3":
         learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
+        learner_info = learner_info.sort_values(by=["Sub_id"])
         learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
         design_matrix = learner_info[['learner', 'non_learner']]
         #design_matrix['intercept'] = [1] * len(level2_images)
@@ -79,6 +80,7 @@ def make_design_files(mnum):
     #model3_g: learners vs non-learners group maps
     if mnum == "model3_g":
         learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
+        learner_info = learner_info.sort_values(by=["Sub_id"])
         learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
         design_matrix = learner_info[['learner', 'non_learner']]
         deshdr="""/NumWaves	2
@@ -99,6 +101,8 @@ def make_design_files(mnum):
 
     #model4: learners vs non-learners and first vs. second half
     #Design and contrast matrices based on https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#ANOVA:_2-factors_2-levels_.282-way_between-subjects_ANOVA.29
+    #model4: main effects and interaction
+    #model4_c: group maps for each condition
     if mnum in ["model4", "model4_c"]:
         regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
         for reg in regs:
@@ -113,6 +117,7 @@ def make_design_files(mnum):
             level2_second_half_subs = [os.path.basename(x).split("_")[0] for x in level2_second_half_images]
             subs = [x for x in level2_first_half_subs if x in level2_second_half_subs]
             learner_info = pd.read_csv('%s/nistats/level_3/learner_info.csv'%(server_scripts))
+            learner_info = learner_info.sort_values(by=["Sub_id"])
             learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
             design_matrix = learner_info[['learner']].append(learner_info[['learner']])
             design_matrix['second_half'] = sorted([1,0]*int(design_matrix.shape[0]/2))
@@ -174,7 +179,7 @@ def make_design_files(mnum):
             """
             design_fts = np.array([[1,1,1,1]])
 
-    #model3_g: learners vs non-learners group maps
+    #model4_h: first vs second half group maps
     if mnum == "model4_h":
         regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
         for reg in regs:
