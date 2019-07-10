@@ -6,7 +6,7 @@ def get_roi_vals(mask, img):
     #Load nifti's if they are strings
     if type(mask) == str:
         mask = nib.load(mask)
-    if type(image) == str:
+    if type(img) == str:
         img = nib.load(img)
 
     #resample mask to image dimensions if they don't match
