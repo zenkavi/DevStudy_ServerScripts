@@ -8,7 +8,7 @@ import pandas as pd
 import re
 import sys
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'roi'))
-import get_roi_vals
+from get_roi_vals import get_roi_vals
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
