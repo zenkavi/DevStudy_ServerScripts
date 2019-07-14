@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #SBATCH -J rm_dir
-#SBATCH --array=1-3%3
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=03:00:00
 #SBATCH -n 1
@@ -9,8 +8,8 @@
 #SBATCH --ntasks-per-node=1
 
 # Outputs ----------------------------------
-#SBATCH -o .out/rm_dir-%A-%a.out
-#SBATCH -e .err/rm_dir-%A-%a.err
+#SBATCH -o .out/rm_dir.out
+#SBATCH -e .err/rm_dir.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
 # ------------------------------------------
