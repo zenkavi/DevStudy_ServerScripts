@@ -210,3 +210,7 @@ Output: {DATA_LOC}/derivatives/rpe_cors/{MODEL}/{SUBNUM}/
 Input: {DATA_LOC}/derivatives/rpe_cors/{MODEL}/{SUBNUM}/contrasts/*, {DATA_LOC}/derivatives/rois/l_vstr_bin.nii.gz, {DATA_LOC}/derivatives/rois/r_vstr_bin.nii.gz, rpe_cors/pred_rpes/*.csv, get_vStr_betas.py, get_vStr_betas_task_list.sh
 Script: run_get_vStr_betas.batch
 Output: {DATA_LOC}/derivatives/rpe_cors/*_vstr_pe_betas.csv
+
+
+To fix pasting issue in terminal use:
+printf "\e[?2004l"

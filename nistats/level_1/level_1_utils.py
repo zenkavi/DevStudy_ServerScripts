@@ -114,6 +114,7 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
     cond_pe = pd.concat([cond_pe.reset_index(drop=True), run_pes['PE'].reset_index(drop=True)], axis=1)
     cond_hpe = cond_pe.query('stimulus == 1 | stimulus == 2')
     cond_lpe = cond_pe.query('stimulus == 3 | stimulus == 4')
+    #Demeaning for parametric regressors
     cond_hpe['PE'] = cond_hpe['PE'].sub(cond_hpe['PE'].mean())
     cond_lpe['PE'] = cond_lpe['PE'].sub(cond_lpe['PE'].mean())
     cond_hpe = cond_hpe[['onset', 'duration', 'PE']]
