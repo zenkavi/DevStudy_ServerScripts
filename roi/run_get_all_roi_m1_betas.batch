@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J get_all_roi_m1_betas
-#SBATCH --array=1-16%16
+#SBATCH --array=1-8%8
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=03:00:00
 #SBATCH -n 1
