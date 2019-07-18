@@ -90,7 +90,8 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe, sub_evs, ev):
     cond_m4['duration'] = mean_rt
     cond_m4['modulation'] = 1
     cond_m4['trial_type'] = 'm4'
-    cond_ev = pd.concat([cur_events.reset_index(drop=True), run_evs['EV'].reset_index(drop=True)], axis=1)
+    cond_ev = cur_events.query('trial_type == "stim_presentation"')
+    cond_ev = pd.concat([cond_ev.reset_index(drop=True), run_evs['EV'].reset_index(drop=True)], axis=1)
     cond_m1_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 1')
     cond_m2_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 2')
     cond_m3_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 3')
