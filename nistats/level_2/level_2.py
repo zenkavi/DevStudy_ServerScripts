@@ -15,15 +15,21 @@ parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
 parser.add_argument("-pe", "--pred_err", help="use prediction error regressor", default= True)
 parser.add_argument("-hv", "--halves", help="compute means for separate halves", default= True)
+parser.add_argument("-ev", "--exp_val", help="use expected value regressor", default= False)
 args = parser.parse_args()
 subnum = args.subnum
 pe = args.pred_err
+ev = args.exp_val
 halves = args.halves
 data_loc = os.environ['DATA_LOC']
 
-in_path = "%s/derivatives/nistats/level_1/sub-%s/contrasts"%(data_loc,subnum)
+if ev:
+    in_path = "%s/derivatives/nistats/level_1_ev/sub-%s/contrasts"%(data_loc,subnum)
+    out_path = "%s/derivatives/nistats/level_2_ev/sub-%s"%(data_loc,subnum)
+else:
+    in_path = "%s/derivatives/nistats/level_1/sub-%s/contrasts"%(data_loc,subnum)
+    out_path = "%s/derivatives/nistats/level_2/sub-%s"%(data_loc,subnum)
 
-out_path = "%s/derivatives/nistats/level_2/sub-%s"%(data_loc,subnum)
 if not os.path.exists(out_path):
     os.mkdir(out_path)
 
@@ -34,9 +40,15 @@ if not os.path.exists(contrasts_path):
 sub_contrasts = os.listdir(in_path)
 
 if pe:
-    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'pe', 'junk', 'task_on', 'rt', 'var_sen', 'ev_sen']
+    if ev:
+        contrasts = ['m1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'pe', 'junk', 'task_on', 'rt', 'var_sen', 'ev_sen']
+    else:
+        contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'hpe', 'lpe', 'pe', 'junk', 'task_on', 'rt', 'var_sen', 'ev_sen']
 else:
-    contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain', 'var_sen', 'ev_sen']
+    if ev:
+        contrasts = ['m1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain', 'var_sen', 'ev_sen']
+    else:
+        contrasts = ['m1.', 'm2.', 'm3.', 'm4.', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt', 'gain.', 'loss.', 'junk', 'task_on', 'rt', 'gain-loss', 'loss-gain', 'var_sen', 'ev_sen']
 
 for c in contrasts:
     second_level_input = [os.path.join(in_path,x) for x in sub_contrasts if c in x]
