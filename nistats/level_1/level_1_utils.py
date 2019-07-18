@@ -210,13 +210,19 @@ def run_level1(subnum, out_path, pe, pe_path, ev, ev_path, beta):
 
     sub_events = [x for x in events_files if subnum in x]
 
-    all_pes = pd.read_csv(pe_path)
-    sub_pes = all_pes.query('sub_id == @subnum')
-    del all_pes
+    if pe:
+        all_pes = pd.read_csv(pe_path)
+        sub_pes = all_pes.query('sub_id == @subnum')
+        del all_pes
+    else:
+        sub_pe = None
 
-    all_evs = pd.read_csv(ev_path)
-    sub_evs = all_evs.query('sub_id == @subnum')
-    del all_evs
+    if ev:
+        all_evs = pd.read_csv(ev_path)
+        sub_evs = all_evs.query('sub_id == @subnum')
+        del all_evs
+    else:
+        sub_evs = None
 
     for run_events in sub_events:
 

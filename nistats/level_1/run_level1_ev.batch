@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH -J devstudy_level1_ev
+#SBATCH --array=1-74%74
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=03:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=10
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=6400M
+
+# Outputs ----------------------------------
+#SBATCH -o ../../.out/level1_ev-%A-%a.out
+#SBATCH -e ../../.err/level1_ev-%A-%a.err
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --mail-type=FAIL,END
+# ------------------------------------------
+
+source /oak/stanford/groups/russpold/users/zenkavi/DevStudy_ServerScripts/setup/dev_study_env.sh
+source activate fmri
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" level1_ev_task_list.sh )

@@ -12,4 +12,4 @@ data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
 pe_model = 'exp_exp'
 
-run_level1(subnum = subnum, out_path = "%s/derivatives/nistats/level_1/sub-%s"%(data_loc,subnum), pe=True, pe_path='%s/rpe_cors/pred_rpes/%s.csv'%(server_scripts, pe_model), beta=False)
+run_level1(subnum = subnum, out_path = "%s/derivatives/nistats/level_1/sub-%s"%(data_loc,subnum), pe=True, pe_path='%s/rpe_cors/pred_rpes/%s.csv'%(server_scripts, pe_model), beta=False, ev=False)
