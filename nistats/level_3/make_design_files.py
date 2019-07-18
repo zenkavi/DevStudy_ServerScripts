@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-ev", "--exp_val")
+args = parser.parse_args()
 ev = args.exp_val
 if ev == "True":
     ev = True
