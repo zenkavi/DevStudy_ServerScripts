@@ -7,20 +7,26 @@ import pandas as pd
 import pickle
 import re
 
-def make_contrasts(design_matrix, pe):
+def make_contrasts(design_matrix, pe, ev=False):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
 
     dictfilt = lambda x, y: dict([ (i,x[i]) for i in x if i in set(y) ])
-    wanted_keys = ['m1', 'm2', 'm3', 'm4','m1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
+    wanted_keys = ['m1', 'm2', 'm3', 'm4', 'm1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
     contrasts = dictfilt(contrasts, wanted_keys)
 
-    contrasts.update({'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-    'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt']),
-    'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-    'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))})
+    contrasts.update({'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])})
+
+    if ev:
+        contrasts.update({'task_on': (contrasts['m1_ev'] + contrasts['m2_ev'] + contrasts['m3_ev'] + contrasts['m4_ev']),
+        'var_sen': ((contrasts['m1_ev'] + contrasts['m2_ev']) - (contrasts['m3_ev'] + contrasts['m4_ev'])),
+        'ev_sen': ((contrasts['m2_ev'] + contrasts['m3_ev']) - (contrasts['m1_ev'] + contrasts['m4_ev']))})
+    else:
+        contrasts.update({'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+        'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+        'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))})
 
     if pe:
         if 'hpe' in contrasts.keys() and 'lpe' in contrasts.keys():
@@ -46,7 +52,7 @@ def add_transform(dataframe, columns=None, type=None):
 def stdize(X):
     return (X - np.nanmean(X, axis=0))/np.nanstd(X, axis=0)
 
-def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
+def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe, sub_evs, ev):
     #process events for GLM
     #events: 4 col events file for WHOLE RUN with onset, duration, trial_type, modulation
     #trial_type column:
@@ -83,6 +89,25 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
     cond_m4['duration'] = mean_rt
     cond_m4['modulation'] = 1
     cond_m4['trial_type'] = 'm4'
+    cond_ev = pd.concat([cur_events.reset_index(drop=True), run_evs['EV'].reset_index(drop=True)], axis=1)
+    cond_m1_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 1')
+    cond_m2_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 2')
+    cond_m3_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 3')
+    cond_m4_ev = cond_ev.query('trial_type == "stim_presentation" & stimulus == 4')
+    #Demeaning for parametric regressors
+    cond_m1_ev['EV'] = cond_m1_ev['EV'].sub(cond_m1_ev['EV'].mean())
+    cond_m2_ev['EV'] = cond_m2_ev['EV'].sub(cond_m2_ev['EV'].mean())
+    cond_m3_ev['EV'] = cond_m3_ev['EV'].sub(cond_m3_ev['EV'].mean())
+    cond_m4_ev['EV'] = cond_m4_ev['EV'].sub(cond_m4_ev['EV'].mean())
+    cond_m1_ev = cond_m1_ev[['onset', 'duration', 'EV']]
+    cond_m1_ev = cond_m1_ev.rename(index=str, columns={"EV": "modulation"})
+    cond_m1_ev['trial_type'] = 'm1_ev'
+    cond_m2_ev = cond_m2_ev.rename(index=str, columns={"EV": "modulation"})
+    cond_m2_ev['trial_type'] = 'm2_ev'
+    cond_m3_ev = cond_m3_ev.rename(index=str, columns={"EV": "modulation"})
+    cond_m3_ev['trial_type'] = 'm3_ev'
+    cond_m4_ev = cond_m4_ev.rename(index=str, columns={"EV": "modulation"})
+    cond_m4_ev['trial_type'] = 'm4_ev'
     cond_m1_rt = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset', 'rt_shift']]
     cond_m1_rt['duration'] = mean_rt
     cond_m1_rt['modulation'] = cond_m1_rt['rt_shift']
@@ -128,9 +153,15 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe):
     cond_junk['trial_type'] = "junk"
 
     if pe:
-        formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_hpe, cond_lpe, cond_junk], ignore_index=True)
+        if ev:
+            formatted_events = pd.concat([cond_m1_ev, cond_m2_ev, cond_m3_ev, cond_m4_ev, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_hpe, cond_lpe, cond_junk], ignore_index=True)
+        else:
+            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_hpe, cond_lpe, cond_junk], ignore_index=True)
     else:
-        formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
+        if ev:
+            formatted_events = pd.concat([cond_m1_ev, cond_m2_ev, cond_m3_ev, cond_m4_ev, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
+        else:
+            formatted_events = pd.concat([cond_m1, cond_m2, cond_m3, cond_m4, cond_m1_rt, cond_m2_rt, cond_m3_rt, cond_m4_rt, cond_gain, cond_loss, cond_junk], ignore_index=True)
 
     formatted_events = formatted_events.sort_values(by='onset')
 
@@ -154,7 +185,7 @@ def get_confounds(cur_confounds):
     formatted_confounds['scrub'] = np.where(formatted_confounds.framewise_displacement>0.5,1,0)
     return formatted_confounds
 
-def run_level1(subnum, out_path, pe, pe_path, beta):
+def run_level1(subnum, out_path, pe, pe_path, ev, ev_path, beta):
 
     data_loc = os.environ['DATA_LOC']
     events_files = glob.glob('%s/sub-*/func/sub-*_task-machinegame_run-*_events.tsv'%(data_loc))
@@ -181,8 +212,11 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
 
     all_pes = pd.read_csv(pe_path)
     sub_pes = all_pes.query('sub_id == @subnum')
-
     del all_pes
+
+    all_evs = pd.read_csv(ev_path)
+    sub_evs = all_evs.query('sub_id == @subnum')
+    del all_evs
 
     for run_events in sub_events:
 
@@ -201,7 +235,7 @@ def run_level1(subnum, out_path, pe, pe_path, beta):
 
             #read in events.tsv for that run
             cur_events = pd.read_csv(run_events, sep = '\t')
-            formatted_events = get_conditions(cur_events, runnum, mean_rt, sub_pes, pe)
+            formatted_events = get_conditions(cur_events, runnum, mean_rt, sub_pes, pe, sub_evs, ev)
 
             #process confounds
             #['X','Y','Z','RotX','RotY','RotY','<-firsttemporalderivative','stdDVARs','FD','scrub']
