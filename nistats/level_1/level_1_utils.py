@@ -7,7 +7,7 @@ import pandas as pd
 import pickle
 import re
 
-def make_contrasts(design_matrix, pe, ev=False):
+def make_contrasts(design_matrix, pe, ev):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
@@ -288,7 +288,7 @@ def run_level1(subnum, out_path, pe, pe_path, ev, ev_path, beta):
             print("***********************************************")
             print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
             print("***********************************************")
-            contrasts = make_contrasts(design_matrix, pe)
+            contrasts = make_contrasts(design_matrix, pe, ev)
             for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
                 z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
                 nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
