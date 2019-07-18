@@ -3,16 +3,28 @@ import glob
 import numpy as np
 import pandas as pd
 import os
+from argparse import ArgumentParser
 
-def make_design_files(mnum):
+parser = ArgumentParser()
+parser.add_argument("-ev", "--exp_val")
+ev = args.exp_val
+if ev == "True":
+    ev = True
+else:
+    ev = False
+
+def make_design_files(mnum, ev):
 
     data_loc = os.environ['DATA_LOC']
     server_scripts = os.environ['SERVER_SCRIPTS']
-    mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc, mnum)
+    if ev:
+        mnum_path = "%s/derivatives/nistats/level_3_ev/%s"%(data_loc, mnum)
+        l2_in_path = "%s/derivatives/nistats/level_2_ev/sub-*/contrasts"%(data_loc)
+    else:
+        mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc, mnum)
+        l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
     if not os.path.exists(mnum_path):
         os.makedirs(mnum_path)
-
-    l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
     level2_images = glob.glob('%s/sub-*_m1.nii.gz'%(l2_in_path))
     level2_images.sort()
     subs = [os.path.basename(x).split("_")[0] for x in level2_images]
@@ -104,7 +116,10 @@ def make_design_files(mnum):
     #model4: main effects and interaction
     #model4_c: group maps for each condition
     if mnum in ["model4", "model4_c"]:
-        regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
+        if ev:
+            regs = ['m1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
+        else:
+            regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
         for reg in regs:
             reg_path = "%s/%s"%(mnum_path, reg)
             if not os.path.exists(reg_path):
@@ -181,7 +196,10 @@ def make_design_files(mnum):
 
     #model4_h: first vs second half group maps
     if mnum == "model4_h":
-        regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
+        if ev:
+            regs = ['m1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
+        else:
+            regs = ['m1', 'm2', 'm3', 'm4', 'hpe', 'lpe', 'pe', 'task_on', 'rt', 'var_sen', 'ev_sen']
         for reg in regs:
             reg_path = "%s/%s"%(mnum_path, reg)
             if not os.path.exists(reg_path):
@@ -243,4 +261,4 @@ def make_design_files(mnum):
 
 mnums = ["model2", "model3", "model3_g", "model4", "model4_h", "model4_c"]
 for mnum in mnums:
-    make_design_files(mnum)
+    make_design_files(mnum, ev)

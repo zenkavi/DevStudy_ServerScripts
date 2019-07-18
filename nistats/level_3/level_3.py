@@ -24,6 +24,7 @@ parser.add_argument("-c", "--c_thresh", help="cluster_threshold", default=3)
 parser.add_argument("-np", "--num_perm", help="number of permutations", default=1000)
 parser.add_argument("-vs", "--var_smooth", help="variance smoothing", default=5)
 parser.add_argument("-s", "--sign", help="calculate p values for positive t's")
+parser.add_argument("-ev", "--exp_val")
 args = parser.parse_args()
 mnum = args.mnum
 reg = args.reg
@@ -34,11 +35,20 @@ c_thresh = int(args.c_thresh)
 num_perm = int(args.num_perm)
 var_smooth = int(args.var_smooth)
 sign = args.sign
+ev = args.exp_val
+if ev == "True":
+    ev = True
+else:
+    ev = False
 
 data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
-l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
-mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc,mnum)
+if ev:
+    l2_in_path = "%s/derivatives/nistats/level_2_ev/sub-*/contrasts"%(data_loc)
+    mnum_path = "%s/derivatives/nistats/level_3_ev/%s"%(data_loc,mnum)
+else:
+    l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
+    mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc,mnum)
 out_path = "%s/%s"%(mnum_path,reg)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
