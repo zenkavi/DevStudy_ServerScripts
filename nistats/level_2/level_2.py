@@ -1,3 +1,4 @@
+#!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 import glob
 import math
 import nibabel as nib
@@ -20,6 +21,8 @@ args = parser.parse_args()
 subnum = args.subnum
 pe = args.pred_err
 ev = args.exp_val
+if ev == "True":
+    ev = True
 halves = args.halves
 data_loc = os.environ['DATA_LOC']
 
