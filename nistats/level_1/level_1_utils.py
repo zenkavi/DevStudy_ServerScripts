@@ -72,6 +72,7 @@ def get_conditions(cur_events, runnum, mean_rt, sub_pes, pe, sub_evs, ev):
 
     max_X = int(runnum)*30
     run_pes = sub_pes.query('X<@max_X')
+    run_evs = sub_evs.query('X<@max_X')
 
     cond_m1 = cur_events.query('trial_type == "stim_presentation" & stimulus == 1')[['onset']]
     cond_m1['duration'] = mean_rt
