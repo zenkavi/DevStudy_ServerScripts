@@ -4,6 +4,7 @@ import glob
 import os
 import sys
 import pandas as pd
+import nibabel as nib
 import numpy as np
 import re
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
