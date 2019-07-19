@@ -21,12 +21,13 @@ def make_design_files(mnum, ev):
     if ev:
         mnum_path = "%s/derivatives/nistats/level_3_ev/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/nistats/level_2_ev/sub-*/contrasts"%(data_loc)
+        level2_images = glob.glob('%s/sub-*_m1_ev.nii.gz'%(l2_in_path))
     else:
         mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
+        level2_images = glob.glob('%s/sub-*_m1.nii.gz'%(l2_in_path))
     if not os.path.exists(mnum_path):
         os.makedirs(mnum_path)
-    level2_images = glob.glob('%s/sub-*_m1.nii.gz'%(l2_in_path))
     level2_images.sort()
     subs = [os.path.basename(x).split("_")[0] for x in level2_images]
 
