@@ -4,8 +4,6 @@ import sys
 import nibabel as nib
 from nilearn import input_data
 import numpy as np
-sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
-from level_1_utils import get_confounds
 
 def get_seed_to_vox_corrs(func_file, confounds, seed):
 

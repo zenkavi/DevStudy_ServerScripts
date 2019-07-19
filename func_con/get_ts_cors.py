@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import re
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
+from level_1_utils import get_confounds
 from get_seed_to_vox_corrs import get_seed_to_vox_corrs
 
 #Usage = ./get_ts_cors.py -s 100003 -c "l_vstr"
