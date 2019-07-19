@@ -42,11 +42,11 @@ def make_design_files(mnum, ev):
         design_matrix = age_info[['kid', 'teen', 'adult']]
         #design_matrix['intercept'] = [1] * len(level2_images)
         deshdr="""/NumWaves	3
-/NumPoints	74
+/NumPoints	%s
 /PPheights		1.000000e+00	1.000000e+00	1.000000e+00
 
 /Matrix
-        """
+        """%(str(design_matrix.shape[0]))
         conhdr = """/ContrastName1	kids
 /ContrastName2	teens
 /ContrastName3	adults
@@ -75,11 +75,11 @@ def make_design_files(mnum, ev):
         design_matrix = learner_info[['learner', 'non_learner']]
         #design_matrix['intercept'] = [1] * len(level2_images)
         deshdr="""/NumWaves	2
-/NumPoints	74
+/NumPoints	%s
 /PPheights		1.000000e+00	1.000000e+00
 
 /Matrix
-        """
+        """%(str(design_matrix.shape[0]))
         conhdr = """/ContrastName1	learner>non_learner
 /ContrastName2	learner<non_learner
 /NumWaves	2
@@ -97,11 +97,11 @@ def make_design_files(mnum, ev):
         learner_info = learner_info[learner_info.Sub_id.isin(subs)].reset_index(drop=True)
         design_matrix = learner_info[['learner', 'non_learner']]
         deshdr="""/NumWaves	2
-/NumPoints	74
+/NumPoints	%s
 /PPheights		1.000000e+00	1.000000e+00
 
 /Matrix
-        """
+        """%(str(design_matrix.shape[0]))
         conhdr = """/ContrastName1	learner
 /ContrastName2	non_learner
 /NumWaves	2
