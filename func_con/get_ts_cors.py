@@ -25,19 +25,19 @@ if not os.path.exists(out_path):
 
 if seed_name == "l_vstr":
     seed_coords = [(-12, 12, -6)]
-if seen_name == "r_vstr":
+if seed_name == "r_vstr":
     seed_coords = [(12, 10, -6)]
-if seen_name == "vmpfc":
+if seed_name == "vmpfc":
     seed_coords = [(2, 46, -8)]
-if seen_name == "l_ains":
+if seed_name == "l_ains":
     seed_coords = [(-30, 22, -6)]
-if seen_name == "r_ains":
+if seed_name == "r_ains":
     seed_coords = [(32, 20, -6)]
-if seen_name == "pcc":
+if seed_name == "pcc":
     seed_coords = [(-4, -30, 36)]
-if seen_name == "acc":
+if seed_name == "acc":
     seed_coords = [(-2, 28, 28)]
-if seen_name == "pre_sma":
+if seed_name == "pre_sma":
     seed_coords = [(-2, 16, 46)]
 
 func_files = glob.glob('%s/derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' %(data_loc, subnum, subnum))
@@ -48,8 +48,14 @@ for func_filename in func_files:
     seed_to_vox_corr_img = get_seed_to_vox_corrs(func_file=func_filename, confounds = formatted_confounds, seed=seed_coords)
     #save each run image
     nib.save(seed_to_vox_corr_img, '%s/sub-%s_run-%s_%s_cor_img.nii.gz'%(out_path, subnum, runnum, seed_name))
+    print("***********************************************")
+    print("Done saving cor image for sub-%s run-%s for %s"%(subnum, runnum, seed_name))
+    print("***********************************************")
 
 #make average subject image
 run_cor_imgs = glob.glob('%s/sub-%s_run-*_%s_cor_img.nii.gz'%(out_path, subnum, seed_name))
 mean_cor_img = mean_img(run_cor_imgs)
 nib.save(mean_cor_img, '%s/sub-%s_run-ave_%s_cor_img.nii.gz'%(out_path, subnum, seed_name))
+print("***********************************************")
+print("Done saving average cor image for sub-%s for %s"%(subnum, seed_name))
+print("***********************************************")
