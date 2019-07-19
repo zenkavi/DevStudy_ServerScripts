@@ -30,6 +30,7 @@ def make_design_files(mnum, ev):
         os.makedirs(mnum_path)
     level2_images.sort()
     subs = [os.path.basename(x).split("_")[0] for x in level2_images]
+    subs.sort()
 
     #model2: age group differences
     #Design and contrast matrices based on: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM#F-Tests_.28Inter-Group_differences.2C_no_repeated_measures.29
