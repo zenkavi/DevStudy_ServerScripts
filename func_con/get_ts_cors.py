@@ -42,6 +42,7 @@ if seed_name == "pre_sma":
     seed_coords = [(-2, 16, 46)]
 
 func_files = glob.glob('%s/derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz' %(data_loc, subnum, subnum))
+func_files.sort()
 
 for func_filename in func_files:
     runnum = re.findall('\d+', os.path.basename(func_filename))[1]
