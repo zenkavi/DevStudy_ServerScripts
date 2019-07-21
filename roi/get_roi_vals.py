@@ -1,6 +1,6 @@
 import nibabel as nib
 import numpy as np
-
+import nilearn
 def get_roi_vals(mask, img):
     #mask and image can be paths or niftis
     #Load nifti's if they are strings
