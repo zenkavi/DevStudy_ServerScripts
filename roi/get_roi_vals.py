@@ -12,7 +12,7 @@ def get_roi_vals(mask, img):
     #resample mask to image dimensions if they don't match
     img_data = img.get_fdata()
     mask_data = mask.get_fdata()
-    if img_data.shape != mask_data.shape:
+    if img_data.shape != mask_data.shape[:3]:
         print("Image dimensions: %s"%(img_data.shape,))
         print("Mask dimensions: %s"%(mask_data.shape,))
         print("Resampling mask ...")
