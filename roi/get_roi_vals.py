@@ -1,6 +1,7 @@
 import nibabel as nib
 import numpy as np
 import nilearn
+
 def get_roi_vals(mask, img):
     #mask and image can be paths or niftis
     #Load nifti's if they are strings
@@ -12,7 +13,11 @@ def get_roi_vals(mask, img):
     #resample mask to image dimensions if they don't match
     img_data = img.get_fdata()
     mask_data = mask.get_fdata()
-    if img_data.shape != mask_data.shape[:3]:
+
+    if len(img_data.shape) < 3:
+        img_data = img_data[0]
+
+    if img_data.shape != mask_data.shape:
         print("Image dimensions: %s"%(img_data.shape,))
         print("Mask dimensions: %s"%(mask_data.shape,))
         print("Resampling mask ...")
