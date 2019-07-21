@@ -15,7 +15,7 @@ def get_roi_vals(mask, img):
     mask_data = mask.get_fdata()
 
     if len(img_data.shape) > 3:
-        img_data = img_data[0]
+        arr.reshape(mask_data.shape)
 
     if img_data.shape != mask_data.shape:
         print("Image dimensions: %s"%(img_data.shape,))
