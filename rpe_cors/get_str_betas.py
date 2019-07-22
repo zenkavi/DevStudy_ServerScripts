@@ -23,7 +23,7 @@ if models is None:
     models = [os.path.splitext(os.path.basename(x))[0] for x in models]
     models.sort()
 
-regions = ['l_vstr', 'r_vstr']
+regions = ['l_vstr', 'r_vstr', 'r_dstr']
 
 all_betas = pd.DataFrame()
 

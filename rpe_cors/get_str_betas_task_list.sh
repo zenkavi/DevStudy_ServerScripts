@@ -1,0 +1,12 @@
+./get_str_betas.py -m Fit_alpha-beta-exp_neg-exp_pos_Fix_lossave_
+./get_str_betas.py -m Fit_alpha-beta-lossave_Fix_exp_
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta_Fix_exp-lossave_
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta-lossave_Fix_exp_
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta-exp_neg-exp_pos-lossave_Fix_
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta-exp_neg-exp_pos_Fix_lossave_
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta-exp_Fix_lossave_
+./get_str_betas.py -m exp_exp
+./get_str_betas.py -m exp_alpha
+./get_str_betas.py -m Fit_alpha-beta-exp_neg-exp_pos-lossave_Fix_
+./get_str_betas.py -m alpha_alpha
+./get_str_betas.py -m Fit_alpha_neg-alpha_pos-beta-exp-lossave_Fix_
