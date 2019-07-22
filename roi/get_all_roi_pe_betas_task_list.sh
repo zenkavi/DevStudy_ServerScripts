@@ -14,3 +14,5 @@
 ./get_all_roi_vals.py -l pre_sma -r lpe -v beta
 ./get_all_roi_vals.py -l r_ains -r lpe -v beta
 ./get_all_roi_vals.py -l vmpfc -r lpe -v beta
+./get_all_roi_vals.py -l r_dstr -r hpe -v beta
+./get_all_roi_vals.py -l r_dstr -r lpe -v beta
