@@ -6,6 +6,9 @@ import os
 import pandas as pd
 import pickle
 import re
+import sys
+sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'], 'func_con'))
+from seed2vox.get_seed_to_vox_corrs import get_seed_timeseries
 
 def make_contrasts(design_matrix, pe, ev):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
@@ -303,3 +306,68 @@ def run_level1(subnum, out_path, pe, pe_path, ev, ev_path, beta):
             print("***********************************************")
             print("No pre-processed BOLD found for sub-%s run-%s"%(subnum, runnum))
             print("***********************************************")
+
+def run_ppi_level1(subnum, out_path, beta, seed_name, task_a, task_b):
+
+    if seed_name == "l_vstr":
+        seed_coords = [(-12, 12, -6)]
+    if seed_name == "r_vstr":
+        seed_coords = [(12, 10, -6)]
+    if seed_name == "vmpfc":
+        seed_coords = [(2, 46, -8)]
+    if seed_name == "l_ains":
+        seed_coords = [(-30, 22, -6)]
+    if seed_name == "r_ains":
+        seed_coords = [(32, 20, -6)]
+    if seed_name == "pcc":
+        seed_coords = [(-4, -30, 36)]
+    if seed_name == "acc":
+        seed_coords = [(-2, 28, 28)]
+    if seed_name == "pre_sma":
+        seed_coords = [(-2, 16, 46)]
+
+    data_loc = os.environ['DATA_LOC']
+
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+
+    contrasts_path = "%s/contrasts"%(out_path)
+    if not os.path.exists(contrasts_path):
+        os.makedirs(contrasts_path)
+
+    run_files = glob.glob(os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"))
+    sub_runs = [x for x in run_files if subnum in x]
+
+    for cur_run in sub_runs:
+
+        runnum = re.findall('\d+', os.path.basename(cur_run))[1]
+
+        #read in preproc_bold for that run
+        cur_img = nib.load(cur_run)
+        cur_img_tr = cur_img.header['pixdim'][4]
+
+        fmri_glm = FirstLevelModel(t_r=cur_img_tr,
+                               noise_model='ar1',
+                               standardize=False,
+                               hrf_model='spm + derivative',
+                               drift_model='cosine',
+                               smoothing_fwhm=5,
+                               mask='%s/derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
+
+        level_1_design = pd.read_csv(...)
+        formatted_confounds = get_confounds(pd.read_csv(os.path.join(data_loc,'derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv'%(subnum, subnum, runnum)), sep='\\t'))
+        seed_ts = get_seed_timeseries(func_file=cur_run, confounds=formatted_confounds, seed=seed_coords)
+        ppi_design = level_1_design
+        ppi_design['seed'] = seed_ts
+        #GPPI 4 regressors:
+        #1 for M1 = 0's or 3's
+        #1 for all other conditions = 0's or 1's
+        #1 for task_a * seed_ts
+        #1 for task_b * seed_ts
+        ppi_design['ppi_reg'] = ...
+
+        #fit glm to run image using run events
+        print("***********************************************")
+        print("Running PPI for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
+        fmri_glm = fmri_glm.fit(fmri_img, design = ppi_design)
