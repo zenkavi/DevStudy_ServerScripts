@@ -354,7 +354,7 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, task_a, task_b):
                                smoothing_fwhm=5,
                                mask='%s/derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz'%(data_loc, subnum, subnum, runnum))
 
-        level_1_design = pd.read_csv(...)
+        level_1_design = pd.read_csv('%s/derivatives/nistats/level_1/sub-%s/sub-%s_run-%s_level1_pe_design_matrix.csv'%(data_loc, subnum, subnum, runnum))
         formatted_confounds = get_confounds(pd.read_csv(os.path.join(data_loc,'derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv'%(subnum, subnum, runnum)), sep='\\t'))
         seed_ts = get_seed_timeseries(func_file=cur_run, confounds=formatted_confounds, seed=seed_coords)
         ppi_design = level_1_design
@@ -362,10 +362,15 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, task_a, task_b):
         #GPPI 4 regressors:
         #1 for M1 = 0's or 3's
         #1 for all other conditions = 0's or 1's
-        #1 for task_a * seed_ts
-        #1 for task_b * seed_ts
-        ppi_design['ppi_reg'] = ...
-
+        #1 for convolved task_a * seed_ts
+        #1 for convolved task_b * seed_ts
+        # CONTRAST ppi_1 with ppi_2
+        if len(task_a) == len(task_b):
+            ppi_design['ppi_1'] = ppi_design[task_a]*ppi_design['seed']
+            ppi_design['ppi_2'] = ppi_design[task_b]*ppi_design['seed']
+        else:
+            ppi_design['ppi_1'] = ppi_design[task_a]*ppi_design['seed']*len(task_b)
+            ppi_design['ppi_2'] = ppi_design[task_b]*ppi_design['seed']*len(task_a)
         #fit glm to run image using run events
         print("***********************************************")
         print("Running PPI for sub-%s run-%s"%(subnum, runnum))
