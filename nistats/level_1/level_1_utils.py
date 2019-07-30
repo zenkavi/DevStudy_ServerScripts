@@ -10,30 +10,36 @@ import sys
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'], 'func_con'))
 from seed2vox.get_seed_to_vox_corrs import get_seed_timeseries
 
-def make_contrasts(design_matrix, pe, ev):
+def make_contrasts(design_matrix, pe, ev, ppi=False):
         # first generate canonical contrasts (i.e. regressors vs. baseline)
     contrast_matrix = np.eye(design_matrix.shape[1])
     contrasts = dict([(column, contrast_matrix[i])
                       for i, column in enumerate(design_matrix.columns)])
 
     dictfilt = lambda x, y: dict([ (i,x[i]) for i in x if i in set(y) ])
-    wanted_keys = ['m1', 'm2', 'm3', 'm4', 'm1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
-    contrasts = dictfilt(contrasts, wanted_keys)
-
-    contrasts.update({'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])})
-
-    if ev:
-        contrasts.update({'task_on': (contrasts['m1_ev'] + contrasts['m2_ev'] + contrasts['m3_ev'] + contrasts['m4_ev']),
-        'var_sen': ((contrasts['m1_ev'] + contrasts['m2_ev']) - (contrasts['m3_ev'] + contrasts['m4_ev'])),
-        'ev_sen': ((contrasts['m2_ev'] + contrasts['m3_ev']) - (contrasts['m1_ev'] + contrasts['m4_ev']))})
+    if ppi:
+        wanted_keys =  [col for col in design_matrix.columns if 'ppi' in col]
+        contrasts = dictfilt(contrasts, wanted_keys)
+        contrasts.update({})
     else:
-        contrasts.update({'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
-        'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
-        'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))})
+        wanted_keys = ['m1', 'm2', 'm3', 'm4', 'm1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
+        contrasts = dictfilt(contrasts, wanted_keys)
 
-    if pe:
-        if 'hpe' in contrasts.keys() and 'lpe' in contrasts.keys():
-            contrasts.update({'pe': contrasts['hpe'] +  contrasts['lpe']})
+        contrasts.update({'rt': (contrasts['m1_rt'] + contrasts['m2_rt'] + contrasts['m3_rt'] + contrasts['m4_rt'])})
+
+        if ev:
+            contrasts.update({'task_on': (contrasts['m1_ev'] + contrasts['m2_ev'] + contrasts['m3_ev'] + contrasts['m4_ev']),
+            'var_sen': ((contrasts['m1_ev'] + contrasts['m2_ev']) - (contrasts['m3_ev'] + contrasts['m4_ev'])),
+            'ev_sen': ((contrasts['m2_ev'] + contrasts['m3_ev']) - (contrasts['m1_ev'] + contrasts['m4_ev']))})
+        else:
+            contrasts.update({'task_on': (contrasts['m1'] + contrasts['m2'] + contrasts['m3'] + contrasts['m4']),
+            'var_sen': ((contrasts['m1'] + contrasts['m2']) - (contrasts['m3'] + contrasts['m4'])),
+            'ev_sen': ((contrasts['m2'] + contrasts['m3']) - (contrasts['m1'] + contrasts['m4']))})
+
+        if pe:
+            if 'hpe' in contrasts.keys() and 'lpe' in contrasts.keys():
+                contrasts.update({'pe': contrasts['hpe'] +  contrasts['lpe']})
+
     return contrasts
 
 def add_transform(dataframe, columns=None, type=None):
@@ -307,7 +313,7 @@ def run_level1(subnum, out_path, pe, pe_path, ev, ev_path, beta):
             print("No pre-processed BOLD found for sub-%s run-%s"%(subnum, runnum))
             print("***********************************************")
 
-def run_ppi_level1(subnum, out_path, beta, seed_name, task_a, task_b):
+def run_ppi_level1(subnum, out_path, beta, seed_name, tasks):
 
     if seed_name == "l_vstr":
         seed_coords = [(-12, 12, -6)]
@@ -357,20 +363,14 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, task_a, task_b):
         level_1_design = pd.read_csv('%s/derivatives/nistats/level_1/sub-%s/sub-%s_run-%s_level1_pe_design_matrix.csv'%(data_loc, subnum, subnum, runnum))
         formatted_confounds = get_confounds(pd.read_csv(os.path.join(data_loc,'derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv'%(subnum, subnum, runnum)), sep='\\t'))
         seed_ts = get_seed_timeseries(func_file=cur_run, confounds=formatted_confounds, seed=seed_coords)
-        ppi_design = level_1_design
+        ppi_design = level_1_design.copy()
         ppi_design['seed'] = seed_ts
-        #GPPI 4 regressors:
-        #1 for M1 = 0's or 3's
-        #1 for all other conditions = 0's or 1's
-        #1 for convolved task_a * seed_ts
-        #1 for convolved task_b * seed_ts
-        # CONTRAST ppi_1 with ppi_2
-        if len(task_a) == len(task_b):
-            ppi_design['ppi_1'] = ppi_design[task_a]*ppi_design['seed']
-            ppi_design['ppi_2'] = ppi_design[task_b]*ppi_design['seed']
-        else:
-            ppi_design['ppi_1'] = ppi_design[task_a]*ppi_design['seed']*len(task_b)
-            ppi_design['ppi_2'] = ppi_design[task_b]*ppi_design['seed']*len(task_a)
+
+        for cur_task in tasks:
+            cur_task = [cur_task]
+            cur_task.append('seed')
+            ppi_design['ppi_%s'%(cur_task[0])] = ppi_design[cur_task].apply(np.prod, axis=1)
+
         #fit glm to run image using run events
         print("***********************************************")
         print("Running PPI for sub-%s run-%s"%(subnum, runnum))

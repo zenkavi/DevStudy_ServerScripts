@@ -14,4 +14,4 @@ data_loc = os.environ['DATA_LOC']
 server_scripts = os.environ['SERVER_SCRIPTS']
 pe_model = 'exp_exp'
 
-run_ppi_level1(subnum = subnum, out_path = "%s/derivatives/func_con/ppi/level_1/sub-%s"%(data_loc,subnum), beta=True, seed_ts_path=..., task_a = ['m1', 'm2'], task_b = ['m3', 'm4'])
+run_ppi_level1(subnum = subnum, out_path = "%s/derivatives/func_con/ppi/level_1/sub-%s"%(data_loc,subnum), beta=True, seed_name="l_vstr", tasks = ['m1', 'm2','m3', 'm4'])
