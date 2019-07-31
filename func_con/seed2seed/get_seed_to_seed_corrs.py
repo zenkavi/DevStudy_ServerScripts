@@ -9,6 +9,7 @@ from level_1_utils import get_confounds
 from nilearn.connectome import ConnectivityMeasure
 from nilearn.input_data import NiftiSpheresMasker
 from argparse import ArgumentParser
+import glob
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
@@ -65,5 +66,9 @@ for func_filename in func_files:
     outpath = ('%s/derivatives/func_con/seed2seed/sub-%s/'%(data_loc, subnum))
     if not os.path.exists(outpath):
         os.makedirs(outpath)
+
+    print("***********************************************")
+    print("Saving partial correlation matrix for sub-%s run-%s"%(subnum, runnum))
+    print("***********************************************")
 
     flat_partial_correlation_matrix.to_csv('%s/sub-%s_run-%s_partial-correlation-matrix.csv'%(outpath, subnum, runnum))
