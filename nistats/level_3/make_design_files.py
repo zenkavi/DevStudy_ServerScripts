@@ -31,7 +31,7 @@ def make_design_files(mnum, ev, ppi):
     elif ppi:
         mnum_path = "%s/derivatives/func_con/ppi/level_3/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/func_con/ppi/level_2/sub-*/contrasts"%(data_loc)
-        level2_images = glob.glob('%s/sub-*_ppi_m1.nii.gz'%(l2_in_path))
+        level2_images = glob.glob('%s/sub-*_ppi_m1_con.nii.gz'%(l2_in_path))
     else:
         mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
