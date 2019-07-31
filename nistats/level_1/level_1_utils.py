@@ -20,7 +20,11 @@ def make_contrasts(design_matrix, pe, ev, ppi=False):
     if ppi:
         wanted_keys =  [col for col in design_matrix.columns if 'ppi' in col]
         contrasts = dictfilt(contrasts, wanted_keys)
-        contrasts.update({})
+        contrasts.update({'ppi_m1_con': (contrasts['ppi_m1']*3 - (contrasts['ppi_m2']+contrasts['ppi_m3']+contrasts['ppi_m4'])),
+                'ppi_m2_con': (contrasts['ppi_m2']*3 - (contrasts['ppi_m1']+contrasts['ppi_m3']+contrasts['ppi_m4'])),
+                'ppi_m3_con': (contrasts['ppi_m3']*3 - (contrasts['ppi_m2']+contrasts['ppi_m1']+contrasts['ppi_m4'])),
+                'ppi_m4_con': (contrasts['ppi_m4']*3 - (contrasts['ppi_m2']+contrasts['ppi_m3']+contrasts['ppi_m1']))})
+
     else:
         wanted_keys = ['m1', 'm2', 'm3', 'm4', 'm1_ev', 'm2_ev', 'm3_ev', 'm4_ev', 'm1_rt', 'm2_rt', 'm3_rt', 'm4_rt','hpe', 'lpe','gain', 'loss','junk']
         contrasts = dictfilt(contrasts, wanted_keys)
@@ -375,4 +379,18 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, tasks):
         print("***********************************************")
         print("Running PPI for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-        fmri_glm = fmri_glm.fit(fmri_img, design = ppi_design)
+        fmri_glm = fmri_glm.fit(cur_run, design_matrices = ppi_design)
+
+        print("***********************************************")
+        print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
+        contrasts = make_contrasts(design_matrix, pe=False, ev=False, ppi=True)
+        for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
+            z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
+            nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
+            if beta:
+                b_map = fmri_glm.compute_contrast(contrast_val, output_type='effect_size')
+                nib.save(b_map, '%s/sub-%s_run-%s_%s_betas.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
+        print("***********************************************")
+        print("Done saving contrasts for sub-%s run-%s"%(subnum, runnum))
+        print("***********************************************")
