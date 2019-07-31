@@ -22,11 +22,11 @@ in_path = "%s/derivatives/func_con/ppi/level_1/sub-%s/contrasts"%(data_loc,subnu
 out_path = "%s/derivatives/func_con/ppi/level_2/sub-%s"%(data_loc,subnum)
 
 if not os.path.exists(out_path):
-    os.mkdirs(out_path)
+    os.makedirs(out_path)
 
 contrasts_path = "%s/contrasts"%(out_path)
 if not os.path.exists(contrasts_path):
-    os.mkdirs(contrasts_path)
+    os.makedirs(contrasts_path)
 
 sub_contrasts = os.listdir(in_path)
 
