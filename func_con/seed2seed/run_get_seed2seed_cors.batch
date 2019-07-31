@@ -10,8 +10,8 @@
 #SBATCH --mem-per-cpu=6400M
 
 # Outputs ----------------------------------
-#SBATCH -o ../.out/get_seed2seed_cors-%A-%a.out
-#SBATCH -e ../.err/get_seed2seed_cors-%A-%a.err
+#SBATCH -o ../../.out/get_seed2seed_cors-%A-%a.out
+#SBATCH -e ../../.err/get_seed2seed_cors-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
 # ------------------------------------------
