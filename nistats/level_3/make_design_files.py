@@ -7,14 +7,20 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-ev", "--exp_val")
+parser.add_argument("-ppi", "--ppi")
 args = parser.parse_args()
 ev = args.exp_val
+ppi = args.ppi
 if ev == "True":
     ev = True
 else:
     ev = False
+if ppi == "True":
+    ppi = True
+else:
+    ppi = False
 
-def make_design_files(mnum, ev):
+def make_design_files(mnum, ev, ppi):
 
     data_loc = os.environ['DATA_LOC']
     server_scripts = os.environ['SERVER_SCRIPTS']
@@ -22,10 +28,15 @@ def make_design_files(mnum, ev):
         mnum_path = "%s/derivatives/nistats/level_3_ev/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/nistats/level_2_ev/sub-*/contrasts"%(data_loc)
         level2_images = glob.glob('%s/sub-*_m1_ev.nii.gz'%(l2_in_path))
+    elif ppi:
+        mnum_path = "%s/derivatives/func_con/ppi/level_3/%s"%(data_loc, mnum)
+        l2_in_path = "%s/derivatives/func_con/ppi/level_2/sub-*/contrasts"%(data_loc)
+        level2_images = glob.glob('%s/sub-*_ppi_m1.nii.gz'%(l2_in_path))
     else:
         mnum_path = "%s/derivatives/nistats/level_3/%s"%(data_loc, mnum)
         l2_in_path = "%s/derivatives/nistats/level_2/sub-*/contrasts"%(data_loc)
         level2_images = glob.glob('%s/sub-*_m1.nii.gz'%(l2_in_path))
+
     if not os.path.exists(mnum_path):
         os.makedirs(mnum_path)
     level2_images.sort()
@@ -264,4 +275,4 @@ def make_design_files(mnum, ev):
 
 mnums = ["model2", "model3", "model3_g", "model4", "model4_h", "model4_c"]
 for mnum in mnums:
-    make_design_files(mnum, ev)
+    make_design_files(mnum, ev, ppi)
