@@ -10,6 +10,7 @@ from nilearn.connectome import ConnectivityMeasure
 from nilearn.input_data import NiftiSpheresMasker
 from argparse import ArgumentParser
 import glob
+import re
 
 parser = ArgumentParser()
 parser.add_argument("-s", "--subnum", help="subject number")
