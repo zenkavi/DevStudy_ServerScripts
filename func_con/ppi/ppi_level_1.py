@@ -1,9 +1,9 @@
 #!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
 from argparse import ArgumentParser
+import os
 import sys
 sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'], '/nistats/level_1'))
 from level_1_utils import run_ppi_level1
-import os
 #Usage: python level_1.py -s SUBNUM -pe
 
 parser = ArgumentParser()
