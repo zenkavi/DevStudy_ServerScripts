@@ -347,6 +347,7 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, tasks):
 
     run_files = glob.glob(os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-*/func/sub-*_task-machinegame_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"))
     sub_runs = [x for x in run_files if subnum in x]
+    sub_runs.sort()
 
     for cur_run in sub_runs:
 
@@ -384,7 +385,7 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, tasks):
         print("***********************************************")
         print("Running contrasts for sub-%s run-%s"%(subnum, runnum))
         print("***********************************************")
-        contrasts = make_contrasts(design_matrix, pe=False, ev=False, ppi=True)
+        contrasts = make_contrasts(ppi_design, pe=False, ev=False, ppi=True)
         for index, (contrast_id, contrast_val) in enumerate(contrasts.items()):
             z_map = fmri_glm.compute_contrast(contrast_val, output_type='z_score')
             nib.save(z_map, '%s/sub-%s_run-%s_%s.nii.gz'%(contrasts_path, subnum, runnum, contrast_id))
