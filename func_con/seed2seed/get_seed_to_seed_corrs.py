@@ -4,8 +4,8 @@ import sys
 import pandas as pd
 from nilearn import input_data, plotting
 import numpy as np
-sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
-from level_1_utils import get_confounds
+#sys.path.append(os.path.join(os.environ['SERVER_SCRIPTS'],'nistats/level_1'))
+#from level_1_utils import get_confounds
 from nilearn.connectome import ConnectivityMeasure
 from nilearn.input_data import NiftiSpheresMasker
 from argparse import ArgumentParser
@@ -42,7 +42,7 @@ for func_filename in func_files:
     runnum = re.findall('\d+', os.path.basename(func_filename))[1]
 
     #formatted_confounds = get_confounds(pd.read_csv(os.path.join(data_loc,"derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv"%(subnum, subnum, runnum)), sep='\t'))
-    formatted_confounds = pd.read_csv(os.path.join(data_loc, "derivatives/nistats/level_1/sub-%s/"%(subnum)))
+    formatted_confounds = pd.read_csv(os.path.join(data_loc,"derivatives/nistats/level_1/sub-%s/sub-%s_run-%s_level1_pe_design_matrix.csv"%(subnum, subnum, runnum)))
     formatted_confounds = formatted_confounds.drop(['Unnamed: 0'], axis=1)
 
     # Create masker object to extract average signal within spheres
