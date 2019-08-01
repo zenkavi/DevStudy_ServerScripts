@@ -368,6 +368,8 @@ def run_ppi_level1(subnum, out_path, beta, seed_name, tasks):
         level_1_design = pd.read_csv('%s/derivatives/nistats/level_1/sub-%s/sub-%s_run-%s_level1_pe_design_matrix.csv'%(data_loc, subnum, subnum, runnum))
         formatted_confounds = get_confounds(pd.read_csv(os.path.join(data_loc,'derivatives/fmriprep_1.4.0/fmriprep/sub-%s/func/sub-%s_task-machinegame_run-%s_desc-confounds_regressors.tsv'%(subnum, subnum, runnum)), sep='\\t'))
         seed_ts = get_seed_timeseries(func_file=cur_run, confounds=formatted_confounds, seed=seed_coords)
+        #normalize
+        seed_ts = (seed_ts - seed_ts.mean()) / (seed_ts.max() - seed_ts.min())
         ppi_design = level_1_design.copy()
         ppi_design['seed'] = seed_ts
 
