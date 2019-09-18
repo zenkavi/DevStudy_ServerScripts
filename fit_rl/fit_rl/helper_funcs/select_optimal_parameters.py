@@ -22,9 +22,8 @@ def calculate_neglogprob(x0,data, pars):
 
     #x0 only has values for parameters that will be fitted; so we can't use numerical indices to extract from the list and assign as the parameter value to be used
     #to fix this we add the argument pars to the function and use it to create to helper lists of parameters that will be fixed and those that will be fit
-    pars = extract_pars(pars)
-    fixparams = pars['fixparams']
-    fitparams = pars['fitparams']
+    fixparams = extract_pars(pars)['fixparams']
+    fitparams = extract_pars(pars)['fitparams']
 
     #because the length of x0 and the parameters the values in it correspond to will change depending on what is fixed vs. fit we need a named dictionary
     #we use the list of fitparams for this
@@ -129,7 +128,7 @@ def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.n
 
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
-    pars_copy = extract_pars(copy.copy(pars))
+    pars = extract_pars(pars)
     fixparams = pars_copy['fixparams']
     fitparams = pars_copy['fitparams']
 
