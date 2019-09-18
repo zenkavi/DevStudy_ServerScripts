@@ -1,3 +1,4 @@
+import copy
 import json
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ def extract_pars(pars):
     for (k,v) in pars.items():
         if v == "nan":
             pars[k] = np.nan
-    
+
     fixparams = []
     fitparams = []
 
@@ -26,3 +27,16 @@ def extract_pars(pars):
     out = {'fitparams':fitparams, 'fixparams':fixparams}
 
     return(out)
+
+def get_model_name(pars):
+
+    pars_copy = extract_pars(copy.copy(pars))
+    fixparams = pars_copy['fixparams']
+    fitparams = pars_copy['fitparams']
+    #make string containing info on fitted pars for output file name
+    if len(fixparams) == 0:
+        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix'+ '-'.join(fixparams)
+    else:
+        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix_'+ '-'.join(fixparams)
+
+    return(model_name)

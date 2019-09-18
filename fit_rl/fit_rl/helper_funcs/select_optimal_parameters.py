@@ -7,7 +7,7 @@ import random
 import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
-from extract_pars import extract_pars
+from extract_pars import extract_pars, get_model_name
 from sample_x0 import sample_x0, get_bounds
 
 def calculate_neglogprob(x0,data, pars):
@@ -132,12 +132,7 @@ def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.n
     fixparams = pars_copy['fixparams']
     fitparams = pars_copy['fitparams']
 
-    #make string containing info on fitted pars for output file name
-    if len(fixparams) == 0:
-        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix'+ '-'.join(fixparams)
-    else:
-        model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix_'+ '-'.join(fixparams)
-
+    model_name = get_model_name(pars)
     bnds = get_bounds(pars)
 
     for i in range(n_fits):

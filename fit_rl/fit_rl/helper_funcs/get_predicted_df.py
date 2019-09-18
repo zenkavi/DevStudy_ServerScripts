@@ -72,4 +72,5 @@ def get_predicted_df(data, pars_dict):
         elif Outcome[i] == 0:
             data.EV[i] = EV[int(TrialNum[i]-1)]
             data.choiceprob[i] = choiceprob[i]
+    data = data[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE', 'choiceprob']]
     return(data)
