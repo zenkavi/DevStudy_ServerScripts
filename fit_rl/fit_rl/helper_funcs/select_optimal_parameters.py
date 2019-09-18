@@ -120,9 +120,9 @@ def calculate_neglogprob(x0,data, pars):
     return(neglogprob)
 
 
-def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, save=True):
+def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, save=False, output_path=np.nan):
 
-    data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
+    #data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
 
@@ -186,11 +186,12 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         except:
             print("fmin error")
 
-
     if save:
         #write out sorted data
         Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
         print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
 
     #return the optimal parameters
-    return()
+    opt_pars_dict = Results.sort_values(by=['neglogprob']).filter(regex='xopt').to_dict('records')[0]
+    opt_pars_dict = {x.replace('xopt_', ''): v for x, v in opt_pars_dict.items()}
+    return(opt_pars_dict)

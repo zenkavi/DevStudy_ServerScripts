@@ -47,11 +47,13 @@ data['fold_nums'] = fold_nums
 
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
+
     #slice data
-    cur_data = data.query("fold_nums == cur_fold")
+    train_data = data.query("fold_nums != cur_fold")
+    test_data = data.query("fold_nums == cur_fold")
 
     #get parameters
-    opt_pars = select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = pars, save=False)
+    opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=50, pars = pars)
 
     #make prediction
 
