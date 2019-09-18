@@ -7,7 +7,7 @@ import random
 import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
-from .extract_pars import extract_pars, get_model_name
+from .extract_pars import extract_pars, get_model_name, make_pars_dict
 from .sample_x0 import sample_x0, get_bounds
 
 def calculate_neglogprob(x0,data, pars):
@@ -122,7 +122,8 @@ def calculate_neglogprob(x0,data, pars):
 
 def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, save=False, output_path=np.nan):
 
-    #data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
+    if isinstance(tmp, dict) == False:
+        pars = make_pars_dict(pars)
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
 

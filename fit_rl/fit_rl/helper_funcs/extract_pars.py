@@ -5,7 +5,7 @@ import pandas as pd
 
 #text wrangling to turn the pars string to dictionary
 
-def extract_pars(pars):
+def make_pars_dict(pars):
     try:
         pars = json.loads(pars.replace('nan', '"nan"').replace("'", "\""))
     except:
@@ -14,6 +14,12 @@ def extract_pars(pars):
     for (k,v) in pars.items():
         if v == "nan":
             pars[k] = np.nan
+
+    return(pars)
+
+def extract_pars(pars):
+
+    pars = make_pars_dict(pars)
 
     fixparams = []
     fitparams = []
@@ -29,6 +35,8 @@ def extract_pars(pars):
     return(out)
 
 def get_model_name(pars):
+
+    pars = make_pars_dict(pars)
 
     pars_copy = extract_pars(copy.copy(pars))
     fixparams = pars_copy['fixparams']
