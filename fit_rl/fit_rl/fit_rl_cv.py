@@ -1,5 +1,4 @@
-from fit_rl import select_optimal_parameters
-from ..pred_rl.pred_rl import get_predicted_df
+from fit_rl.helper_funcs import select_optimal_parameters, get_predicted_df
 import copy
 import json
 import math
@@ -44,13 +43,16 @@ random.seed(42354)
 random.shuffle(fold_nums)
 if len(fold_nums) != data.shape[0]:
     fold_nums = fold_nums[:data.shape[0]]
-data['fold_nums'] = fold_num
+data['fold_nums'] = fold_nums
 
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
     #slice data
     cur_data = data.query("fold_nums == cur_fold")
+
     #get parameters
-    select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, data_amt=1)
+    select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = pars)
+
     #make prediction
+
     #summarize prediction accuracy
