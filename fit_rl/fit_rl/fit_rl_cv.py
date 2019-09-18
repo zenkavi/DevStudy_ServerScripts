@@ -18,8 +18,8 @@ parser = ArgumentParser()
 parser.add_argument("-s", "--subject", help="subject number")
 parser.add_argument("-n", "--n_fits", default=50, help="Number of iterations for model")
 parser.add_argument("-dp", "--data_path", default=todo_path+'/behav_data_tb_organized/machine_game/' , help="data path")
-parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.fits', help="output path")
-parser.add_argument("-f", "--folds", default=1, help="number of cv folds")
+parser.add_argument("-op", "--output_path", default=server_scripts+'/fit_rl/.cv_fits/', help="output path")
+parser.add_argument("-f", "--folds", default=4, help="number of cv folds")
 parser.add_argument("-p", "--pars", help="parameters dictionary")
 args = parser.parse_args()
 
@@ -28,11 +28,6 @@ subject = args.subject
 n_fits = args.n_fits
 data_path = args.data_path
 folds = int(args.folds)
-if(folds == 1):
-    output_path = args.output_path + '/'
-else:
-    output_path = args.output_path+ '_'+ str(folds) + '_fold_cv/'
-print("Output will be saved in %s"%(output_path))
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
@@ -58,17 +53,22 @@ for cur_fold in range(1,fold_nums+1):
     test_data = data.query("fold_nums == cur_fold")
 
     #get parameters
-    opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=50, pars = pars)
+    opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=n_fits, pars = pars)
 
     #make prediction
     pred_df = get_predicted_df(data=test_df, pars_dict=opt_pars_dict)
 
     #summarize prediction accuracy
-    fold_out
-    all_folds_out = all_folds_out.append(fold_out)
-    sub_summary_out
+    fold_out = pd.DataFrame.from_dict(opt_pars_dict)
+    fold_out = df.add_prefix('xopt_')
+    fold_out['fold'] =  cur_fold
+    fold_out['sub_id'] = subject
+    fold_out['pred_acc'] = sum(pred_df['pred_correct'])/pred_df.shape[0]
+    fold_out['model_name'] = model_name
 
-    opt pars, pred accuracy, cv fold per subject
-    then summarize this one step further with ave pred accuracy per subject
+    if cur_fold == 1:
+        all_folds_out = fold_out
+    else:
+        all_folds_out = all_folds_out.append(fold_out)
 
-    #outputs
+all_folds_out.to_csv(output_path+ 'CV_'+model_name+'_'+str(subject)+'.csv')
