@@ -128,7 +128,7 @@ def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.n
 
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
-    pars = extract_pars(pars)
+    pars_copy = extract_pars(pars)
     fixparams = pars_copy['fixparams']
     fitparams = pars_copy['fitparams']
 
