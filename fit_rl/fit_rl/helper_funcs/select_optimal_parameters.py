@@ -8,6 +8,7 @@ import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
 from extract_pars import extract_pars
+from sample_x0 import sample_x0, get_bounds
 
 def calculate_neglogprob(x0,data, pars):
 
@@ -21,8 +22,9 @@ def calculate_neglogprob(x0,data, pars):
 
     #x0 only has values for parameters that will be fitted; so we can't use numerical indices to extract from the list and assign as the parameter value to be used
     #to fix this we add the argument pars to the function and use it to create to helper lists of parameters that will be fixed and those that will be fit
-    fixparams = extract_pars(pars)['fixparams']
-    fitparams = extract_pars(pars)['fitparams']
+    pars = extract_pars(pars)
+    fixparams = pars['fixparams']
+    fitparams = pars['fitparams']
 
     #because the length of x0 and the parameters the values in it correspond to will change depending on what is fixed vs. fit we need a named dictionary
     #we use the list of fitparams for this
@@ -118,7 +120,7 @@ def calculate_neglogprob(x0,data, pars):
     return(neglogprob)
 
 
-def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}):
+def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, save=True):
 
     data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 
@@ -126,8 +128,9 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
 
     Results = pd.DataFrame(np.nan, columns=cols, index=range(int(n_fits)))
 
-    fixparams = extract_pars(pars)['fixparams']
-    fitparams = extract_pars(pars)['fitparams']
+    pars_copy = extract_pars(copy.copy(pars))
+    fixparams = pars_copy['fixparams']
+    fitparams = pars_copy['fitparams']
 
     #make string containing info on fitted pars for output file name
     if len(fixparams) == 0:
@@ -135,66 +138,7 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
     else:
         model_name = 'LearningParams_Fit_'+ '-'.join(fitparams) + '_Fix_'+ '-'.join(fixparams)
 
-    def sample_x0(pars):
-
-        pars_copy = copy.copy(pars)
-        x0 = []
-        #Fix vs fit params
-        for key in sorted(pars_copy.keys()):
-            #if NaN then fit param; so sample from prior; otherwise leave as is
-            if np.isnan(pars_copy[key]):
-                #Priors
-                #UPDATING X0 FOR ALL PARS THAT WILL BE FITTED AFTER SAMPLING FROM PRIOR TO make sure x0 has the correct order and only values for parameters that will be fittd!
-                if key == 'alpha':
-                    #pars_copy[key] = random.uniform(0,1)
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'alpha_neg':
-                    #pars_copy[key] = random.uniform(0,1)
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'alpha_pos':
-                    #pars_copy[key] = random.uniform(0,1)
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'beta':
-                    #pars_copy[key] = random.uniform(0,5)
-                    pars_copy[key] = np.random.gamma(2,1)
-                    x0.append(pars_copy[key])
-                if key == 'exp':
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'exp_neg':
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'exp_pos':
-                    pars_copy[key] = np.random.beta(1.2,1.2)
-                    x0.append(pars_copy[key])
-                if key == 'lossave':
-                    # Based on: https://github.com/kieranrcampbell/blog-notebooks/blob/master/Fast%20vectorized%20sampling%20from%20truncated%20normal%20distributions%20in%20python.ipynb
-                    pars_copy[key] = truncnorm.rvs((0 - 2) / 2, (10 - 2) / 2, 2, 2)
-                    x0.append(pars_copy[key])
-
-        return(x0)
-
-    bnds = []
-    if "alpha" in pars.keys() and np.isnan(pars['alpha']):
-        bnds.append((0.05,2))
-    if "alpha_neg" in pars.keys() and np.isnan(pars['alpha_neg']):
-        bnds.append((0.05,2))
-    if "alpha_pos" in pars.keys() and np.isnan(pars['alpha_pos']):
-        bnds.append((0.05,2))
-    if "beta" in pars.keys() and np.isnan(pars['beta']):
-        bnds.append((0,15))
-    if "exp" in pars.keys() and np.isnan(pars['exp']):
-        bnds.append((0.05,2))
-    if "exp_neg" in pars.keys() and np.isnan(pars['exp_neg']):
-        bnds.append((0.05,2))
-    if "exp_pos" in pars.keys() and np.isnan(pars['exp_pos']):
-        bnds.append((0.05,2))
-    if "lossave" in pars.keys() and np.isnan(pars['lossave']):
-        bnds.append((0,10))
-    bnds = tuple(bnds)
+    bnds = get_bounds(pars)
 
     for i in range(n_fits):
 
@@ -227,8 +171,10 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
                 Results['x0_'+key][i] = x0_dict[key]
                 Results['xopt_'+key][i] = xopt_dict[key]
 
+            #fill in Results df with x0 and xopt for the fixed params
             for key in fixparams:
                 Results['x0_'+key][i] = pars[key]
+                Results['xopt_'+key][i] = pars[key]
 
             #add neg log of fit to Results output
             Results.neglogprob[i] = calculate_neglogprob(xopt,data,pars)
@@ -240,6 +186,11 @@ def select_optimal_parameters(subject, inpath, outpath, n_fits=50, pars = {'alph
         except:
             print("fmin error")
 
-    #write out sorted data
-    Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
-    print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
+
+    if save:
+        #write out sorted data
+        Results.sort_values(by=['neglogprob']).to_csv(output_path+ model_name+'_'+str(subject)+'.csv')
+        print("Estimated parameters saved in: %s"%(output_path+ model_name+'_'+str(subject)+'.csv'))
+
+    #return the optimal parameters
+    return()
