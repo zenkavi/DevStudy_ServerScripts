@@ -8,8 +8,8 @@ import random
 import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
-from helper_functions.select_optimal_parameters import select_optimal_parameters
-from helper_functions.get_predicted_df import get_predicted_df
+from helper_funcs.select_optimal_parameters import select_optimal_parameters
+from helper_funcs.get_predicted_df import get_predicted_df
 
 todo_path = os.environ['TODO_PATH']
 server_scripts = os.environ['SERVER_SCRIPTS']
@@ -47,6 +47,8 @@ data['fold_nums'] = fold_nums
 
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
+
+    print('Running fold: %s for subject: %s'%(str(cur_fold), subject))
 
     #slice data
     train_data = data.query("fold_nums != cur_fold")

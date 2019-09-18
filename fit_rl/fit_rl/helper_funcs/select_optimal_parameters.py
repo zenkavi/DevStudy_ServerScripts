@@ -7,8 +7,8 @@ import random
 import scipy.optimize
 from scipy.stats import truncnorm
 from argparse import ArgumentParser
-from extract_pars import extract_pars, get_model_name
-from sample_x0 import sample_x0, get_bounds
+from .extract_pars import extract_pars, get_model_name
+from .sample_x0 import sample_x0, get_bounds
 
 def calculate_neglogprob(x0,data, pars):
 
