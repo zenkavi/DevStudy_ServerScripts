@@ -19,7 +19,8 @@ def make_pars_dict(pars):
 
 def extract_pars(pars):
 
-    pars = make_pars_dict(pars)
+    if isinstance(pars, dict) == False:
+        pars = make_pars_dict(pars)
 
     fixparams = []
     fitparams = []
@@ -35,8 +36,6 @@ def extract_pars(pars):
     return(out)
 
 def get_model_name(pars):
-
-    pars = make_pars_dict(pars)
 
     pars_copy = extract_pars(copy.copy(pars))
     fixparams = pars_copy['fixparams']
