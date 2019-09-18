@@ -122,7 +122,7 @@ def calculate_neglogprob(x0,data, pars):
 
 def select_optimal_parameters(data, subject, n_fits=50, pars = {'alpha_neg':np.nan, 'alpha_pos':np.nan, 'beta':np.nan,  'exp_neg':np.nan, 'exp_pos':np.nan, 'lossave': np.nan}, save=False, output_path=np.nan):
 
-    if isinstance(tmp, dict) == False:
+    if isinstance(pars, dict) == False:
         pars = make_pars_dict(pars)
 
     cols = ['x0_'+s for s in list(sorted(pars.keys()))] +['xopt_'+s for s in list(sorted(pars.keys()))] + ['neglogprob', 'sub_id', 'seed']
