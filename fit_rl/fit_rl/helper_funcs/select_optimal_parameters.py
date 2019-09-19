@@ -12,6 +12,7 @@ from .sample_x0 import sample_x0, get_bounds
 
 def calculate_neglogprob(x0,data, pars):
 
+    data.reset_index()
     TrialNum = data.Trial_type
     Response = data.Response
     Outcome = data.Points_earned
