@@ -29,6 +29,7 @@ subject = args.subject
 n_fits = args.n_fits
 data_path = args.data_path
 fold_nums = int(args.fold_nums)
+output_path = args.output_path
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 pars = args.pars
