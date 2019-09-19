@@ -39,13 +39,13 @@ data =  pd.read_csv(data_path+'ProbLearn'+str(subject)+'.csv')
 model_name = get_model_name(pars)
 
 #assign cv folds to subject data (in this case try 25% vs 75% so 4 fold)
-fold_nums = list(range(1,fold_nums+1))*int(data.shape[0]/fold_nums)
+fold_nums_col = list(range(1,fold_nums+1))*int(data.shape[0]/fold_nums)
 r_seed = random.randint(1000, 9999999)
 random.seed(r_seed)
-random.shuffle(fold_nums)
-if len(fold_nums) != data.shape[0]:
-    fold_nums = fold_nums[:data.shape[0]]
-data['fold_nums'] = fold_nums
+random.shuffle(fold_nums_col)
+if len(fold_nums_col) != data.shape[0]:
+    fold_nums_col = fold_nums_col[:data.shape[0]]
+data['fold_nums'] = fold_nums_col
 
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
