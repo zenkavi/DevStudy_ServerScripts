@@ -4,11 +4,9 @@ import pandas as pd
 from string import digits
 from argparse import ArgumentParser
 
-#python concat_rl_output.py -r fits
-#python concat_rl_output.py -r fits_0_75
+#python concat_rl_output.py -r cv_fits
 #python concat_rl_output.py -r preds
 #python concat_rl_output.py -r preds -m Fit_alpha-beta-exp_Fix_
-#python concat_rl_output.py -r preds_0_25
 
 parser = ArgumentParser()
 parser.add_argument("-m", "--model_name", default='all', help="model name")
