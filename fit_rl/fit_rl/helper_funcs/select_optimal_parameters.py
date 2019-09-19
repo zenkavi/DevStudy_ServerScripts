@@ -10,12 +10,12 @@ from argparse import ArgumentParser
 from .extract_pars import extract_pars, get_model_name, make_pars_dict
 from .sample_x0 import sample_x0, get_bounds
 
-def calculate_neglogprob(x0,data, pars):
+def calculate_neglogprob(x0,df, pars):
 
-    data.reset_index()
-    TrialNum = data.Trial_type
-    Response = data.Response
-    Outcome = data.Points_earned
+    df.reset_index(inplace=True, drop=True)
+    TrialNum = df.Trial_type
+    Response = df.Response
+    Outcome = df.Points_earned
 
     EV = [0,0,0,0]
     Prediction_Error = 0

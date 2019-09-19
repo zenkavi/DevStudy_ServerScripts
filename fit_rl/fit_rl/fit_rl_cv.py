@@ -54,7 +54,9 @@ for cur_fold in range(1,fold_nums+1):
 
     #slice data
     train_data = data[data.fold_nums != cur_fold]
+    train_data.reset_index(inplace=True, drop=True)
     test_data = data[data.fold_nums == cur_fold]
+    test_data.reset_index(inplace=True, drop=True)
 
     #get parameters
     opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=n_fits, pars = pars)
