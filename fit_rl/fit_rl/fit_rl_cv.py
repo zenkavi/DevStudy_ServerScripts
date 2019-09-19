@@ -62,11 +62,11 @@ for cur_fold in range(1,fold_nums+1):
     opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=n_fits, pars = pars)
 
     #make prediction
-    pred_df = get_predicted_df(data=test_df, pars_dict=opt_pars_dict)
+    pred_df = get_predicted_df(data=test_data, pars_dict=opt_pars_dict)
 
     #summarize prediction accuracy
-    fold_out = pd.DataFrame.from_dict(opt_pars_dict)
-    fold_out = df.add_prefix('xopt_')
+    fold_out = pd.DataFrame.from_dict(opt_pars_dict, orient='index').transpose()
+    fold_out = fold_out.add_prefix('xopt_')
     fold_out['fold'] =  cur_fold
     fold_out['seed'] = r_seed
     fold_out['sub_id'] = subject

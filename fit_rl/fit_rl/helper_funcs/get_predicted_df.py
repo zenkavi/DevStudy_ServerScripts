@@ -4,7 +4,6 @@ import numpy as np
 import os
 import pandas as pd
 import re
-from argparse import ArgumentParser
 
 def get_predicted_df(data, pars_dict):
     data = data.reset_index()
@@ -75,5 +74,5 @@ def get_predicted_df(data, pars_dict):
     data = data[['Trial_type', 'Response', 'Points_earned', 'EV', 'PE', 'choiceprob']]
     data['pred_choice'] = list(np.where(data['choiceprob']>0.5,1,0))
     data['response_recode'] = list(np.where(data['Response']==1,1,0))
-    data['pred_correct'] = list(np.where(data['pred_chocie']==data['response_recode'],1,0))
+    data['pred_correct'] = list(np.where(data['pred_choice']==data['response_recode'],1,0))
     return(data)
