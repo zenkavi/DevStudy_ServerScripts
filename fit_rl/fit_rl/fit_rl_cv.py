@@ -51,13 +51,19 @@ data['fold_nums'] = fold_nums_col
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
 
+    print("***********************************************")
     print('Running fold: %s for subject: %s'%(str(cur_fold), subject))
+    print("***********************************************")
 
-    #slice data
-    train_data = data[data.fold_nums != cur_fold]
-    train_data.reset_index(inplace=True, drop=True)
-    test_data = data[data.fold_nums == cur_fold]
-    test_data.reset_index(inplace=True, drop=True)
+    if fold_nums>1:
+        #slice data
+        train_data = data[data.fold_nums != cur_fold]
+        train_data.reset_index(inplace=True, drop=True)
+        test_data = data[data.fold_nums == cur_fold]
+        test_data.reset_index(inplace=True, drop=True)
+    else:
+        train_data = data
+        test_data = data
 
     #get parameters
     opt_pars_dict = select_optimal_parameters(data=train_data, subject=subject, n_fits=n_fits, pars = pars)
@@ -80,3 +86,7 @@ for cur_fold in range(1,fold_nums+1):
         all_folds_out = all_folds_out.append(fold_out)
 
 all_folds_out.to_csv(output_path+ 'CV_'+model_name+'_'+str(subject)+'.csv')
+
+print("***********************************************")
+print('Saving output for subject: %s in %s'%(subject, output_path))
+print("***********************************************")
