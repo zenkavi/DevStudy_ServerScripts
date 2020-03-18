@@ -39,15 +39,29 @@ model_name = get_model_name(pars)
 
 #assign cv folds to subject data (in this case try 25% vs 75% so 4 fold)
 
-#CHANGE THIS TO BALANCED FOLDS!
+#EXCLUDE first five encounters of each condition and
+data['con_count'] = data.groupby('Trial_type').cumcount()
+data = data.query('con_count>4')
 
-fold_nums_col = list(range(1,fold_nums+1))*int(data.shape[0]/fold_nums)
+#BALANCED FOLDS!
+# Each condition has 40 trials left with 160 total trials
+# For k=4 CV
+# Train on 160-(160/k) = 120 trials
+# Test on 160/k = 40 trials
+# Each fold should have a balanced number of TrialType
+# Have one fold num column
+# It should be of length = 40
+# Shuffle it
+# Assign it to sub dfs filtered by trial type
+
+fold_nums_col = list(range(1,fold_nums+1))*int(data.shape[0]/fold_nums/len(data.Trial_type.unique()))
 r_seed = random.randint(1000, 9999999)
 random.seed(r_seed)
 random.shuffle(fold_nums_col)
-if len(fold_nums_col) != data.shape[0]:
-    fold_nums_col = fold_nums_col[:data.shape[0]]
-data['fold_nums'] = fold_nums_col
+def assign_fold_nums(df):
+    df['fold_nums'] = fold_nums_col
+    return df
+data = data.groupby('Trial_type').apply(assign_fold_nums)
 
 #for each fold:
 for cur_fold in range(1,fold_nums+1):
