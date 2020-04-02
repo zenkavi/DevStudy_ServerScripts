@@ -4,5 +4,6 @@
 .fits
 .preds
 .rl_task_lists
+.comp_out
 license.txt
 l1_debug_jobs.sh

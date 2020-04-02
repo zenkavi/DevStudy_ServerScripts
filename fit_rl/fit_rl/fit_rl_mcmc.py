@@ -9,8 +9,6 @@
     # Compare predicted choice vector to true choices and calculate accuracy
         # Store each fold's prediction accuracy (e.g. pred_acc_f1)
 
-#Useful resource: https://github.com/ricardoV94/stats/blob/master/modelling/RL_PyMC.ipynb
-
 # Desired output:
 # Per subject -
 # Mean accuracy across folds
