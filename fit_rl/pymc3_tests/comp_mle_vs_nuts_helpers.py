@@ -41,6 +41,8 @@ def generate_data(alpha, beta, n=100,
 
     for i in range(n):
 
+        print("Generating trial %s"%(str(i)))
+
         cur_machine = machs[i]
 
         # Apply the Softmax transformation
