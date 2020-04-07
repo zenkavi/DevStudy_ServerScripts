@@ -15,7 +15,7 @@ import scipy
 import pymc3 as pm
 import theano
 import theano.tensor as tt
-from .comp_mle_vs_nuts_helpers import generate_data, llik_td_vectorized, update_Q, theano_llik_td, get_mle_nuts_est
+from comp_mle_vs_nuts_helpers import generate_data, llik_td_vectorized, update_Q, theano_llik_td, get_mle_nuts_est
 
 est_df, mle_iters, nuts_posteriors = get_mle_nuts_est(alpha, beta)
 
