@@ -42,6 +42,7 @@ def generate_data(alpha, beta, n=100,
     for i in range(n):
 
         print("Generating trial %s"%(str(i)))
+        print("Current values are m1 = [%s, %s], m2 = [%s, %s], m3 = [%s, %s], m4 = [%s, %s]"%(str(Q[0][0]), str(Q[0][1]), str(Q[1][0]), str(Q[1][1]), str(Q[2][0]), str(Q[2][1]), str(Q[3][0]), str(Q[3][1])))
 
         cur_machine = machs[i]
 
