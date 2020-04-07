@@ -1,4 +1,4 @@
-#!/home/groups/russpold/software/miniconda/envs/fmri/bin/python
+#!/home/groups/russpold/software/miniconda/envs/py38/bin/python
 from argparse import ArgumentParser
 #Usage: ./comp_mle_vs_nuts.py --alpha 0.1 --beta 3.0
 
