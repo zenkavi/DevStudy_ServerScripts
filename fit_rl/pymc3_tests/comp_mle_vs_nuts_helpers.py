@@ -149,7 +149,7 @@ def get_mle_nuts_est(true_alpha, true_beta, n=120, mle_niters = 50):
 
     # MLE estimate starting from true value
     x0 = [true_alpha, true_beta]
-    result = scipy.optimize.minimize(llik_td, x0, args=(machines, actions, rewards), method='BFGS')
+    result = scipy.optimize.minimize(llik_td_vectorized, x0, args=(machines, actions, rewards), method='BFGS')
     mle_alpha_ts = result.x[0]
     mle_beta_ts = result.x[1]
     mle_llik_ts = result.fun
@@ -162,7 +162,7 @@ def get_mle_nuts_est(true_alpha, true_beta, n=120, mle_niters = 50):
         random_alpha_start = np.random.beta(1,1)
         random_beta_start = scipy.stats.halfnorm(scale=10).rvs()
         x0 = [random_alpha_start, random_beta_start]
-        result = scipy.optimize.minimize(llik_td, x0, args=(machines, actions, rewards), method='BFGS')
+        result = scipy.optimize.minimize(llik_td_vectorized, x0, args=(machines, actions, rewards), method='BFGS')
         cur_alpha_est = result.x[0]
         cur_beta_est = result.x[1]
         cur_llik = result.fun
