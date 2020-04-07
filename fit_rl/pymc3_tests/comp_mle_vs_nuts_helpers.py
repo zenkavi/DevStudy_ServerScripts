@@ -47,7 +47,7 @@ def generate_data(alpha, beta, n=100,
         cur_machine = machs[i]
 
         # Apply the Softmax transformation
-        exp_Q = np.exp(beta*Q[cur_machine])
+        exp_Q = np.exp(np.multiply(beta,Q[cur_machine]))
         prob_a = exp_Q / np.sum(exp_Q)
 
         # Simulate choice
