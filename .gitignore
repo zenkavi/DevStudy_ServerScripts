@@ -7,3 +7,4 @@
 .comp_out
 license.txt
 l1_debug_jobs.sh
+__pycache__
