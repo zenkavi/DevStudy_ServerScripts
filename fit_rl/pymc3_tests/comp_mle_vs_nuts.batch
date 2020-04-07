@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #SBATCH -J comp_mle_vs_nuts
-#SBATCH --array=1-78%78
+#SBATCH --array=1-840%840
 #SBATCH -p russpold,owners,normal
 #SBATCH --time=12:00:00
 
 # Outputs ----------------------------------
-#SBATCH -o ../../.out/comp_mle_vs_nuts-%A-%a.out
-#SBATCH -e ../../.err/comp_mle_vs_nuts-%A-%a.err
+#SBATCH -o .out/comp_mle_vs_nuts-%A-%a.out
+#SBATCH -e .err/comp_mle_vs_nuts-%A-%a.err
 #SBATCH --mail-user=zenkavi@stanford.edu
 #SBATCH --mail-type=FAIL,END
 # ------------------------------------------
